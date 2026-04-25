@@ -188,7 +188,10 @@ body::after {
   inset: 0;
   background-size: cover;
   background-position: center;
-  transition: background-image 0.5s ease;
+  transition: background-image 0.6s ease, opacity 0.6s ease;
+  filter: blur(28px) brightness(0.7);
+  transform: scale(1.12);
+  opacity: 0;
 }
 #cf-fullbg-overlay {
   position: absolute;
@@ -1302,19 +1305,22 @@ function cfToggleNav() {
   if (cfNavVisible) cfEsconderNav(); else cfMostrarNav();
 }
 
-async function cfAtualizarBg() {
+function cfAtualizarBg() {
   if (!cfLista.length) return;
   const m = cfLista[cfIdx];
   const cover = cfCovers[m.nome+'|'+m.artista];
+  const bg = document.getElementById('cf-fullbg');
   const color = document.getElementById('cf-fullbg-color');
-  const grad = cfGradient(m.nome);
 
-  if (cover?.color) {
-    color.style.background = `linear-gradient(160deg, ${cover.color.dark} 0%, ${cover.color.mid} 100%)`;
-    cfAtualizarTema(cover.color.dark, cover.color.mid);
+  if (cover?.img) {
+    bg.style.backgroundImage = `url('${cover.img}')`;
+    bg.style.opacity = '1';
+    color.style.background = 'rgba(0,0,0,0.45)';
   } else {
+    const grad = cfGradient(m.nome);
+    bg.style.backgroundImage = '';
+    bg.style.opacity = '0';
     color.style.background = `linear-gradient(160deg,${grad[0]} 0%,${grad[1]}55 100%)`;
-    cfAtualizarTema(grad[0], grad[1]);
   }
 }
 
