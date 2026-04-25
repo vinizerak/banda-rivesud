@@ -1170,9 +1170,9 @@ function cfInitials(nome) {
   return nome.split(' ').slice(0,2).map(w=>w[0]||'').join('').toUpperCase() || '♪';
 }
 
-function cfFetchTimeout(url, ms=3000) {
+function cfFetchTimeout(url, ms=5000) {
   return Promise.race([
-    fetch(url, { mode: 'cors' }),
+    fetch(url),
     new Promise((_,reject) => setTimeout(()=>reject(new Error('timeout')), ms))
   ]);
 }
@@ -1181,9 +1181,9 @@ async function cfBuscarCapa(musica) {
   const key = musica.nome+'|'+musica.artista;
   if (cfCovers[key] !== undefined) return cfCovers[key];
   cfCovers[key] = null;
-  const q = encodeURIComponent((musica.nome+' '+musica.artista).trim());
+  const q = (musica.nome+' '+musica.artista).trim();
   try {
-    const r = await cfFetchTimeout(`https://itunes.apple.com/search?term=${q}&entity=song&limit=1&country=br`);
+    const r = await cfFetchTimeout(`/.netlify/functions/itunes?q=${encodeURIComponent(q)}`);
     const d = await r.json();
     if (d.results?.length > 0) {
       const item = d.results[0];
@@ -1423,20 +1423,43 @@ async function cfAbrirSheet(m) {
   const spotifyUrl = midias.find(u=>u.includes('spotify.com'))||null;
   const youtubeUrl = midias.find(u=>u.includes('youtu'))||null;
 
-  // Cifra: linha inteira. Spotify + YouTube: lado a lado na linha de baixo
-  const cifraBtnHtml = cifras.length
-    ? `<button class="sheet-btn" onclick="abrirMultiplosCifras(${JSON.stringify(cifras)})">&#127926; Cifra</button>`
-    : `<button class="sheet-btn disabled">&#127926; Cifra</button>`;
-  const spotBtnHtml = spotifyUrl
-    ? `<a href="${esc(spotifyUrl)}" class="sheet-btn spotify" target="_blank" rel="noopener">&#9654; Spotify</a>`
-    : `<button class="sheet-btn disabled">&#9654; Spotify</button>`;
-  const ytBtnHtml = youtubeUrl
-    ? `<a href="${esc(youtubeUrl)}" class="sheet-btn youtube" target="_blank" rel="noopener">&#9654; YouTube</a>`
-    : `<button class="sheet-btn disabled">&#9654; YouTube</button>`;
+  const actionsEl = document.getElementById('cf-sheet-actions');
+  actionsEl.innerHTML = '';
 
-  document.getElementById('cf-sheet-actions').innerHTML =
-    cifraBtnHtml +
-    `<div class="sheet-actions-row">${spotBtnHtml}${ytBtnHtml}</div>`;
+  // Cifra — linha inteira
+  const cifraBtn = document.createElement('button');
+  cifraBtn.className = 'sheet-btn' + (cifras.length?'':' disabled');
+  cifraBtn.innerHTML = '&#127926; Cifra';
+  if (cifras.length) cifraBtn.addEventListener('click', ()=>cifras.forEach(u=>window.open(u,'_blank')));
+  actionsEl.appendChild(cifraBtn);
+
+  // Spotify + YouTube lado a lado
+  const row = document.createElement('div');
+  row.className = 'sheet-actions-row';
+
+  if (spotifyUrl) {
+    const a = document.createElement('a');
+    a.href = spotifyUrl; a.target='_blank'; a.rel='noopener';
+    a.className='sheet-btn spotify'; a.innerHTML='&#9654; Spotify';
+    row.appendChild(a);
+  } else {
+    const b = document.createElement('button');
+    b.className='sheet-btn disabled'; b.innerHTML='&#9654; Spotify';
+    row.appendChild(b);
+  }
+
+  if (youtubeUrl) {
+    const a = document.createElement('a');
+    a.href = youtubeUrl; a.target='_blank'; a.rel='noopener';
+    a.className='sheet-btn youtube'; a.innerHTML='&#9654; YouTube';
+    row.appendChild(a);
+  } else {
+    const b = document.createElement('button');
+    b.className='sheet-btn disabled'; b.innerHTML='&#9654; YouTube';
+    row.appendChild(b);
+  }
+
+  actionsEl.appendChild(row);
 
   sheet.classList.add('open');
   document.body.style.overflow='hidden';
