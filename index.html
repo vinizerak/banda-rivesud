@@ -37,7 +37,7 @@ body::before {
   content: '';
   position: fixed;
   inset: 0;
-  background: var(--cf-bg-full, linear-gradient(160deg, var(--album-c1) 0%, color-mix(in srgb, var(--album-c2) 30%, var(--album-c1)) 100%));
+  background: var(--cf-bg-full, #0d0d0d);
   transition: background 0.7s ease;
   z-index: -2;
   pointer-events: none;
@@ -1187,11 +1187,15 @@ async function cfBuscarCapa(musica) {
     const d = await r.json();
     if (d.results?.length > 0) {
       const item = d.results[0];
-      cfCovers[key] = { img: (item.artworkUrl100||'').replace('100x100bb','400x400bb'), preview: item.previewUrl||null };
+      cfCovers[key] = {
+        img: (item.artworkUrl100||'').replace('100x100bb','400x400bb'),
+        preview: item.previewUrl||null,
+        color: d.dominantColor||null,
+      };
       return cfCovers[key];
     }
   } catch(e) {}
-  cfCovers[key] = { img: null, preview: null };
+  cfCovers[key] = { img: null, preview: null, color: null };
   return cfCovers[key];
 }
 
@@ -1298,17 +1302,20 @@ function cfToggleNav() {
   if (cfNavVisible) cfEsconderNav(); else cfMostrarNav();
 }
 
-function cfAtualizarBg() {
+async function cfAtualizarBg() {
   if (!cfLista.length) return;
   const m = cfLista[cfIdx];
-  const grad = cfGradient(m.nome);
-  // Só gradiente no fundo — sem foto
-  const bg = document.getElementById('cf-fullbg');
-  bg.style.backgroundImage = '';
-  bg.style.opacity = '0';
+  const cover = cfCovers[m.nome+'|'+m.artista];
   const color = document.getElementById('cf-fullbg-color');
-  color.style.background = `linear-gradient(160deg,${grad[0]} 0%,${grad[1]}55 100%)`;
-  cfAtualizarTema(grad[0], grad[1], null);
+  const grad = cfGradient(m.nome);
+
+  if (cover?.color) {
+    color.style.background = `linear-gradient(160deg, ${cover.color.dark} 0%, ${cover.color.mid} 100%)`;
+    cfAtualizarTema(cover.color.dark, cover.color.mid);
+  } else {
+    color.style.background = `linear-gradient(160deg,${grad[0]} 0%,${grad[1]}55 100%)`;
+    cfAtualizarTema(grad[0], grad[1]);
+  }
 }
 
 function cfAtualizarInfo() {
@@ -1748,17 +1755,8 @@ function showTab(id, btn) {
   }
 }
 
-function cfAtualizarTema(c1, c2, coverUrl) {
-  const r = document.documentElement;
-  r.style.setProperty('--album-c1', c1);
-  r.style.setProperty('--album-c2', c2);
-  const grad = `linear-gradient(160deg, ${c1} 0%, color-mix(in srgb, ${c2} 35%, ${c1}) 100%)`;
-  document.body.style.setProperty('--cf-bg-full', grad);
-  if (coverUrl) {
-    document.body.style.setProperty('--cf-cover-url', `url('${coverUrl}')`);
-  } else {
-    document.body.style.removeProperty('--cf-cover-url');
-  }
+function cfAtualizarTema(c1, c2) {
+  document.body.style.setProperty('--cf-bg-full', `linear-gradient(160deg, ${c1} 0%, ${c2} 100%)`);
 }
 
 function renderEnsaioTab() {
