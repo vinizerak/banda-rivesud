@@ -142,7 +142,133 @@ body::after {
 .other-nav-pill.active { background: rgba(255,255,255,0.18); color: #fff; border-color: rgba(255,255,255,0.35); }
 .other-nav-pill:hover:not(.active) { background: rgba(255,255,255,0.12); color: rgba(255,255,255,0.85); }
 
-#panel-cultos, #panel-ensaio { padding: 72px 16px 20px; }
+#panel-ensaio { padding: 72px 16px 20px; }
+
+/* ===================== CULTOS FULLSCREEN ===================== */
+#panel-cultos { position: fixed; inset: 0; z-index: 1; overflow: hidden; padding: 0; }
+#panel-cultos.active { display: block; }
+#c-bg { position: absolute; inset: 0; background: linear-gradient(160deg,#0d1225 0%,#0d0d0d 100%); transition: background 0.8s ease; z-index: 0; }
+#c-bg-blur { position: absolute; inset: -10%; opacity: 0.35; filter: blur(60px); transition: background 0.8s ease; transform: scale(1.1); z-index: 1; pointer-events: none; }
+#c-bg-overlay { position: absolute; inset: 0; background: linear-gradient(180deg,rgba(0,0,0,0.5) 0%,rgba(0,0,0,0.1) 25%,rgba(0,0,0,0.15) 55%,rgba(0,0,0,0.75) 100%); z-index: 2; pointer-events: none; }
+
+/* stats strip */
+#c-stats { position: fixed; top: 56px; left: 0; right: 0; z-index: 110; display: none; justify-content: center; padding: 6px 14px; gap: 0; }
+#c-stats.vis { display: flex; }
+.c-seg { flex: 1; max-width: 96px; text-align: center; padding: 6px 6px; background: rgba(0,0,0,0.32); backdrop-filter: blur(14px); border: 0.5px solid rgba(255,255,255,0.09); border-right: none; }
+.c-seg:first-child { border-radius: 10px 0 0 10px; }
+.c-seg:last-child  { border-radius: 0 10px 10px 0; border-right: 0.5px solid rgba(255,255,255,0.09); }
+.c-seg.btn { cursor: pointer; }
+.c-seg.btn:hover { background: rgba(255,255,255,0.07); }
+.c-sv { font-size: 16px; font-weight: 700; line-height: 1; color: #fff; }
+.c-sl { font-size: 9px; color: rgba(255,255,255,0.38); margin-top: 2px; text-transform: uppercase; letter-spacing: 0.05em; }
+
+/* month strip */
+#c-months { position: fixed; top: 108px; left: 0; right: 0; z-index: 110; display: none; gap: 6px; padding: 4px 14px; overflow-x: auto; scrollbar-width: none; }
+#c-months.vis { display: flex; }
+#c-months::-webkit-scrollbar { display: none; }
+.c-mpill { flex-shrink: 0; height: 27px; padding: 0 12px; background: rgba(255,255,255,0.07); border: 0.5px solid rgba(255,255,255,0.12); border-radius: 99px; font-size: 11px; font-weight: 500; color: rgba(255,255,255,0.45); cursor: pointer; transition: all 0.22s; white-space: nowrap; }
+.c-mpill.active { background: rgba(255,255,255,0.2); color: #fff; border-color: rgba(255,255,255,0.38); }
+
+/* culto carousel */
+#c-stage { position: fixed; left: 0; right: 0; z-index: 20; top: 146px; height: min(162px,44vw); display: none; align-items: center; justify-content: center; }
+#c-stage.vis { display: flex; }
+#c-cards { position: relative; width: 100%; height: 100%; }
+.cc { position: absolute; top: 0; left: 50%; margin-left: calc(min(240px,68vw) / -2); width: min(240px,68vw); height: min(162px,44vw); border-radius: 20px; overflow: hidden; cursor: pointer; transition: transform 0.42s cubic-bezier(0.25,0.46,0.45,0.94), filter 0.42s ease, opacity 0.42s ease; background: rgba(255,255,255,0.08); border: 0.5px solid rgba(255,255,255,0.18); backdrop-filter: blur(24px); }
+.cc.pos-c { transform: translateX(0) scale(1); filter: brightness(1); z-index: 10; box-shadow: 0 20px 50px rgba(0,0,0,0.6); }
+.cc.pos-l { transform: translateX(min(-190px,-52vw)) scale(0.78); filter: brightness(0.38); z-index: 5; }
+.cc.pos-r { transform: translateX(min(190px,52vw)) scale(0.78); filter: brightness(0.38); z-index: 5; }
+.cc.pos-hl { transform: translateX(min(-390px,-105vw)) scale(0.6); opacity: 0; z-index: 1; pointer-events: none; }
+.cc.pos-hr { transform: translateX(min(390px,105vw)) scale(0.6); opacity: 0; z-index: 1; pointer-events: none; }
+.cc-tint { position: absolute; inset: 0; pointer-events: none; background: linear-gradient(135deg,rgba(255,255,255,0.04) 0%,transparent 60%); }
+.cc-body { width: 100%; height: 100%; padding: 16px 18px; display: flex; flex-direction: column; justify-content: space-between; }
+.cc-top { display: flex; align-items: flex-start; gap: 9px; }
+.cc-day { font-size: 46px; font-weight: 800; line-height: 0.9; letter-spacing: -0.03em; color: rgba(255,255,255,0.95); }
+.cc-meta { display: flex; flex-direction: column; padding-top: 5px; }
+.cc-dow { font-size: 9px; color: rgba(255,255,255,0.45); text-transform: uppercase; letter-spacing: 0.07em; }
+.cc-myr { font-size: 11px; font-weight: 500; color: rgba(255,255,255,0.65); margin-top: 2px; }
+.cc-leader { font-size: 13px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cc-count { font-size: 9px; color: rgba(255,255,255,0.38); margin-top: 2px; text-transform: uppercase; letter-spacing: 0.05em; }
+
+/* culto dots/pos */
+#c-info { position: fixed; left: 0; right: 0; z-index: 20; top: calc(146px + min(162px,44vw) + 8px); display: none; flex-direction: column; align-items: center; gap: 5px; }
+#c-info.vis { display: flex; }
+#c-pos { font-size: 10px; color: rgba(255,255,255,0.25); letter-spacing: 0.04em; }
+#c-dots { display: flex; gap: 5px; }
+.c-dot { width: 5px; height: 5px; border-radius: 50%; background: rgba(255,255,255,0.25); transition: all 0.3s; cursor: pointer; }
+.c-dot.active { width: 14px; border-radius: 3px; background: rgba(255,255,255,0.9); }
+
+/* song stage */
+#c-song-stage { position: fixed; left: 0; right: 0; z-index: 20; top: calc(146px + min(162px,44vw) + 54px); bottom: 72px; display: none; flex-direction: column; align-items: center; padding: 0 14px; gap: 8px; }
+#c-song-stage.vis { display: flex; }
+#c-sv { width: 100%; max-width: 520px; flex: 1; position: relative; overflow: hidden; border-radius: 18px; }
+.csc { position: absolute; inset: 0; background: rgba(0,0,0,0.42); backdrop-filter: blur(22px); border: 0.5px solid rgba(255,255,255,0.12); border-radius: 18px; padding: 16px 18px; display: flex; flex-direction: column; justify-content: space-between; }
+.csc.er { animation: cER 0.3s cubic-bezier(0.25,0.46,0.45,0.94) forwards; }
+.csc.el { animation: cEL 0.3s cubic-bezier(0.25,0.46,0.45,0.94) forwards; }
+.csc.xr { animation: cXR 0.22s cubic-bezier(0.55,0,1,0.45) forwards; }
+.csc.xl { animation: cXL 0.22s cubic-bezier(0.55,0,1,0.45) forwards; }
+.csc.ef { animation: cEF 0.3s ease forwards; }
+@keyframes cER { from{transform:translateX(60px);opacity:0} to{transform:none;opacity:1} }
+@keyframes cEL { from{transform:translateX(-60px);opacity:0} to{transform:none;opacity:1} }
+@keyframes cXR { from{transform:none;opacity:1} to{transform:translateX(-44px);opacity:0} }
+@keyframes cXL { from{transform:none;opacity:1} to{transform:translateX(44px);opacity:0} }
+@keyframes cEF  { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:none} }
+.csc-lbl { font-size: 10px; color: rgba(255,255,255,0.3); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 2px; }
+.csc-num { font-size: 50px; font-weight: 800; line-height: 0.9; color: rgba(255,255,255,0.1); letter-spacing: -0.04em; margin-bottom: 3px; }
+.csc-name { font-size: 19px; font-weight: 700; line-height: 1.15; }
+.csc-artist { font-size: 11px; color: rgba(255,255,255,0.42); margin-top: 4px; }
+.csc-bot { display: flex; align-items: center; justify-content: space-between; }
+.csc-key { font-size: 13px; font-weight: 700; background: rgba(255,255,255,0.1); border: 0.5px solid rgba(255,255,255,0.2); border-radius: 7px; padding: 4px 10px; color: rgba(255,255,255,0.7); }
+.csc-play { width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,0.15); border: 0.5px solid rgba(255,255,255,0.25); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background 0.15s; color: #fff; flex-shrink: 0; }
+.csc-play:hover { background: rgba(255,255,255,0.28); }
+.csc-play.playing { background: rgba(255,255,255,0.3); }
+.csc-play svg { width: 13px; height: 13px; }
+#c-snav { width: 100%; max-width: 520px; display: flex; align-items: center; justify-content: space-between; padding: 0 2px; }
+.c-sarr { background: none; border: none; color: rgba(255,255,255,0.3); font-size: 30px; cursor: pointer; padding: 0 8px; transition: color 0.15s; line-height: 1; user-select: none; }
+.c-sarr:hover:not(:disabled) { color: rgba(255,255,255,0.8); }
+.c-sarr:disabled { opacity: 0.12; cursor: default; }
+#c-sdots { display: flex; gap: 5px; }
+.c-sdot { width: 5px; height: 5px; border-radius: 50%; background: rgba(255,255,255,0.25); transition: all 0.3s; cursor: pointer; }
+.c-sdot.active { width: 14px; border-radius: 3px; background: rgba(255,255,255,0.9); }
+
+/* cultos FAB */
+#c-fab { position: fixed; bottom: 24px; right: 20px; z-index: 115; width: 50px; height: 50px; border-radius: 50%; background: #fff; color: #0d0d0d; font-size: 26px; font-weight: 300; border: none; cursor: pointer; display: none; align-items: center; justify-content: center; box-shadow: 0 4px 20px rgba(0,0,0,0.55); transition: transform 0.25s; }
+#c-fab.vis { display: flex; }
+#c-fab:hover { transform: scale(1.06); }
+#c-fab.open { transform: rotate(45deg); }
+
+/* cultos add sheet */
+#c-sh-ov { position: fixed; inset: 0; z-index: 200; background: rgba(0,0,0,0.6); backdrop-filter: blur(6px); opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+#c-sh-ov.open { opacity: 1; pointer-events: all; }
+#c-sh { position: fixed; bottom: 0; left: 0; right: 0; z-index: 210; max-width: 600px; margin: 0 auto; background: #141414; border-radius: 22px 22px 0 0; border-top: 0.5px solid rgba(255,255,255,0.16); transform: translateY(100%); transition: transform 0.4s cubic-bezier(0.25,0.46,0.45,0.94); max-height: 92vh; display: flex; flex-direction: column; }
+#c-sh.open { transform: translateY(0); }
+.c-sh-hand { width: 36px; height: 4px; background: rgba(255,255,255,0.14); border-radius: 2px; margin: 14px auto 0; flex-shrink: 0; }
+.c-sh-hdr { padding: 14px 20px 0; flex-shrink: 0; }
+.c-sh-title { font-family: 'Instrument Serif', serif; font-size: 22px; color: #fff; }
+.c-sh-sub { font-size: 13px; color: rgba(255,255,255,0.4); margin-top: 3px; }
+.c-sh-body { flex: 1; overflow-y: auto; padding: 16px 20px 28px; min-height: 0; }
+.c-pend-item { display: flex; align-items: center; gap: 9px; background: rgba(255,255,255,0.05); border: 0.5px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 9px 12px; margin-bottom: 6px; }
+.c-pend-num { font-size: 11px; color: rgba(255,255,255,0.25); width: 16px; flex-shrink: 0; }
+.c-pend-name { flex: 1; font-size: 13px; font-weight: 500; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.c-pend-tom { width: 50px; height: 30px; text-align: center; background: rgba(255,255,255,0.07); border: 0.5px solid rgba(255,255,255,0.16); border-radius: 7px; font-size: 12px; font-family: 'DM Sans', sans-serif; color: #fff; outline: none; }
+.c-pend-rm { background: none; border: none; color: rgba(255,255,255,0.35); font-size: 18px; cursor: pointer; line-height: 1; }
+.c-pend-rm:hover { color: #ff6b6b; }
+.c-add-s { width: 100%; height: 40px; background: none; border: 1px dashed rgba(255,255,255,0.16); border-radius: 10px; color: rgba(255,255,255,0.38); font-size: 13px; font-family: 'DM Sans', sans-serif; cursor: pointer; margin-bottom: 14px; transition: all 0.15s; }
+.c-add-s:hover { border-color: rgba(255,255,255,0.38); color: rgba(255,255,255,0.75); }
+
+/* topmes sheet */
+#c-tm-ov { position: fixed; inset: 0; z-index: 200; background: rgba(0,0,0,0.55); backdrop-filter: blur(6px); opacity: 0; pointer-events: none; transition: opacity 0.25s; display: flex; align-items: flex-end; justify-content: center; }
+#c-tm-ov.open { opacity: 1; pointer-events: all; }
+#c-tm-sh { background: #141414; border-radius: 22px 22px 0 0; border-top: 0.5px solid rgba(255,255,255,0.15); width: 100%; max-width: 600px; padding: 14px 20px 36px; transform: translateY(100%); transition: transform 0.35s cubic-bezier(0.25,0.46,0.45,0.94); }
+#c-tm-ov.open #c-tm-sh { transform: translateY(0); }
+.c-tm-hand { width: 36px; height: 4px; background: rgba(255,255,255,0.13); border-radius: 2px; margin: 0 auto 14px; }
+.c-tm-lbl { font-size: 10px; color: rgba(255,255,255,0.3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px; }
+.c-tm-title { font-family: 'Instrument Serif', serif; font-size: 24px; color: #fff; margin-bottom: 2px; }
+.c-tm-sub { font-size: 13px; color: rgba(255,255,255,0.4); margin-bottom: 18px; }
+.c-tm-row { display: flex; align-items: center; gap: 12px; background: rgba(255,255,255,0.05); border: 0.5px solid rgba(255,255,255,0.08); border-radius: 11px; padding: 10px 14px; margin-bottom: 6px; }
+.c-tm-rank { font-size: 11px; color: rgba(255,255,255,0.22); width: 18px; text-align: right; flex-shrink: 0; }
+.c-tm-name { flex: 1; font-size: 14px; font-weight: 500; color: #fff; }
+.c-tm-cnt { font-size: 11px; color: rgba(255,255,255,0.38); background: rgba(255,255,255,0.07); padding: 2px 8px; border-radius: 99px; flex-shrink: 0; }
+.c-tm-close { width: 100%; height: 40px; background: rgba(255,255,255,0.06); border: 0.5px solid rgba(255,255,255,0.1); border-radius: 10px; font-size: 13px; font-family: 'DM Sans', sans-serif; color: rgba(255,255,255,0.45); cursor: pointer; margin-top: 12px; }
 
 /* Search bar — tema escuro */
 .search-bar { display: flex; gap: 8px; margin-bottom: 16px; }
@@ -943,24 +1069,11 @@ body::after {
   </div>
 </div>
 
-<!-- PAINEL: CULTOS -->
+<!-- PAINEL: CULTOS (fullscreen) -->
 <div id="panel-cultos" class="panel">
-  <div class="section-count" id="cultos-count"></div>
-  <div id="lista-cultos"></div>
-  <hr class="divider">
-  <div class="section-title">Adicionar novo culto</div>
-  <div class="form-row">
-    <label class="form-label">Data</label>
-    <input type="text" class="form-input" id="culto-data" placeholder="ex: 15/12/2024">
-  </div>
-  <div class="form-row">
-    <label class="form-label">Ministra(o)</label>
-    <input type="text" class="form-input" id="culto-ministra">
-  </div>
-  <div class="section-count" style="margin-top:18px;margin-bottom:8px;">Músicas deste culto</div>
-  <div id="culto-pendente-lista"></div>
-  <button class="add-song-btn" onclick="abrirPicker()">+ Adicionar música ao culto</button>
-  <button class="btn-primary" id="btn-salvar-culto" onclick="salvarCulto()">Salvar culto na planilha</button>
+  <div id="c-bg"></div>
+  <div id="c-bg-blur"></div>
+  <div id="c-bg-overlay"></div>
 </div>
 
 <!-- PAINEL: ENSAIO -->
@@ -985,7 +1098,68 @@ body::after {
 
 </div><!-- /content -->
 
-<!-- ENSAIO FULLSCREEN -->
+<!-- CULTOS: fixed UI elements (shown when cultos tab is active) -->
+<div id="c-stats">
+  <div class="c-seg"><div class="c-sv" id="c-sv-tot">—</div><div class="c-sl">cultos</div></div>
+  <div class="c-seg"><div class="c-sv" id="c-sv-uniq">—</div><div class="c-sl">músicas únicas</div></div>
+  <div class="c-seg"><div class="c-sv" id="c-sv-lead">—</div><div class="c-sl">ministra(o)s</div></div>
+  <div class="c-seg btn" onclick="cAbrirTopMes()"><div class="c-sv" id="c-sv-top" style="font-size:11px;line-height:1.3;text-align:center;">—</div><div class="c-sl">top mês ›</div></div>
+</div>
+<div id="c-months"></div>
+<div id="c-stage"><div id="c-cards"></div></div>
+<div id="c-info">
+  <div id="c-pos"></div>
+  <div id="c-dots"></div>
+</div>
+<div id="c-song-stage">
+  <div id="c-sv"></div>
+  <div id="c-snav">
+    <button class="c-sarr" id="c-prev" onclick="cNavSong(-1)">‹</button>
+    <div id="c-sdots"></div>
+    <button class="c-sarr" id="c-next" onclick="cNavSong(1)">›</button>
+  </div>
+</div>
+<button id="c-fab" onclick="cToggleSheet()">+</button>
+
+<!-- Cultos: Add sheet -->
+<div id="c-sh-ov" onclick="if(event.target===this)cFecharSheet()"></div>
+<div id="c-sh">
+  <div class="c-sh-hand"></div>
+  <div class="c-sh-hdr">
+    <div class="c-sh-title">Novo culto</div>
+    <div class="c-sh-sub">Preencha e salve na planilha</div>
+  </div>
+  <div class="c-sh-body">
+    <div class="form-row">
+      <label class="form-label">Data</label>
+      <input type="text" class="form-input" id="c-data" placeholder="ex: 27/04/2025">
+    </div>
+    <div class="form-row">
+      <label class="form-label">Ministra(o)</label>
+      <input type="text" class="form-input" id="c-ministra" placeholder="Nome">
+    </div>
+    <div class="form-row">
+      <label class="form-label">Músicas <span id="c-pend-ct" style="font-weight:400;text-transform:none;letter-spacing:0;color:rgba(255,255,255,0.28);font-size:11px;"></span></label>
+      <div id="c-pend-list"></div>
+      <button class="c-add-s" onclick="abrirPicker()">+ Adicionar música</button>
+    </div>
+    <button class="btn-primary" id="c-btn-save" onclick="salvarCulto()">Salvar culto na planilha</button>
+  </div>
+</div>
+
+<!-- Cultos: Top mês sheet -->
+<div id="c-tm-ov" onclick="if(event.target===this)cFecharTopMes()">
+  <div id="c-tm-sh">
+    <div class="c-tm-hand"></div>
+    <div class="c-tm-lbl">Este mês</div>
+    <div class="c-tm-title" id="c-tm-title">—</div>
+    <div class="c-tm-sub" id="c-tm-sub"></div>
+    <div id="c-tm-rows"></div>
+    <button class="c-tm-close" onclick="cFecharTopMes()">Fechar</button>
+  </div>
+</div>
+
+
 <div id="ensaio-fs">
   <iframe id="ensaio-iframe" allowfullscreen></iframe>
   <div id="ensaio-no-cifra-msg" class="ensaio-no-cifra" style="display:none;"></div>
@@ -1076,6 +1250,19 @@ let cultos = [];
 let cultoPendente = [];
 let filtroNuncaUsadas = false;
 let ordenarPorRecente = false;
+
+// ── CULTOS STATE ──
+let cMonths = [], cMIdx = 0, cCIdx = 0, cSIdx = 0;
+let cAudio = null, cAudioBtn = null;
+const C_PALETTES = [
+  ['#0d1228','#1a2a5e'],['#1a0d28','#3a1a5e'],['#0a1e16','#1a3d2c'],
+  ['#0d1a0a','#1f3d10'],['#1a1300','#3a2c00'],['#1a0c00','#3d2000'],
+  ['#1a0012','#3a0028'],['#001a1a','#003838'],['#141200','#2e2900'],
+  ['#1a0707','#3a1212'],['#0a0c1a','#1a1e3c'],['#00101e','#001e40'],
+];
+const C_MESES   = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+const C_MESES_S = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+const C_DIAS    = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
 
 async function carregarDados() {
   try {
@@ -1533,103 +1720,328 @@ document.addEventListener('DOMContentLoaded',()=>{
 
 
 function renderCultos() {
-  document.getElementById('cultos-count').textContent=`${cultos.length} ${cultos.length===1?'culto':'cultos'}`;
-  const el=document.getElementById('lista-cultos');
-  if (!cultos.length) { el.innerHTML='<div class="empty-state">Nenhum culto registrado ainda.</div>'; return; }
-  el.innerHTML = cultos.map((c,i)=>`
-    <div class="culto-card">
-      <div class="culto-header" onclick="toggleCulto(${i})">
-        <div>
-          <div class="culto-date">${esc(c.data)}</div>
-          <div class="culto-meta">${c.musicas.length} ${c.musicas.length===1?'música':'músicas'} • ${esc(c.ministra)||'—'}</div>
+  cMonths = cBuildMonths(cultos);
+  cRenderStats();
+}
+
+// ── CULTOS: BUILD DATA ──
+function cBuildMonths(cultos) {
+  const map = {};
+  cultos.forEach(c => {
+    const d = parseDataBR(c.data);
+    const k = `${d.getFullYear()}_${d.getMonth()}`;
+    if (!map[k]) map[k] = { year: d.getFullYear(), month: d.getMonth(), cultos: [] };
+    map[k].cultos.push(c);
+  });
+  return Object.values(map).sort((a,b) => b.year - a.year || b.month - a.month);
+}
+
+function cRenderStats() {
+  document.getElementById('c-sv-tot').textContent = cultos.length;
+  const ss = new Set(cultos.flatMap(c => c.musicas.map(m => m.nome.toLowerCase())));
+  document.getElementById('c-sv-uniq').textContent = ss.size;
+  const ls = new Set(cultos.map(c => (c.ministra||'').toLowerCase()).filter(Boolean));
+  document.getElementById('c-sv-lead').textContent = ls.size || '—';
+  const now = new Date();
+  const top = cGetTopMes(now.getMonth(), now.getFullYear());
+  const topEl = document.getElementById('c-sv-top');
+  topEl.textContent = top.length ? (top[0].nome.length > 13 ? top[0].nome.slice(0,12)+'…' : top[0].nome) : '—';
+}
+
+function cGetTopMes(mes, ano) {
+  const freq = {};
+  cultos.forEach(c => {
+    const d = parseDataBR(c.data);
+    if (d.getMonth() !== mes || d.getFullYear() !== ano) return;
+    c.musicas.forEach(m => { const k = m.nome.toLowerCase(); freq[k] = (freq[k]||0)+1; });
+  });
+  return Object.entries(freq).sort((a,b) => b[1]-a[1])
+    .map(([k,cnt]) => ({ nome: cultos.flatMap(c=>c.musicas).find(m=>m.nome.toLowerCase()===k)?.nome||k, cnt }));
+}
+
+// ── CULTOS: INIT VIEW ──
+function cInitView() {
+  if (!cMonths.length) return;
+  // find current/most recent month
+  const now = new Date();
+  const idx = cMonths.findIndex(m => m.month === now.getMonth() && m.year === now.getFullYear());
+  cMIdx = idx >= 0 ? idx : 0;
+  cCIdx = 0; cSIdx = 0;
+  cRenderMonths();
+  cRenderAll('none');
+}
+
+function cRenderMonths() {
+  const el = document.getElementById('c-months');
+  el.innerHTML = cMonths.map((m,i) =>
+    `<button class="c-mpill${i===cMIdx?' active':''}" onclick="cSelectMonth(${i})">${C_MESES_S[m.month]} ${m.year}</button>`
+  ).join('');
+  cScrollMonth(cMIdx);
+}
+
+function cScrollMonth(idx) {
+  const strip = document.getElementById('c-months');
+  const pill  = strip.children[idx];
+  if (!pill) return;
+  strip.scrollLeft = pill.offsetLeft - strip.offsetWidth/2 + pill.offsetWidth/2;
+}
+
+function cUpdateBg() {
+  if (!cMonths.length) return;
+  const [c1, c2] = C_PALETTES[cMonths[cMIdx].month];
+  document.getElementById('c-bg').style.background = `linear-gradient(160deg,${c1} 0%,#0d0d0d 100%)`;
+  document.getElementById('c-bg-blur').style.background = `radial-gradient(ellipse at 30% 30%,${c2}88 0%,transparent 70%)`;
+}
+
+function cRenderAll(dir) {
+  cUpdateBg();
+  cRenderCarousel(dir);
+  cRenderInfo();
+  cRenderSongCard('ef');
+  cRenderSongDots();
+}
+
+function cRenderCarousel(dir) {
+  const cs = cMonths[cMIdx]?.cultos || [];
+  const total = cs.length;
+  const container = document.getElementById('c-cards');
+  container.innerHTML = '';
+  [-2,-1,0,1,2].forEach(offset => {
+    if (!total) return;
+    const idx = (cCIdx + offset + total) % total;
+    const c = cs[idx];
+    const d = parseDataBR(c.data);
+    const pos = offset===0?'pos-c':offset===-1?'pos-l':offset===1?'pos-r':offset<-1?'pos-hl':'pos-hr';
+    const div = document.createElement('div');
+    div.className = `cc ${pos}`;
+    div.innerHTML = `<div class="cc-tint"></div>
+      <div class="cc-body">
+        <div class="cc-top">
+          <div class="cc-day">${d.getDate()}</div>
+          <div class="cc-meta">
+            <div class="cc-dow">${C_DIAS[d.getDay()]}</div>
+            <div class="cc-myr">${C_MESES_S[d.getMonth()]} ${d.getFullYear()}</div>
+          </div>
         </div>
-        <div class="culto-toggle" id="culto-toggle-${i}">▼</div>
-      </div>
-      <div class="culto-songs" id="culto-songs-${i}">
-        ${c.musicas.map((m,j)=>{
-          const musicaInfo = musicas.find(mu => mu.nome.toLowerCase() === m.nome.toLowerCase());
-          const links = [];
-          
-          // Suporte a múltiplas cifras com regex
-          if (musicaInfo && musicaInfo.cifra) {
-            const cifras = musicaInfo.cifra.match(/https?:\/\/[^\s]+/g) || [];
-            if (cifras.length > 0) {
-              const urlsEscaped = cifras.map(u => `'${u.replace(/'/g,"\\'")}'`).join(',');
-              links.push(`<button class="link-btn" onclick="abrirMultiplosCifras([${urlsEscaped}])">Cifra${cifras.length > 1 ? 's' : ''}</button>`);
-            }
-          }
-          if (musicaInfo && musicaInfo.midia) {
-            const midias = musicaInfo.midia.match(/https?:\/\/[^\s]+/g) || [];
-            midias.forEach(url => {
-              if (url.includes('spotify.com')) {
-                links.push(`<a href="${esc(url)}" class="link-btn-icon link-btn-spotify" target="_blank" rel="noopener" title="Spotify">${SVG_SPOTIFY}</a>`);
-              } else if (url.includes('youtu')) {
-                links.push(`<a href="${esc(url)}" class="link-btn-icon link-btn-youtube" target="_blank" rel="noopener" title="YouTube">${SVG_YOUTUBE}</a>`);
-              }
-            });
-          }
-          if (m.mp3) links.push(`<a href="${esc(m.mp3)}" class="link-btn" target="_blank" rel="noopener">MP3</a>`);
-          const linksHTML = links.length ? `<div class="culto-song-links">${links.join('')}</div>` : '';
-          return `
-            <div class="culto-song-item">
-              <div><span class="culto-song-num">${j+1}.</span><span class="culto-song-name">${esc(m.nome)}</span></div>
-              ${linksHTML}
-            </div>`;
-        }).join('')}
-      </div>
+        <div>
+          <div class="cc-leader">${esc(c.ministra||'—')}</div>
+          <div class="cc-count">${c.musicas.length} músicas</div>
+        </div>
+      </div>`;
+    if (offset !== 0) div.addEventListener('click', () => cNavCulto(offset < 0 ? -1 : 1));
+    container.appendChild(div);
+  });
+}
+
+function cRenderInfo() {
+  const cs = cMonths[cMIdx]?.cultos || [];
+  const total = cs.length;
+  document.getElementById('c-pos').textContent = total > 1 ? `culto ${cCIdx+1} de ${total}` : '';
+  const el = document.getElementById('c-dots');
+  el.innerHTML = '';
+  if (total <= 1) return;
+  const show = Math.min(total, 10);
+  let start = Math.max(0, cCIdx - Math.floor(show/2));
+  let end   = Math.min(total, start + show);
+  if (end - start < show) start = Math.max(0, end - show);
+  for (let i = start; i < end; i++) {
+    const d = document.createElement('div');
+    d.className = `c-dot${i===cCIdx?' active':''}`;
+    d.addEventListener('click', () => cSelectCulto(i));
+    el.appendChild(d);
+  }
+}
+
+function cRenderSongCard(animIn) {
+  const cs = cMonths[cMIdx]?.cultos || [];
+  if (!cs.length) return;
+  const songs = cs[cCIdx]?.musicas || [];
+  if (!songs.length) return;
+  const viewport = document.getElementById('c-sv');
+  const old = viewport.querySelector('.csc');
+  const m = songs[cSIdx];
+  const info = musicas.find(x => x.nome.toLowerCase() === m.nome.toLowerCase());
+  const audioUrl = cDriveUrl(m.mp3);
+
+  const card = document.createElement('div');
+  card.className = `csc ${animIn}`;
+  card.innerHTML = `
+    <div>
+      <div class="csc-lbl">música ${cSIdx+1} de ${songs.length}</div>
+      <div class="csc-num">${String(cSIdx+1).padStart(2,'0')}</div>
+      <div class="csc-name">${esc(m.nome)}</div>
+      ${info?.artista ? `<div class="csc-artist">${esc(info.artista)}</div>` : ''}
+    </div>
+    <div class="csc-bot">
+      ${m.tom ? `<span class="csc-key">${esc(m.tom)}</span>` : '<span></span>'}
+      ${audioUrl ? `<button class="csc-play" onclick="cToggleAudio(this,'${esc(audioUrl)}')">
+        <svg viewBox="0 0 13 13" fill="currentColor"><polygon points="2,1 12,6.5 2,12"/></svg>
+      </button>` : ''}
+    </div>`;
+
+  if (old) {
+    const exitCls = animIn==='er'?'xr':animIn==='el'?'xl':'xl';
+    old.classList.add(exitCls);
+    old.addEventListener('animationend', () => old.remove(), {once:true});
+  }
+  viewport.appendChild(card);
+  cUpdateSongNav();
+}
+
+function cRenderSongDots() {
+  const total = cMonths[cMIdx]?.cultos?.[cCIdx]?.musicas?.length || 0;
+  const el = document.getElementById('c-sdots');
+  el.innerHTML = '';
+  for (let i = 0; i < total; i++) {
+    const d = document.createElement('div');
+    d.className = `c-sdot${i===cSIdx?' active':''}`;
+    d.addEventListener('click', () => cSelectSong(i));
+    el.appendChild(d);
+  }
+}
+
+function cUpdateSongNav() {
+  const total = cMonths[cMIdx]?.cultos?.[cCIdx]?.musicas?.length || 0;
+  document.getElementById('c-prev').disabled = cSIdx === 0;
+  document.getElementById('c-next').disabled = cSIdx === total - 1;
+}
+
+// ── CULTOS: NAVIGATION ──
+function cSelectMonth(idx) {
+  if (idx === cMIdx) return;
+  const dir = idx > cMIdx ? 1 : -1;
+  cMIdx = idx; cCIdx = 0; cSIdx = 0;
+  cStopAudio();
+  document.querySelectorAll('.c-mpill').forEach((p,i) => p.classList.toggle('active', i===idx));
+  cScrollMonth(idx);
+  cRenderAll(dir);
+}
+
+function cNavCulto(dir) {
+  const cs = cMonths[cMIdx]?.cultos || [];
+  const newIdx = cCIdx + dir;
+  if (newIdx < 0 || newIdx >= cs.length) return;
+  cCIdx = newIdx; cSIdx = 0;
+  cStopAudio();
+  cRenderCarousel(dir);
+  cRenderInfo();
+  cRenderSongCard('ef');
+  cRenderSongDots();
+}
+
+function cSelectCulto(idx) {
+  if (idx === cCIdx) return;
+  const dir = idx > cCIdx ? 1 : -1;
+  cCIdx = idx; cSIdx = 0;
+  cStopAudio();
+  cRenderCarousel(dir);
+  cRenderInfo();
+  cRenderSongCard('ef');
+  cRenderSongDots();
+}
+
+function cNavSong(dir) {
+  const total = cMonths[cMIdx]?.cultos?.[cCIdx]?.musicas?.length || 0;
+  const n = cSIdx + dir;
+  if (n < 0 || n >= total) return;
+  cSIdx = n;
+  cRenderSongCard(dir > 0 ? 'er' : 'el');
+  cRenderSongDots();
+}
+
+function cSelectSong(idx) {
+  if (idx === cSIdx) return;
+  const dir = idx > cSIdx ? 1 : -1;
+  cSIdx = idx;
+  cRenderSongCard(dir > 0 ? 'er' : 'el');
+  cRenderSongDots();
+}
+
+// ── CULTOS: AUDIO ──
+function cDriveUrl(url) {
+  if (!url) return null;
+  const m = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
+  if (m) return `https://drive.google.com/uc?export=download&id=${m[1]}`;
+  return url || null;
+}
+
+function cToggleAudio(btn, url) {
+  if (cAudio && cAudioBtn === btn) { cStopAudio(); return; }
+  cStopAudio();
+  const a = new Audio(url);
+  a.play().catch(() => toast('Não foi possível tocar o áudio.', true));
+  btn.classList.add('playing');
+  btn.innerHTML = '<svg viewBox="0 0 13 13" fill="currentColor"><rect x="1.5" y="1" width="3" height="11"/><rect x="8.5" y="1" width="3" height="11"/></svg>';
+  cAudio = a; cAudioBtn = btn;
+  a.onended = () => { btn.classList.remove('playing'); btn.innerHTML='<svg viewBox="0 0 13 13" fill="currentColor"><polygon points="2,1 12,6.5 2,12"/></svg>'; cAudio=null; cAudioBtn=null; };
+}
+
+function cStopAudio() {
+  if (cAudio) { cAudio.pause(); cAudio = null; }
+  if (cAudioBtn) { cAudioBtn.classList.remove('playing'); cAudioBtn.innerHTML='<svg viewBox="0 0 13 13" fill="currentColor"><polygon points="2,1 12,6.5 2,12"/></svg>'; cAudioBtn = null; }
+}
+
+// ── CULTOS: TOUCH/KEYBOARD ──
+let cTx0 = 0, cTy0 = 0, cTZone = null;
+document.addEventListener('touchstart', e => {
+  if (!document.getElementById('panel-cultos').classList.contains('active')) return;
+  cTx0 = e.touches[0].clientX; cTy0 = e.touches[0].clientY;
+  cTZone = e.target.closest('#c-stage,#c-info') ? 'culto' : e.target.closest('#c-song-stage') ? 'song' : null;
+}, {passive:true});
+document.addEventListener('touchend', e => {
+  if (!cTZone) return;
+  const dx = e.changedTouches[0].clientX - cTx0, dy = e.changedTouches[0].clientY - cTy0;
+  if (Math.abs(dx) < Math.abs(dy) || Math.abs(dx) < 38) { cTZone = null; return; }
+  if (cTZone === 'culto') cNavCulto(dx < 0 ? 1 : -1);
+  else cNavSong(dx < 0 ? 1 : -1);
+  cTZone = null;
+}, {passive:true});
+
+// ── CULTOS: ADD SHEET ──
+function cToggleSheet() {
+  const open = document.getElementById('c-sh').classList.contains('open');
+  open ? cFecharSheet() : cAbrirSheet();
+}
+function cAbrirSheet() {
+  document.getElementById('c-sh').classList.add('open');
+  document.getElementById('c-sh-ov').classList.add('open');
+  document.getElementById('c-fab').classList.add('open');
+  cRenderPendente();
+}
+function cFecharSheet() {
+  document.getElementById('c-sh').classList.remove('open');
+  document.getElementById('c-sh-ov').classList.remove('open');
+  document.getElementById('c-fab').classList.remove('open');
+}
+
+function cRenderPendente() {
+  const el = document.getElementById('c-pend-list');
+  document.getElementById('c-pend-ct').textContent = cultoPendente.length ? `(${cultoPendente.length})` : '';
+  if (!cultoPendente.length) { el.innerHTML = '<div style="color:rgba(255,255,255,.22);font-size:12px;padding:4px 0;">Nenhuma música adicionada.</div>'; return; }
+  el.innerHTML = cultoPendente.map((m,i) => `
+    <div class="c-pend-item">
+      <span class="c-pend-num">${i+1}.</span>
+      <span class="c-pend-name">${esc(m.nome)}</span>
+      <input class="c-pend-tom" placeholder="Tom" value="${esc(m.tom)}" oninput="cultoPendente[${i}].tom=this.value">
+      <button class="c-pend-rm" onclick="cultoPendente.splice(${i},1);cRenderPendente()">×</button>
     </div>`).join('');
 }
 
-function toggleCulto(i) {
-  const songs = document.getElementById('culto-songs-'+i);
-  const toggle = document.getElementById('culto-toggle-'+i);
-  songs.classList.toggle('open');
-  toggle.classList.toggle('open');
+// ── CULTOS: TOP MÊS ──
+function cAbrirTopMes() {
+  const now = new Date();
+  const top = cGetTopMes(now.getMonth(), now.getFullYear());
+  document.getElementById('c-tm-title').textContent = C_MESES[now.getMonth()];
+  document.getElementById('c-tm-sub').textContent = top.length ? `${top.length} músicas tocadas` : 'Nenhum culto este mês.';
+  document.getElementById('c-tm-rows').innerHTML = top.slice(0,5).map((t,i) =>
+    `<div class="c-tm-row"><span class="c-tm-rank">${i+1}</span><span class="c-tm-name">${esc(t.nome)}</span><span class="c-tm-cnt">${t.cnt}×</span></div>`
+  ).join('');
+  document.getElementById('c-tm-ov').classList.add('open');
 }
+function cFecharTopMes() { document.getElementById('c-tm-ov').classList.remove('open'); }
 
 function renderCultoPendente() {
-  const el=document.getElementById('culto-pendente-lista');
-  if (!cultoPendente.length) { el.innerHTML='<div class="empty-state" style="padding:20px 0;">Nenhuma música adicionada ainda.</div>'; return; }
-  el.innerHTML = cultoPendente.map((m,i)=>`
-    <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:11px 14px;display:flex;align-items:center;gap:10px;margin-bottom:7px;">
-      <div style="font-size:12px;color:var(--muted);width:20px;flex-shrink:0;">${i+1}.</div>
-      <div style="flex:1;min-width:0;">
-        <div style="font-size:14px;font-weight:500;">${esc(m.nome)}</div>
-      </div>
-      <input style="font-size:12px;color:var(--muted);background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:2px 6px;width:52px;text-align:center;font-family:'DM Sans',sans-serif;outline:none;flex-shrink:0;" placeholder="Tom" value="${esc(m.tom||'')}" oninput="cultoPendente[${i}].tom=this.value">
-      <button style="background:none;border:none;cursor:pointer;color:var(--muted);font-size:20px;line-height:1;padding:2px 4px;flex-shrink:0;" onclick="cultoPendente.splice(${i},1);renderCultoPendente()">×</button>
-    </div>`).join('');
-}
-
-function abrirPicker() {
-  document.getElementById('picker-overlay').classList.add('open');
-  document.getElementById('picker-search').value='';
-  renderPicker();
-  setTimeout(()=>document.getElementById('picker-search').focus(),100);
-}
-
-function fecharPicker() {
-  document.getElementById('picker-overlay').classList.remove('open');
-}
-
-function fecharPickerSeFora(e) {
-  if(e.target===document.getElementById('picker-overlay')) fecharPicker();
-}
-
-function renderPicker() {
-  const q=document.getElementById('picker-search').value.toLowerCase();
-  const presentes=cultoPendente.map(m=>m.nome.toLowerCase());
-  const lista=musicas.filter(m=>!presentes.includes(m.nome.toLowerCase())&&(m.nome.toLowerCase().includes(q)||m.artista.toLowerCase().includes(q)));
-  const el=document.getElementById('picker-list');
-  if (!lista.length) { el.innerHTML='<div class="empty-state" style="padding:20px 0;">Nenhuma música encontrada.</div>'; return; }
-  el.innerHTML=lista.map(m=>`
-    <div class="picker-item" onclick="selecionarMusica('${esc(m.nome).replace(/'/g,"\\'")}')">
-      <div>
-        <div class="picker-item-name">${esc(m.nome)}</div>
-        <div class="picker-item-artist">${esc(m.artista)||'—'}</div>
-      </div>
-      <div class="picker-item-badge">${m.usos===0?'nunca':m.usos+'x'}</div>
-    </div>`).join('');
+  cRenderPendente();
 }
 
 function selecionarMusica(nome) {
@@ -1637,7 +2049,7 @@ function selecionarMusica(nome) {
   if (!m) return;
   if (!cultoPendente.find(x=>x.nome===nome)) {
     cultoPendente.push({nome:m.nome,tom:''});
-    renderCultoPendente();
+    cRenderPendente();
   }
   fecharPicker();
 }
@@ -1645,20 +2057,20 @@ function selecionarMusica(nome) {
 
 
 async function salvarCulto() {
-  const data = document.getElementById('culto-data').value.trim();
-  const ministra = document.getElementById('culto-ministra').value.trim();
+  const data = document.getElementById('c-data').value.trim();
+  const ministra = document.getElementById('c-ministra').value.trim();
   if (!data) { toast('Data é obrigatória.',true); return; }
-  if (!cultoPendente.length) { toast('Adicione pelo menos uma música ao culto.',true); return; }
-  const btn = document.getElementById('btn-salvar-culto');
+  if (!cultoPendente.length) { toast('Adicione pelo menos uma música.',true); return; }
+  const btn = document.getElementById('c-btn-save');
   btn.disabled=true; btn.textContent='Salvando…';
   const ok = await chamarScript({acao:'adicionarCulto',data,ministra,musicas:cultoPendente});
   btn.disabled=false; btn.textContent='Salvar culto na planilha';
   if (ok) {
     toast('Culto salvo com sucesso!');
-    document.getElementById('culto-data').value='';
-    document.getElementById('culto-ministra').value='';
+    document.getElementById('c-data').value='';
+    document.getElementById('c-ministra').value='';
     cultoPendente = [];
-    renderCultoPendente();
+    cFecharSheet();
     setTimeout(()=>location.reload(),1500);
   }
 }
@@ -1748,16 +2160,23 @@ function showTab(id, btn) {
   document.getElementById('panel-' + id).classList.add('active');
   if (btn) btn.classList.add('active');
   const otherNav = document.getElementById('other-nav');
+  const isCultos = id === 'cultos';
+  // show/hide cultos fixed UI
+  ['c-stats','c-months','c-stage','c-info','c-song-stage'].forEach(elId => {
+    document.getElementById(elId).classList.toggle('vis', isCultos);
+  });
+  document.getElementById('c-fab').classList.toggle('vis', isCultos);
   if (id === 'repertorio') {
     otherNav.classList.remove('visible');
     cfEsconderNav();
   } else {
     otherNav.classList.add('visible');
-    // Marca o pill correto na nav dos outros painéis
     document.querySelectorAll('.other-nav-pill').forEach(p => {
       if (p.textContent.toLowerCase().includes(id==='cultos'?'culto':'ensaio')) p.classList.add('active');
     });
     if (id === 'ensaio') renderEnsaioTab();
+    if (id === 'cultos' && cMonths.length) cInitView();
+    else if (id === 'cultos' && !cMonths.length) cInitView();
   }
 }
 
