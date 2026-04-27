@@ -120,7 +120,7 @@ body::after {
 /* Nav para painéis não-músicas */
 #other-nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-  display: none;
+  display: flex;
   align-items: center; justify-content: space-between;
   padding: 12px 20px;
   background: rgba(0,0,0,0.4);
@@ -128,7 +128,6 @@ body::after {
   -webkit-backdrop-filter: blur(16px);
   border-bottom: 0.5px solid rgba(255,255,255,0.08);
 }
-#other-nav.visible { display: flex; }
 .other-nav-title { font-family: 'Instrument Serif', serif; font-size: 17px; color: rgba(255,255,255,0.9); }
 .other-nav-pills { display: flex; gap: 4px; }
 .other-nav-pill {
@@ -142,7 +141,6 @@ body::after {
 .other-nav-pill.active { background: rgba(255,255,255,0.18); color: #fff; border-color: rgba(255,255,255,0.35); }
 .other-nav-pill:hover:not(.active) { background: rgba(255,255,255,0.12); color: rgba(255,255,255,0.85); }
 
-#panel-ensaio { padding: 72px 16px 20px; }
 
 /* ===================== CULTOS FULLSCREEN ===================== */
 #panel-cultos { position: fixed; inset: 0; z-index: 1; overflow: hidden; padding: 0; }
@@ -341,6 +339,7 @@ body::after {
   align-items: center;
   justify-content: center;
   pointer-events: none;
+  margin-top: 34px; /* metade da altura do nav para não esconder atrás dele */
 }
 
 .cf-card {
@@ -766,7 +765,7 @@ body::after {
 /* ===================== ENSAIO ===================== */
 
 /* Painel ensaio */
-#panel-ensaio { display: none; padding-top: 24px; }
+#panel-ensaio { display: none; padding-top: 68px; padding-left: 16px; padding-right: 16px; padding-bottom: 20px; }
 #panel-ensaio.active { display: block; }
 .ensaio-choice-row { display: flex; gap: 12px; margin-bottom: 20px; }
 .ensaio-choice-card {
@@ -990,7 +989,7 @@ body::after {
 <nav id="other-nav">
   <span class="other-nav-title">Rive-Sud</span>
   <div class="other-nav-pills">
-    <button class="other-nav-pill" onclick="showTab('repertorio',this)">Músicas</button>
+    <button class="other-nav-pill active" onclick="showTab('repertorio',this)">Músicas</button>
     <button class="other-nav-pill" onclick="showTab('cultos',this)">Cultos</button>
     <button class="other-nav-pill" onclick="showTab('ensaio',this)">🎸 Ensaio</button>
   </div>
@@ -1271,9 +1270,11 @@ async function carregarDados() {
     cultos = parseCSVCultos(c);
     renderMusicas();
     renderCultos();
-    document.getElementById('loading-badge').style.display='none';
+    const lb = document.getElementById('loading-badge');
+    if (lb) lb.style.display='none';
   } catch(e) {
-    document.getElementById('loading-badge').textContent='Erro ao carregar';
+    const lb = document.getElementById('loading-badge');
+    if (lb) lb.textContent='Erro ao carregar';
     toast('Erro ao carregar planilha. Tente novamente.', true);
   }
 }
@@ -1321,7 +1322,17 @@ function parseCSVLine(ln) {
 function parseDataBR(d) {
   const p=d.split('/');
   if (p.length!==3) return new Date(0);
-  return new Date(p[2],p[1]-1,p[0]);
+  // Se o primeiro campo > 12, é dd/mm/yyyy; caso contrário detectar pelo tamanho do ano
+  const a = parseInt(p[0]), b = parseInt(p[1]), c = parseInt(p[2]);
+  if (p[2].length === 4) {
+    // Terceiro campo é o ano (dd/mm/yyyy ou m/d/yyyy)
+    if (a > 12) return new Date(c, b-1, a); // dd/mm/yyyy
+    if (b > 12) return new Date(c, a-1, b); // m/d/yyyy
+    // Ambiguidade: assume dd/mm/yyyy (padrão BR)
+    return new Date(c, b-1, a);
+  }
+  // Fallback: primeiro campo é o ano (yyyy/mm/dd)
+  return new Date(a, b-1, c);
 }
 
 function toggleFiltro() {
@@ -1960,8 +1971,13 @@ function cSelectSong(idx) {
 // ── CULTOS: AUDIO ──
 function cDriveUrl(url) {
   if (!url) return null;
+  url = url.trim();
+  // Se já é uma URL de download/stream do Drive, usar direto
+  if (url.includes('uc?export=download') || url.includes('uc?export=open')) return url;
+  // Extrair file ID de links compartilhados do Drive
   const m = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
-  if (m) return `https://drive.google.com/uc?export=download&id=${m[1]}`;
+  if (m) return `https://docs.google.com/uc?export=open&id=${m[1]}`;
+  // URL direta — retornar como está
   return url || null;
 }
 
@@ -2042,6 +2058,37 @@ function cFecharTopMes() { document.getElementById('c-tm-ov').classList.remove('
 
 function renderCultoPendente() {
   cRenderPendente();
+}
+
+function abrirPicker() {
+  document.getElementById('picker-overlay').classList.add('open');
+  document.getElementById('picker-search').value='';
+  renderPicker();
+  setTimeout(()=>document.getElementById('picker-search').focus(),100);
+}
+
+function fecharPicker() {
+  document.getElementById('picker-overlay').classList.remove('open');
+}
+
+function fecharPickerSeFora(e) {
+  if(e.target===document.getElementById('picker-overlay')) fecharPicker();
+}
+
+function renderPicker() {
+  const q=document.getElementById('picker-search').value.toLowerCase();
+  const presentes=cultoPendente.map(m=>m.nome.toLowerCase());
+  const lista=musicas.filter(m=>!presentes.includes(m.nome.toLowerCase())&&(m.nome.toLowerCase().includes(q)||m.artista.toLowerCase().includes(q)));
+  const el=document.getElementById('picker-list');
+  if (!lista.length) { el.innerHTML='<div class="empty-state" style="padding:20px 0;">Nenhuma música encontrada.</div>'; return; }
+  el.innerHTML=lista.map(m=>`
+    <div class="picker-item" onclick="selecionarMusica('${esc(m.nome).replace(/'/g,"\\\'")}')">
+      <div>
+        <div class="picker-item-name">${esc(m.nome)}</div>
+        <div class="picker-item-artist">${esc(m.artista)||'—'}</div>
+      </div>
+      <div class="picker-item-badge">${m.usos===0?'nunca':m.usos+'x'}</div>
+    </div>`).join('');
 }
 
 function selecionarMusica(nome) {
@@ -2159,7 +2206,13 @@ function showTab(id, btn) {
   document.querySelectorAll('.cf-nav-pill, .other-nav-pill').forEach(t => t.classList.remove('active'));
   document.getElementById('panel-' + id).classList.add('active');
   if (btn) btn.classList.add('active');
-  const otherNav = document.getElementById('other-nav');
+  // sync other-nav pills
+  document.querySelectorAll('.other-nav-pill').forEach(p => {
+    const txt = p.textContent.toLowerCase();
+    if ((id==='repertorio' && txt.includes('mús')) ||
+        (id==='cultos'     && txt.includes('culto')) ||
+        (id==='ensaio'     && txt.includes('ensaio'))) p.classList.add('active');
+  });
   const isCultos = id === 'cultos';
   // show/hide cultos fixed UI
   ['c-stats','c-months','c-stage','c-info','c-song-stage'].forEach(elId => {
@@ -2167,16 +2220,10 @@ function showTab(id, btn) {
   });
   document.getElementById('c-fab').classList.toggle('vis', isCultos);
   if (id === 'repertorio') {
-    otherNav.classList.remove('visible');
     cfEsconderNav();
   } else {
-    otherNav.classList.add('visible');
-    document.querySelectorAll('.other-nav-pill').forEach(p => {
-      if (p.textContent.toLowerCase().includes(id==='cultos'?'culto':'ensaio')) p.classList.add('active');
-    });
     if (id === 'ensaio') renderEnsaioTab();
-    if (id === 'cultos' && cMonths.length) cInitView();
-    else if (id === 'cultos' && !cMonths.length) cInitView();
+    if (id === 'cultos') cInitView();
   }
 }
 
