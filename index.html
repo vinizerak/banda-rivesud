@@ -150,7 +150,7 @@ body::after {
 #c-bg-overlay { position: absolute; inset: 0; background: linear-gradient(180deg,rgba(0,0,0,0.5) 0%,rgba(0,0,0,0.1) 25%,rgba(0,0,0,0.15) 55%,rgba(0,0,0,0.75) 100%); z-index: 2; pointer-events: none; }
 
 /* stats strip */
-#c-stats { position: fixed; top: 56px; left: 0; right: 0; z-index: 110; display: none; justify-content: center; padding: 6px 14px; gap: 0; }
+#c-stats { position: fixed; top: 68px; left: 0; right: 0; z-index: 110; display: none; justify-content: center; padding: 6px 14px; gap: 0; }
 #c-stats.vis { display: flex; }
 .c-seg { flex: 1; max-width: 96px; text-align: center; padding: 6px 6px; background: rgba(0,0,0,0.32); backdrop-filter: blur(14px); border: 0.5px solid rgba(255,255,255,0.09); border-right: none; }
 .c-seg:first-child { border-radius: 10px 0 0 10px; }
@@ -168,13 +168,13 @@ body::after {
 .c-mpill.active { background: rgba(255,255,255,0.2); color: #fff; border-color: rgba(255,255,255,0.38); }
 
 /* culto carousel */
-#c-stage { position: fixed; left: 0; right: 0; z-index: 20; top: 146px; height: min(162px,44vw); display: none; align-items: center; justify-content: center; }
+#c-stage { position: fixed; left: 0; right: 0; z-index: 20; top: 148px; height: min(162px,44vw); display: none; align-items: center; justify-content: center; overflow: visible; }
 #c-stage.vis { display: flex; }
-#c-cards { position: relative; width: 100%; height: 100%; }
+#c-cards { position: relative; width: 100%; height: 100%; overflow: visible; }
 .cc { position: absolute; top: 0; left: 50%; margin-left: calc(min(240px,68vw) / -2); width: min(240px,68vw); height: min(162px,44vw); border-radius: 20px; overflow: hidden; cursor: pointer; transition: transform 0.42s cubic-bezier(0.25,0.46,0.45,0.94), filter 0.42s ease, opacity 0.42s ease; background: rgba(255,255,255,0.08); border: 0.5px solid rgba(255,255,255,0.18); backdrop-filter: blur(24px); }
 .cc.pos-c { transform: translateX(0) scale(1); filter: brightness(1); z-index: 10; box-shadow: 0 20px 50px rgba(0,0,0,0.6); }
-.cc.pos-l { transform: translateX(min(-190px,-52vw)) scale(0.78); filter: brightness(0.38); z-index: 5; }
-.cc.pos-r { transform: translateX(min(190px,52vw)) scale(0.78); filter: brightness(0.38); z-index: 5; }
+.cc.pos-l { transform: translateX(min(-190px,-52vw)) scale(0.78); filter: brightness(0.38); z-index: 5; cursor: pointer; }
+.cc.pos-r { transform: translateX(min(190px,52vw)) scale(0.78); filter: brightness(0.38); z-index: 5; cursor: pointer; }
 .cc.pos-hl { transform: translateX(min(-390px,-105vw)) scale(0.6); opacity: 0; z-index: 1; pointer-events: none; }
 .cc.pos-hr { transform: translateX(min(390px,105vw)) scale(0.6); opacity: 0; z-index: 1; pointer-events: none; }
 .cc-tint { position: absolute; inset: 0; pointer-events: none; background: linear-gradient(135deg,rgba(255,255,255,0.04) 0%,transparent 60%); }
@@ -188,7 +188,7 @@ body::after {
 .cc-count { font-size: 9px; color: rgba(255,255,255,0.38); margin-top: 2px; text-transform: uppercase; letter-spacing: 0.05em; }
 
 /* culto dots/pos */
-#c-info { position: fixed; left: 0; right: 0; z-index: 20; top: calc(146px + min(162px,44vw) + 8px); display: none; flex-direction: column; align-items: center; gap: 5px; }
+#c-info { position: fixed; left: 0; right: 0; z-index: 20; top: calc(148px + min(162px,44vw) + 8px); display: none; flex-direction: column; align-items: center; gap: 5px; }
 #c-info.vis { display: flex; }
 #c-pos { font-size: 10px; color: rgba(255,255,255,0.25); letter-spacing: 0.04em; }
 #c-dots { display: flex; gap: 5px; }
@@ -196,7 +196,7 @@ body::after {
 .c-dot.active { width: 14px; border-radius: 3px; background: rgba(255,255,255,0.9); }
 
 /* song stage */
-#c-song-stage { position: fixed; left: 0; right: 0; z-index: 20; top: calc(146px + min(162px,44vw) + 54px); bottom: 72px; display: none; flex-direction: column; align-items: center; padding: 0 14px; gap: 8px; }
+#c-song-stage { position: fixed; left: 0; right: 0; z-index: 20; top: calc(148px + min(162px,44vw) + 54px); bottom: 72px; display: none; flex-direction: column; align-items: center; padding: 0 14px; gap: 8px; }
 #c-song-stage.vis { display: flex; }
 #c-sv { width: 100%; max-width: 520px; flex: 1; position: relative; overflow: hidden; border-radius: 18px; }
 .csc { position: absolute; inset: 0; background: rgba(0,0,0,0.42); backdrop-filter: blur(22px); border: 0.5px solid rgba(255,255,255,0.12); border-radius: 18px; padding: 16px 18px; display: flex; flex-direction: column; justify-content: space-between; }
@@ -1320,19 +1320,28 @@ function parseCSVLine(ln) {
 }
 
 function parseDataBR(d) {
-  const p=d.split('/');
-  if (p.length!==3) return new Date(0);
-  // Se o primeiro campo > 12, é dd/mm/yyyy; caso contrário detectar pelo tamanho do ano
-  const a = parseInt(p[0]), b = parseInt(p[1]), c = parseInt(p[2]);
+  if (!d) return new Date(0);
+  d = String(d).trim();
+  const p = d.split('/');
+  if (p.length !== 3) return new Date(0);
+  const n0 = parseInt(p[0], 10), n1 = parseInt(p[1], 10), n2 = parseInt(p[2], 10);
+  if (isNaN(n0) || isNaN(n1) || isNaN(n2)) return new Date(0);
+  // Ano de 4 dígitos no terceiro campo: dd/mm/yyyy ou mm/dd/yyyy
   if (p[2].length === 4) {
-    // Terceiro campo é o ano (dd/mm/yyyy ou m/d/yyyy)
-    if (a > 12) return new Date(c, b-1, a); // dd/mm/yyyy
-    if (b > 12) return new Date(c, a-1, b); // m/d/yyyy
-    // Ambiguidade: assume dd/mm/yyyy (padrão BR)
-    return new Date(c, b-1, a);
+    if (n0 > 12) return new Date(n2, n1 - 1, n0); // dd/mm/yyyy
+    if (n1 > 12) return new Date(n2, n0 - 1, n1); // mm/dd/yyyy
+    return new Date(n2, n1 - 1, n0);               // assume dd/mm/yyyy
   }
-  // Fallback: primeiro campo é o ano (yyyy/mm/dd)
-  return new Date(a, b-1, c);
+  // Ano de 2 dígitos no terceiro campo: dd/mm/yy (ex: 26/04/26)
+  if (p[2].length <= 2) {
+    const ano = n2 + 2000; // 26 → 2026
+    if (n0 > 12) return new Date(ano, n1 - 1, n0);
+    if (n1 > 12) return new Date(ano, n0 - 1, n1);
+    return new Date(ano, n1 - 1, n0);
+  }
+  // Ano de 4 dígitos no primeiro campo: yyyy/mm/dd
+  if (p[0].length === 4) return new Date(n0, n1 - 1, n2);
+  return new Date(0);
 }
 
 function toggleFiltro() {
@@ -1885,8 +1894,8 @@ function cRenderSongCard(animIn) {
     </div>
     <div class="csc-bot">
       ${m.tom ? `<span class="csc-key">${esc(m.tom)}</span>` : '<span></span>'}
-      ${audioUrl ? `<button class="csc-play" onclick="cToggleAudio(this,'${esc(audioUrl)}')">
-        <svg viewBox="0 0 13 13" fill="currentColor"><polygon points="2,1 12,6.5 2,12"/></svg>
+      ${audioUrl ? `<button class="csc-play" title="Ouvir no Drive" onclick="cToggleAudio(this,'${esc(audioUrl)}')">
+        <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 7l3 3 7-7"/></svg>
       </button>` : ''}
     </div>`;
 
@@ -1972,24 +1981,17 @@ function cSelectSong(idx) {
 function cDriveUrl(url) {
   if (!url) return null;
   url = url.trim();
-  // Se já é uma URL de download/stream do Drive, usar direto
-  if (url.includes('uc?export=download') || url.includes('uc?export=open')) return url;
-  // Extrair file ID de links compartilhados do Drive
+  // Extrair file ID de links completos do Drive
   const m = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
-  if (m) return `https://docs.google.com/uc?export=open&id=${m[1]}`;
-  // URL direta — retornar como está
+  if (m) return `https://drive.google.com/file/d/${m[1]}/view`;
+  // Se já parece um ID puro (só base64url chars, sem /), montar URL direto
+  if (/^[a-zA-Z0-9_-]{10,}$/.test(url)) return `https://drive.google.com/file/d/${url}/view`;
   return url || null;
 }
 
+// Abre o MP3 no Drive em nova aba (CORS impede tocar direto do browser)
 function cToggleAudio(btn, url) {
-  if (cAudio && cAudioBtn === btn) { cStopAudio(); return; }
-  cStopAudio();
-  const a = new Audio(url);
-  a.play().catch(() => toast('Não foi possível tocar o áudio.', true));
-  btn.classList.add('playing');
-  btn.innerHTML = '<svg viewBox="0 0 13 13" fill="currentColor"><rect x="1.5" y="1" width="3" height="11"/><rect x="8.5" y="1" width="3" height="11"/></svg>';
-  cAudio = a; cAudioBtn = btn;
-  a.onended = () => { btn.classList.remove('playing'); btn.innerHTML='<svg viewBox="0 0 13 13" fill="currentColor"><polygon points="2,1 12,6.5 2,12"/></svg>'; cAudio=null; cAudioBtn=null; };
+  window.open(url, '_blank');
 }
 
 function cStopAudio() {
