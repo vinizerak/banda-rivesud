@@ -120,7 +120,7 @@ body::after {
 /* Nav para painéis não-músicas */
 #other-nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-  display: flex;
+  display: none;
   align-items: center; justify-content: space-between;
   padding: 12px 20px;
   background: rgba(0,0,0,0.4);
@@ -128,6 +128,7 @@ body::after {
   -webkit-backdrop-filter: blur(16px);
   border-bottom: 0.5px solid rgba(255,255,255,0.08);
 }
+#other-nav.visible { display: flex; }
 .other-nav-title { font-family: 'Instrument Serif', serif; font-size: 17px; color: rgba(255,255,255,0.9); }
 .other-nav-pills { display: flex; gap: 4px; }
 .other-nav-pill {
@@ -141,6 +142,7 @@ body::after {
 .other-nav-pill.active { background: rgba(255,255,255,0.18); color: #fff; border-color: rgba(255,255,255,0.35); }
 .other-nav-pill:hover:not(.active) { background: rgba(255,255,255,0.12); color: rgba(255,255,255,0.85); }
 
+#panel-ensaio { padding: 72px 16px 20px; }
 
 /* ===================== CULTOS FULLSCREEN ===================== */
 #panel-cultos { position: fixed; inset: 0; z-index: 1; overflow: hidden; padding: 0; }
@@ -150,7 +152,7 @@ body::after {
 #c-bg-overlay { position: absolute; inset: 0; background: linear-gradient(180deg,rgba(0,0,0,0.5) 0%,rgba(0,0,0,0.1) 25%,rgba(0,0,0,0.15) 55%,rgba(0,0,0,0.75) 100%); z-index: 2; pointer-events: none; }
 
 /* stats strip */
-#c-stats { position: fixed; top: 68px; left: 0; right: 0; z-index: 110; display: none; justify-content: center; padding: 6px 14px; gap: 0; }
+#c-stats { position: fixed; top: 56px; left: 0; right: 0; z-index: 110; display: none; justify-content: center; padding: 6px 14px; gap: 0; }
 #c-stats.vis { display: flex; }
 .c-seg { flex: 1; max-width: 96px; text-align: center; padding: 6px 6px; background: rgba(0,0,0,0.32); backdrop-filter: blur(14px); border: 0.5px solid rgba(255,255,255,0.09); border-right: none; }
 .c-seg:first-child { border-radius: 10px 0 0 10px; }
@@ -168,13 +170,13 @@ body::after {
 .c-mpill.active { background: rgba(255,255,255,0.2); color: #fff; border-color: rgba(255,255,255,0.38); }
 
 /* culto carousel */
-#c-stage { position: fixed; left: 0; right: 0; z-index: 20; top: 148px; height: min(162px,44vw); display: none; align-items: center; justify-content: center; overflow: visible; }
+#c-stage { position: fixed; left: 0; right: 0; z-index: 20; top: 146px; height: min(162px,44vw); display: none; align-items: center; justify-content: center; }
 #c-stage.vis { display: flex; }
-#c-cards { position: relative; width: 100%; height: 100%; overflow: visible; }
+#c-cards { position: relative; width: 100%; height: 100%; }
 .cc { position: absolute; top: 0; left: 50%; margin-left: calc(min(240px,68vw) / -2); width: min(240px,68vw); height: min(162px,44vw); border-radius: 20px; overflow: hidden; cursor: pointer; transition: transform 0.42s cubic-bezier(0.25,0.46,0.45,0.94), filter 0.42s ease, opacity 0.42s ease; background: rgba(255,255,255,0.08); border: 0.5px solid rgba(255,255,255,0.18); backdrop-filter: blur(24px); }
 .cc.pos-c { transform: translateX(0) scale(1); filter: brightness(1); z-index: 10; box-shadow: 0 20px 50px rgba(0,0,0,0.6); }
-.cc.pos-l { transform: translateX(min(-190px,-52vw)) scale(0.78); filter: brightness(0.38); z-index: 5; cursor: pointer; }
-.cc.pos-r { transform: translateX(min(190px,52vw)) scale(0.78); filter: brightness(0.38); z-index: 5; cursor: pointer; }
+.cc.pos-l { transform: translateX(min(-190px,-52vw)) scale(0.78); filter: brightness(0.38); z-index: 5; }
+.cc.pos-r { transform: translateX(min(190px,52vw)) scale(0.78); filter: brightness(0.38); z-index: 5; }
 .cc.pos-hl { transform: translateX(min(-390px,-105vw)) scale(0.6); opacity: 0; z-index: 1; pointer-events: none; }
 .cc.pos-hr { transform: translateX(min(390px,105vw)) scale(0.6); opacity: 0; z-index: 1; pointer-events: none; }
 .cc-tint { position: absolute; inset: 0; pointer-events: none; background: linear-gradient(135deg,rgba(255,255,255,0.04) 0%,transparent 60%); }
@@ -188,7 +190,7 @@ body::after {
 .cc-count { font-size: 9px; color: rgba(255,255,255,0.38); margin-top: 2px; text-transform: uppercase; letter-spacing: 0.05em; }
 
 /* culto dots/pos */
-#c-info { position: fixed; left: 0; right: 0; z-index: 20; top: calc(148px + min(162px,44vw) + 8px); display: none; flex-direction: column; align-items: center; gap: 5px; }
+#c-info { position: fixed; left: 0; right: 0; z-index: 20; top: calc(146px + min(162px,44vw) + 8px); display: none; flex-direction: column; align-items: center; gap: 5px; }
 #c-info.vis { display: flex; }
 #c-pos { font-size: 10px; color: rgba(255,255,255,0.25); letter-spacing: 0.04em; }
 #c-dots { display: flex; gap: 5px; }
@@ -196,7 +198,7 @@ body::after {
 .c-dot.active { width: 14px; border-radius: 3px; background: rgba(255,255,255,0.9); }
 
 /* song stage */
-#c-song-stage { position: fixed; left: 0; right: 0; z-index: 20; top: calc(148px + min(162px,44vw) + 54px); bottom: 72px; display: none; flex-direction: column; align-items: center; padding: 0 14px; gap: 8px; }
+#c-song-stage { position: fixed; left: 0; right: 0; z-index: 20; top: calc(146px + min(162px,44vw) + 54px); bottom: 72px; display: none; flex-direction: column; align-items: center; padding: 0 14px; gap: 8px; }
 #c-song-stage.vis { display: flex; }
 #c-sv { width: 100%; max-width: 520px; flex: 1; position: relative; overflow: hidden; border-radius: 18px; }
 .csc { position: absolute; inset: 0; background: rgba(0,0,0,0.42); backdrop-filter: blur(22px); border: 0.5px solid rgba(255,255,255,0.12); border-radius: 18px; padding: 16px 18px; display: flex; flex-direction: column; justify-content: space-between; }
@@ -339,7 +341,6 @@ body::after {
   align-items: center;
   justify-content: center;
   pointer-events: none;
-  margin-top: 34px; /* metade da altura do nav para não esconder atrás dele */
 }
 
 .cf-card {
@@ -765,7 +766,7 @@ body::after {
 /* ===================== ENSAIO ===================== */
 
 /* Painel ensaio */
-#panel-ensaio { display: none; padding-top: 68px; padding-left: 16px; padding-right: 16px; padding-bottom: 20px; }
+#panel-ensaio { display: none; padding-top: 24px; }
 #panel-ensaio.active { display: block; }
 .ensaio-choice-row { display: flex; gap: 12px; margin-bottom: 20px; }
 .ensaio-choice-card {
@@ -989,7 +990,7 @@ body::after {
 <nav id="other-nav">
   <span class="other-nav-title">Rive-Sud</span>
   <div class="other-nav-pills">
-    <button class="other-nav-pill active" onclick="showTab('repertorio',this)">Músicas</button>
+    <button class="other-nav-pill" onclick="showTab('repertorio',this)">Músicas</button>
     <button class="other-nav-pill" onclick="showTab('cultos',this)">Cultos</button>
     <button class="other-nav-pill" onclick="showTab('ensaio',this)">🎸 Ensaio</button>
   </div>
@@ -1270,11 +1271,9 @@ async function carregarDados() {
     cultos = parseCSVCultos(c);
     renderMusicas();
     renderCultos();
-    const lb = document.getElementById('loading-badge');
-    if (lb) lb.style.display='none';
+    document.getElementById('loading-badge').style.display='none';
   } catch(e) {
-    const lb = document.getElementById('loading-badge');
-    if (lb) lb.textContent='Erro ao carregar';
+    document.getElementById('loading-badge').textContent='Erro ao carregar';
     toast('Erro ao carregar planilha. Tente novamente.', true);
   }
 }
@@ -1320,28 +1319,9 @@ function parseCSVLine(ln) {
 }
 
 function parseDataBR(d) {
-  if (!d) return new Date(0);
-  d = String(d).trim();
-  const p = d.split('/');
-  if (p.length !== 3) return new Date(0);
-  const n0 = parseInt(p[0], 10), n1 = parseInt(p[1], 10), n2 = parseInt(p[2], 10);
-  if (isNaN(n0) || isNaN(n1) || isNaN(n2)) return new Date(0);
-  // Ano de 4 dígitos no terceiro campo: dd/mm/yyyy ou mm/dd/yyyy
-  if (p[2].length === 4) {
-    if (n0 > 12) return new Date(n2, n1 - 1, n0); // dd/mm/yyyy
-    if (n1 > 12) return new Date(n2, n0 - 1, n1); // mm/dd/yyyy
-    return new Date(n2, n1 - 1, n0);               // assume dd/mm/yyyy
-  }
-  // Ano de 2 dígitos no terceiro campo: dd/mm/yy (ex: 26/04/26)
-  if (p[2].length <= 2) {
-    const ano = n2 + 2000; // 26 → 2026
-    if (n0 > 12) return new Date(ano, n1 - 1, n0);
-    if (n1 > 12) return new Date(ano, n0 - 1, n1);
-    return new Date(ano, n1 - 1, n0);
-  }
-  // Ano de 4 dígitos no primeiro campo: yyyy/mm/dd
-  if (p[0].length === 4) return new Date(n0, n1 - 1, n2);
-  return new Date(0);
+  const p=d.split('/');
+  if (p.length!==3) return new Date(0);
+  return new Date(p[2],p[1]-1,p[0]);
 }
 
 function toggleFiltro() {
@@ -1894,8 +1874,8 @@ function cRenderSongCard(animIn) {
     </div>
     <div class="csc-bot">
       ${m.tom ? `<span class="csc-key">${esc(m.tom)}</span>` : '<span></span>'}
-      ${audioUrl ? `<button class="csc-play" title="Ouvir no Drive" onclick="cToggleAudio(this,'${esc(audioUrl)}')">
-        <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 7l3 3 7-7"/></svg>
+      ${audioUrl ? `<button class="csc-play" onclick="cToggleAudio(this,'${esc(audioUrl)}')">
+        <svg viewBox="0 0 13 13" fill="currentColor"><polygon points="2,1 12,6.5 2,12"/></svg>
       </button>` : ''}
     </div>`;
 
@@ -1980,18 +1960,20 @@ function cSelectSong(idx) {
 // ── CULTOS: AUDIO ──
 function cDriveUrl(url) {
   if (!url) return null;
-  url = url.trim();
-  // Extrair file ID de links completos do Drive
   const m = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
-  if (m) return `https://drive.google.com/file/d/${m[1]}/view`;
-  // Se já parece um ID puro (só base64url chars, sem /), montar URL direto
-  if (/^[a-zA-Z0-9_-]{10,}$/.test(url)) return `https://drive.google.com/file/d/${url}/view`;
+  if (m) return `https://drive.google.com/uc?export=download&id=${m[1]}`;
   return url || null;
 }
 
-// Abre o MP3 no Drive em nova aba (CORS impede tocar direto do browser)
 function cToggleAudio(btn, url) {
-  window.open(url, '_blank');
+  if (cAudio && cAudioBtn === btn) { cStopAudio(); return; }
+  cStopAudio();
+  const a = new Audio(url);
+  a.play().catch(() => toast('Não foi possível tocar o áudio.', true));
+  btn.classList.add('playing');
+  btn.innerHTML = '<svg viewBox="0 0 13 13" fill="currentColor"><rect x="1.5" y="1" width="3" height="11"/><rect x="8.5" y="1" width="3" height="11"/></svg>';
+  cAudio = a; cAudioBtn = btn;
+  a.onended = () => { btn.classList.remove('playing'); btn.innerHTML='<svg viewBox="0 0 13 13" fill="currentColor"><polygon points="2,1 12,6.5 2,12"/></svg>'; cAudio=null; cAudioBtn=null; };
 }
 
 function cStopAudio() {
@@ -2060,37 +2042,6 @@ function cFecharTopMes() { document.getElementById('c-tm-ov').classList.remove('
 
 function renderCultoPendente() {
   cRenderPendente();
-}
-
-function abrirPicker() {
-  document.getElementById('picker-overlay').classList.add('open');
-  document.getElementById('picker-search').value='';
-  renderPicker();
-  setTimeout(()=>document.getElementById('picker-search').focus(),100);
-}
-
-function fecharPicker() {
-  document.getElementById('picker-overlay').classList.remove('open');
-}
-
-function fecharPickerSeFora(e) {
-  if(e.target===document.getElementById('picker-overlay')) fecharPicker();
-}
-
-function renderPicker() {
-  const q=document.getElementById('picker-search').value.toLowerCase();
-  const presentes=cultoPendente.map(m=>m.nome.toLowerCase());
-  const lista=musicas.filter(m=>!presentes.includes(m.nome.toLowerCase())&&(m.nome.toLowerCase().includes(q)||m.artista.toLowerCase().includes(q)));
-  const el=document.getElementById('picker-list');
-  if (!lista.length) { el.innerHTML='<div class="empty-state" style="padding:20px 0;">Nenhuma música encontrada.</div>'; return; }
-  el.innerHTML=lista.map(m=>`
-    <div class="picker-item" onclick="selecionarMusica('${esc(m.nome).replace(/'/g,"\\\'")}')">
-      <div>
-        <div class="picker-item-name">${esc(m.nome)}</div>
-        <div class="picker-item-artist">${esc(m.artista)||'—'}</div>
-      </div>
-      <div class="picker-item-badge">${m.usos===0?'nunca':m.usos+'x'}</div>
-    </div>`).join('');
 }
 
 function selecionarMusica(nome) {
@@ -2208,13 +2159,7 @@ function showTab(id, btn) {
   document.querySelectorAll('.cf-nav-pill, .other-nav-pill').forEach(t => t.classList.remove('active'));
   document.getElementById('panel-' + id).classList.add('active');
   if (btn) btn.classList.add('active');
-  // sync other-nav pills
-  document.querySelectorAll('.other-nav-pill').forEach(p => {
-    const txt = p.textContent.toLowerCase();
-    if ((id==='repertorio' && txt.includes('mús')) ||
-        (id==='cultos'     && txt.includes('culto')) ||
-        (id==='ensaio'     && txt.includes('ensaio'))) p.classList.add('active');
-  });
+  const otherNav = document.getElementById('other-nav');
   const isCultos = id === 'cultos';
   // show/hide cultos fixed UI
   ['c-stats','c-months','c-stage','c-info','c-song-stage'].forEach(elId => {
@@ -2222,10 +2167,16 @@ function showTab(id, btn) {
   });
   document.getElementById('c-fab').classList.toggle('vis', isCultos);
   if (id === 'repertorio') {
+    otherNav.classList.remove('visible');
     cfEsconderNav();
   } else {
+    otherNav.classList.add('visible');
+    document.querySelectorAll('.other-nav-pill').forEach(p => {
+      if (p.textContent.toLowerCase().includes(id==='cultos'?'culto':'ensaio')) p.classList.add('active');
+    });
     if (id === 'ensaio') renderEnsaioTab();
-    if (id === 'cultos') cInitView();
+    if (id === 'cultos' && cMonths.length) cInitView();
+    else if (id === 'cultos' && !cMonths.length) cInitView();
   }
 }
 
