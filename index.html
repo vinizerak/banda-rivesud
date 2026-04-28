@@ -305,17 +305,31 @@ body::after {
 .csl-item {
   background: rgba(0,0,0,0.38); backdrop-filter: blur(18px);
   border: 0.5px solid rgba(255,255,255,0.1); border-radius: 13px;
-  padding: 9px 13px; cursor: pointer;
+  padding: 6px 13px;        /* era 9px 13px */
+  cursor: pointer;
   transition: all 0.28s cubic-bezier(0.25,0.46,0.45,0.94);
   flex: 1; display: flex; flex-direction: column; justify-content: center; min-height: 0;
 }
-.csl-item:active { background: rgba(255,255,255,0.06); }
-.csl-item.active { background: rgba(0,0,0,0.55); border-color: rgba(255,255,255,0.22); padding: 12px 15px; flex: 1.7; }
+
+.csl-item.active {
+  background: rgba(0,0,0,0.55); border-color: rgba(255,255,255,0.22);
+  padding: 8px 15px;        /* era 12px 15px */
+  flex: 1.4;                /* era 1.7 */
+}
 .csl-row { display: flex; align-items: center; gap: 9px; }
 .csl-num { font-size: 10px; font-weight: 700; color: rgba(255,255,255,0.2); width: 16px; flex-shrink: 0; text-align: right; }
 .csl-item.active .csl-num { color: rgba(255,255,255,0.45); }
-.csl-name { flex: 1; font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.7); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.csl-item.active .csl-name { color: #fff; font-size: 15px; font-weight: 600; white-space: normal; }
+
+.csl-name { 
+  flex: 1; font-size: 12px;   /* era 13px */
+  font-weight: 500; color: rgba(255,255,255,0.7); 
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; 
+}
+
+.csl-item.active .csl-name { 
+  color: #fff; font-size: 14px;  /* era 15px */
+  font-weight: 600; white-space: normal; 
+}
 .csl-tom { font-size: 10px; font-weight: 700; background: rgba(255,255,255,0.1); border: 0.5px solid rgba(255,255,255,0.2); border-radius: 6px; padding: 2px 7px; color: rgba(255,255,255,0.55); flex-shrink: 0; }
 .csl-item.active .csl-tom { color: #fff; background: rgba(255,255,255,0.16); border-color: rgba(255,255,255,0.32); }
 .csl-expanded { max-height: 0; overflow: hidden; opacity: 0; transition: max-height 0.28s cubic-bezier(0.25,0.46,0.45,0.94), opacity 0.22s; }
