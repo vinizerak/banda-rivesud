@@ -254,10 +254,21 @@ body::after {
 .c-sv { font-size: 16px; font-weight: 700; line-height: 1; color: #fff; }
 .c-sl { font-size: 9px; color: rgba(255,255,255,0.38); margin-top: 2px; text-transform: uppercase; letter-spacing: 0.05em; }
 
-#c-months { position: fixed; top: 108px; left: 0; right: 0; z-index: 110; display: none; gap: 6px; padding: 4px 14px; overflow-x: auto; scrollbar-width: none; justify-content: center; }
+#c-months {
+  position: fixed; top: 108px; left: 0; right: 0; z-index: 110;
+  display: none; gap: 8px;           /* era 6px */
+  padding: 10px 14px;                /* era 4px 14px */
+  overflow-x: auto; scrollbar-width: none; justify-content: center;
+}
 #c-months.vis { display: flex; }
 #c-months::-webkit-scrollbar { display: none; }
-.c-mpill { flex-shrink: 0; height: 27px; padding: 0 12px; background: rgba(255,255,255,0.07); border: 0.5px solid rgba(255,255,255,0.12); border-radius: 99px; font-size: 11px; font-weight: 500; color: rgba(255,255,255,0.45); cursor: pointer; transition: all 0.22s; white-space: nowrap; }
+.c-mpill {
+  flex-shrink: 0; height: 30px;      /* era 27px */
+  padding: 0 14px;                   /* era 0 12px */
+  background: rgba(255,255,255,0.07); border: 0.5px solid rgba(255,255,255,0.12);
+  border-radius: 99px; font-size: 11px; font-weight: 500;
+  color: rgba(255,255,255,0.45); cursor: pointer; transition: all 0.22s; white-space: nowrap;
+}
 .c-mpill.active { background: rgba(255,255,255,0.2); color: #fff; border-color: rgba(255,255,255,0.38); }
 
 /* ── MUDANÇA 2: pos-l com translateX menor para não cortar ── */
@@ -667,8 +678,6 @@ body::after {
     </div>
   </div>
 </div>
-
-<button id="c-fab" onclick="cToggleSheet()">+</button>
 
 <!-- sheet novo culto -->
 <div id="c-sh-ov" onclick="if(event.target===this)cFecharSheet()"></div>
@@ -1366,8 +1375,8 @@ document.addEventListener('touchend',e=>{
 
 // sheets cultos
 function cToggleSheet(){const open=document.getElementById('c-sh').classList.contains('open');open?cFecharSheet():cAbrirSheet();}
-function cAbrirSheet(){document.getElementById('c-sh').classList.add('open');document.getElementById('c-sh-ov').classList.add('open');document.getElementById('c-fab').classList.add('open');cRenderPendente();}
-function cFecharSheet(){document.getElementById('c-sh').classList.remove('open');document.getElementById('c-sh-ov').classList.remove('open');document.getElementById('c-fab').classList.remove('open');}
+function cAbrirSheet(){document.getElementById('c-sh').classList.add('open');document.getElementById('c-sh-ov').classList.add('open');cRenderPendente();}
+function cFecharSheet(){document.getElementById('c-sh').classList.remove('open');document.getElementById('c-sh-ov').classList.remove('open');}
 function cRenderPendente() {
   const el=document.getElementById('c-pend-list');
   document.getElementById('c-pend-ct').textContent=cultoPendente.length?`(${cultoPendente.length})`:'';
@@ -1425,7 +1434,6 @@ function showTab(id,btn) {
 
   const isCultos=id==='cultos';
   ['c-stats','c-months','c-stage','c-info','c-song-stage'].forEach(eid=>document.getElementById(eid).classList.toggle('vis',isCultos));
-  document.getElementById('c-fab').classList.toggle('vis',isCultos);
   if(id==='repertorio') { document.getElementById('other-nav').classList.remove('visible'); }
   else {
     document.getElementById('other-nav').classList.add('visible');
