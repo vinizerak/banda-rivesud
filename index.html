@@ -163,7 +163,7 @@ body::after {
 #cf-player-strip {
   position: absolute;
   left: 0; right: 0; z-index: 21;
-  bottom: 96px;
+  bottom: 148px;  /* era 96px */
   display: flex; align-items: center; justify-content: center; gap: 20px;
   transition: opacity 0.3s;
 }
@@ -1307,16 +1307,14 @@ function cRenderSongList() {
   if (gPlayer.audio && gPlayer.url) document.getElementById('c-player-bar').classList.add('vis');
 }
 
-function cSelectSong(idx,m,info) {
-  if (idx===cSIdx) return;
-  cSIdx=idx;
+function cSelectSong(idx, m, info) {
+  cSIdx = idx;
   cRenderSongList();
-  // toca a música
-  const url=resolveAudioUrl(m?.mp3);
+  const url = resolveAudioUrl(m?.mp3);
   if (!url) return;
   gPlayer.play(url, m.nome, info?.artista||'');
-  document.getElementById('cpb-name').textContent=m.nome;
-  document.getElementById('cpb-artist').textContent=info?.artista||'';
+  document.getElementById('cpb-name').textContent = m.nome;
+  document.getElementById('cpb-artist').textContent = info?.artista||'';
   document.getElementById('c-player-bar').classList.add('vis');
 }
 
