@@ -163,8 +163,7 @@ body::after {
 #cf-player-strip {
   position: absolute;
   left: 0; right: 0; z-index: 21;
-  /* posicionado entre cards e nome via bottom */
-  bottom: 130px;
+  bottom: 96px;
   display: flex; align-items: center; justify-content: center; gap: 20px;
   transition: opacity 0.3s;
 }
@@ -758,8 +757,16 @@ const gPlayer = {
   artista: '',
 
   play(url, nome, artista) {
-    // para qualquer coisa que esteja tocando
     if (this.audio) { this.audio.pause(); this.audio.src = ''; }
+    // para o preview iTunes se estiver tocando
+    const cfAudio = document.getElementById('cf-audio');
+    if (cfAudio && !cfAudio.paused) {
+      cfAudio.pause();
+      cfAudio.src = '';
+      document.getElementById('cf-audio-bar').style.display = 'none';
+      document.getElementById('cf-player-strip').classList.add('hidden');
+      document.getElementById('cfps-play-icon').innerHTML = '<path d="M8 5v14l11-7z"/>';
+    }
     this.url = url; this.nome = nome; this.artista = artista;
     this.audio = new Audio(url);
     this.audio.muted = this.muted;
@@ -850,8 +857,35 @@ const gPlayer = {
   }
 };
 
-function gPlayPause()  { gPlayer.togglePlayPause(); }
-function gMuteToggle() { gPlayer.muteToggle(); }
+function gPlayPause() {
+  // na aba músicas, controla o preview iTunes (#cf-audio)
+  if (document.getElementById('panel-repertorio').classList.contains('active')) {
+    const audio = document.getElementById('cf-audio');
+    if (!audio.src) return;
+    if (audio.paused) {
+      audio.play().catch(()=>{});
+      document.getElementById('cfps-play-icon').innerHTML = '<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>';
+    } else {
+      audio.pause();
+      document.getElementById('cfps-play-icon').innerHTML = '<path d="M8 5v14l11-7z"/>';
+    }
+    return;
+  }
+  gPlayer.togglePlayPause();
+}
+
+function gMuteToggle() {
+  // na aba músicas, muta o preview iTunes
+  if (document.getElementById('panel-repertorio').classList.contains('active')) {
+    const audio = document.getElementById('cf-audio');
+    audio.muted = !audio.muted;
+    const offSVG = '<path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>';
+    const onSVG  = '<path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/>';
+    document.getElementById('cfps-mute-icon').innerHTML = audio.muted ? offSVG : onSVG;
+    return;
+  }
+  gPlayer.muteToggle();
+}
 
 // seek no scrubber cultos
 document.addEventListener('DOMContentLoaded', () => {
@@ -1091,22 +1125,31 @@ async function cfPreloadCovers() {
 
 // preview iTunes — preservado do original (usa #cf-audio separado do gPlayer)
 async function cfTocarPreview() {
-  const audio=document.getElementById('cf-audio');
-  const bar=document.getElementById('cf-audio-bar');
-  const statusEl=document.getElementById('cf-audio-status');
-  const titleEl=document.getElementById('cf-audio-title');
-  audio.pause(); audio.src='';
+  const audio = document.getElementById('cf-audio');
+  const bar = document.getElementById('cf-audio-bar');
+  const statusEl = document.getElementById('cf-audio-status');
+  const titleEl = document.getElementById('cf-audio-title');
+  audio.pause(); audio.src = '';
+  document.getElementById('cf-player-strip').classList.add('hidden');
+  document.getElementById('cfps-play-icon').innerHTML = '<path d="M8 5v14l11-7z"/>';
   if (!cfLista.length) return;
-  const m=cfLista[cfIdx];
-  titleEl.textContent=m.nome;
-  const cover=cfCovers[m.nome+'|'+m.artista]||await cfBuscarCapa(m);
-  if (cover?.preview && cfLista[cfIdx]===m) {
-    bar.style.display='flex'; statusEl.textContent='carregando…';
-    audio.src=cover.preview; audio.volume=0.55;
-    try { await audio.play(); statusEl.textContent='▶ preview 30s'; }
-    catch(e) { statusEl.textContent='toque ▶'; }
-    audio.onended=()=>{ statusEl.textContent='—'; };
-  } else { bar.style.display='none'; }
+  const m = cfLista[cfIdx];
+  titleEl.textContent = m.nome;
+  const cover = cfCovers[m.nome+'|'+m.artista] || await cfBuscarCapa(m);
+  if (cover?.preview && cfLista[cfIdx] === m) {
+    bar.style.display = 'flex'; statusEl.textContent = 'carregando…';
+    audio.src = cover.preview; audio.volume = 0.55;
+    try {
+      await audio.play();
+      statusEl.textContent = '▶ preview 30s';
+      document.getElementById('cf-player-strip').classList.remove('hidden');
+      document.getElementById('cfps-play-icon').innerHTML = '<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>';
+    } catch(e) { statusEl.textContent = 'toque ▶'; }
+    audio.onended = () => {
+      statusEl.textContent = '—';
+      document.getElementById('cfps-play-icon').innerHTML = '<path d="M8 5v14l11-7z"/>';
+    };
+  } else { bar.style.display = 'none'; }
 }
 
 // MUDANÇA 3: sheet só com botão play Cloudinary
@@ -1354,6 +1397,20 @@ function showTab(id,btn) {
   document.querySelectorAll('.cf-nav-pill,.other-nav-pill').forEach(t=>t.classList.remove('active'));
   document.getElementById('panel-'+id).classList.add('active');
   if(btn) btn.classList.add('active');
+
+  // para qualquer áudio ao trocar de aba
+  const cfAudio = document.getElementById('cf-audio');
+  if (cfAudio && !cfAudio.paused) {
+    cfAudio.pause();
+    cfAudio.src = '';
+    document.getElementById('cf-audio-bar').style.display = 'none';
+    document.getElementById('cf-player-strip').classList.add('hidden');
+    document.getElementById('cfps-play-icon').innerHTML = '<path d="M8 5v14l11-7z"/>';
+  }
+  if (id !== 'repertorio' && gPlayer.isPlaying()) {
+    // não para o gPlayer ao voltar pra músicas, só para o cf-audio
+  }
+
   const isCultos=id==='cultos';
   ['c-stats','c-months','c-stage','c-info','c-song-stage'].forEach(eid=>document.getElementById(eid).classList.toggle('vis',isCultos));
   document.getElementById('c-fab').classList.toggle('vis',isCultos);
