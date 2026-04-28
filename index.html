@@ -1145,12 +1145,14 @@ function cfRenderDots() {
 
 async function cfPreloadCovers() {
   if (!cfLista.length) return;
-  const total=cfLista.length;
-  const prioridade=[0,1,-1].map(o=>(cfIdx+o+total)%total);
-  await Promise.all(prioridade.map(async i=>{const m=cfLista[i];if(cfCovers[m.nome+'|'+m.artista]===undefined)await cfBuscarCapa(m);}));
+  const total = cfLista.length;
+  const prioridade = [0,1,-1].map(o=>(cfIdx+o+total)%total);
+  await Promise.all(prioridade.map(async i=>{
+    const m=cfLista[i];
+    if(cfCovers[m.nome+'|'+m.artista]===undefined) await cfBuscarCapa(m);
+  }));
   cfAtualizarBg(); cfRenderCarrossel();
-  const resto=cfLista.map((_,i)=>i).filter(i=>!prioridade.includes(i)&&cfCovers[cfLista[i].nome+'|'+cfLista[i].artista]===undefined);
-  for(let i=0;i<resto.length;i+=6) await Promise.all(resto.slice(i,i+6).map(idx=>cfBuscarCapa(cfLista[idx])));
+  // REMOVE daqui pra baixo — era o loop que pré-carregava tudo
 }
 
 // preview iTunes — preservado do original (usa #cf-audio separado do gPlayer)
