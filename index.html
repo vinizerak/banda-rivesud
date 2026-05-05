@@ -82,19 +82,15 @@ body::after {
 .panel { display: none; }
 .panel.active { display: block; }
 
-/* ═══ ABA MÚSICAS — COVERFLOW ═══ */
-#panel-repertorio { position: fixed; inset: 0; z-index: 1; overflow: hidden; }
+/* ═══ ABA MÚSICAS — LISTA ═══ */
+#panel-repertorio { position: fixed; inset: 0; z-index: 1; background: #0d0d0d; overflow-y: auto; -webkit-overflow-scrolling: touch; }
 #panel-repertorio.active { display: block; }
 
-#cf-fullbg { position: absolute; inset: 0; background-size: cover; background-position: center; transition: background-image 0.6s ease, opacity 0.6s ease; filter: blur(28px) brightness(0.7); transform: scale(1.12); opacity: 0; }
-#cf-fullbg-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.35) 100%); }
-#cf-fullbg-color { position: absolute; inset: 0; transition: background 0.7s ease; opacity: 0.6; }
-
 #cf-nav-overlay {
-  position: absolute;
+  position: sticky;
   top: 0; left: 0; right: 0;
   z-index: 50;
-  background: rgba(0,0,0,0.55);
+  background: rgba(13,13,13,0.95);
   backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
   border-bottom: 0.5px solid rgba(255,255,255,0.1);
   padding: 12px 16px 14px;
@@ -131,105 +127,40 @@ body::after {
 }
 .cf-filter-btn.on { background: rgba(255,255,255,0.2); border-color: rgba(255,255,255,0.4); color: #fff; font-weight: 500; }
 
-#cf-count-badge { position: absolute; top: 108px; right: 16px; z-index: 30; font-size: 11px; color: rgba(255,255,255,0.25); }
+#cf-count-badge { padding: 6px 16px 2px; font-size: 11px; color: rgba(255,255,255,0.22); }
 
-#cf-cards {
-  position: absolute;
-  top: 50%; left: 0; right: 0;
-  transform: translateY(-54%);
-  margin-top: 30px;
-  display: flex; align-items: center; justify-content: center;
-  pointer-events: none;
-}
-
-.cf-card { position: absolute; border-radius: 16px; overflow: hidden; cursor: pointer; pointer-events: all; transition: all 0.42s cubic-bezier(0.25,0.46,0.45,0.94); }
-.cf-card-size      { width: min(56vw, 260px); height: min(56vw, 260px); }
-.cf-card-size-side { width: min(32vw, 150px); height: min(32vw, 150px); }
-.cf-card.pos-center { z-index: 10; transform: translateX(0) scale(1); box-shadow: 0 24px 60px rgba(0,0,0,0.5); }
-.cf-card.pos-left   { z-index: 5; transform: translateX(calc(-1 * min(50vw, 230px))) scale(1); filter: brightness(0.4); }
-.cf-card.pos-right  { z-index: 5; transform: translateX(min(50vw, 230px)) scale(1); filter: brightness(0.4); }
-.cf-card.pos-hidden-left  { z-index:1; transform: translateX(calc(-1 * min(85vw,400px))); opacity:0; pointer-events:none; }
-.cf-card.pos-hidden-right { z-index:1; transform: translateX(min(85vw,400px)); opacity:0; pointer-events:none; }
-.cf-cover-img { position: absolute; inset: 0; background-size: cover; background-position: center; }
-.cf-cover-fallback { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: clamp(28px,12vw,52px); font-weight: 500; color: rgba(255,255,255,0.25); }
-.cf-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 50%); }
-.cf-plays-badge { position: absolute; top: 10px; right: 10px; background: rgba(255,255,255,0.15); backdrop-filter: blur(8px); border: 0.5px solid rgba(255,255,255,0.25); border-radius: 99px; padding: 3px 9px; font-size: 11px; font-weight: 500; color: white; }
-
-#cf-player-strip {
-  position: absolute;
-  left: 0; right: 0; z-index: 21;
-  bottom: 178px;
-  display: flex; align-items: center; justify-content: center; gap: 20px;
-  transition: opacity 0.3s;
-}
-#cf-player-strip.hidden { opacity: 0; pointer-events: none; }
-.cfps-mute {
-  background: none; border: none; cursor: pointer;
-  color: rgba(255,255,255,0.7); display: flex; align-items: center; justify-content: center;
-  padding: 8px; border-radius: 50%; transition: background 0.15s;
-}
-.cfps-mute:active { background: rgba(255,255,255,0.1); }
-.cfps-mute svg { width: 22px; height: 22px; fill: currentColor; display: block; }
-.cfps-play-btn {
-  width: 44px; height: 44px; border-radius: 50%;
-  background: rgba(255,255,255,0.13); border: 0.5px solid rgba(255,255,255,0.28);
-  display: flex; align-items: center; justify-content: center;
-  cursor: pointer; transition: background 0.15s; flex-shrink: 0;
-}
-.cfps-play-btn:active { background: rgba(255,255,255,0.22); }
-.cfps-play-btn svg { width: 15px; height: 15px; fill: #fff; display: block; }
-
-#cf-song-info { position: absolute; bottom: 90px; left: 0; right: 0; text-align: center; z-index: 20; padding: 0 24px; pointer-events: none; }
-#cf-song-name { font-size: clamp(20px,5vw,28px); font-weight: 600; color: #fff; text-shadow: 0 2px 12px rgba(0,0,0,0.5); line-height: 1.2; }
-#cf-song-artist { font-size: clamp(13px,3vw,16px); color: rgba(255,255,255,0.55); margin-top: 4px; }
-
-#cf-dots { position: absolute; bottom: 68px; left: 0; right: 0; display: flex; justify-content: center; gap: 5px; z-index: 20; flex-wrap: wrap; max-width: 200px; margin: 0 auto; }
-.cf-dot { width: 5px; height: 5px; border-radius: 50%; background: rgba(255,255,255,0.3); transition: all 0.3s; cursor: pointer; }
-.cf-dot.active { background: #fff; width: 14px; border-radius: 3px; }
-
-#cf-audio-bar { position: absolute; bottom: 16px; left: 20px; right: 20px; display: none; align-items: center; gap: 10px; padding: 8px 14px; background: rgba(0,0,0,0.4); backdrop-filter: blur(12px); border: 0.5px solid rgba(255,255,255,0.12); border-radius: 10px; z-index: 20; }
-#cf-audio-icon { font-size: 14px; flex-shrink: 0; }
-#cf-audio-title { font-size: 12px; color: rgba(255,255,255,0.6); flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-#cf-audio-status { font-size: 11px; color: rgba(255,255,255,0.7); flex-shrink: 0; }
-#cf-audio { display: none; }
-
-@keyframes cf-enter-right { from{transform:translateX(min(50vw,230px)) scale(0.58);opacity:0.6;}to{transform:translateX(0) scale(1);opacity:1;} }
-@keyframes cf-enter-left  { from{transform:translateX(calc(-1 * min(50vw,230px))) scale(0.58);opacity:0.6;}to{transform:translateX(0) scale(1);opacity:1;} }
-.cf-card.anim-enter-right { animation: cf-enter-right 0.38s cubic-bezier(0.25,0.46,0.45,0.94) forwards; }
-.cf-card.anim-enter-left  { animation: cf-enter-left  0.38s cubic-bezier(0.25,0.46,0.45,0.94) forwards; }
-
-/* ── SHEET músicas ── */
-#cf-sheet { position: absolute; inset: 0; z-index: 200; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; pointer-events: none; opacity: 0; transition: opacity 0.25s; }
-#cf-sheet.open { pointer-events: all; opacity: 1; }
-#cf-sheet-backdrop { position: absolute; inset: 0; background: rgba(0,0,0,0.5); backdrop-filter: blur(4px); }
-#cf-sheet-body { position: relative; width: 100%; max-width: 560px; max-height: 88vh; background: #0e1510; border-radius: 24px 24px 0 0; border-top: 0.5px solid rgba(255,255,255,0.12); display: flex; flex-direction: column; transform: translateY(100%); transition: transform 0.38s cubic-bezier(0.25,0.46,0.45,0.94); overflow: hidden; }
-#cf-sheet.open #cf-sheet-body { transform: translateY(0); }
-.sheet-drag-handle { width: 36px; height: 4px; background: rgba(255,255,255,0.15); border-radius: 2px; margin: 12px auto 0; flex-shrink: 0; cursor: grab; }
-.sheet-header { display: flex; align-items: center; gap: 14px; padding: 12px 20px 0; flex-shrink: 0; }
-.sheet-cover-thumb { width: 56px; height: 56px; border-radius: 10px; background-size: cover; background-position: center; flex-shrink: 0; }
-.sheet-header-info { flex: 1; min-width: 0; }
-.sheet-song-name { font-size: 17px; font-weight: 600; color: #fff; line-height: 1.25; }
-.sheet-song-artist { font-size: 13px; color: rgba(255,255,255,0.5); margin-top: 2px; }
-.sheet-stats { display: flex; gap: 8px; padding: 14px 20px 0; flex-shrink: 0; }
-.sheet-stat { flex: 1; background: rgba(255,255,255,0.06); border-radius: 10px; padding: 10px 8px; text-align: center; }
-.sheet-stat-val { font-size: 18px; font-weight: 600; color: #fff; line-height: 1; }
-.sheet-stat-lbl { font-size: 10px; color: rgba(255,255,255,0.4); margin-top: 3px; }
-.sheet-hist-label { font-size: 10px; font-weight: 600; color: rgba(255,255,255,0.35); text-transform: uppercase; letter-spacing: 0.06em; padding: 14px 20px 6px; flex-shrink: 0; }
-.sheet-hist-scroll { flex: 1; overflow-y: auto; padding: 0 20px; min-height: 0; -webkit-overflow-scrolling: touch; }
-.sheet-hist-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 0.5px solid rgba(255,255,255,0.07); font-size: 13px; }
-.sheet-hist-item:last-child { border-bottom: none; }
-.shi-date { color: rgba(255,255,255,0.4); font-size: 12px; }
-.shi-leader { color: #fff; font-weight: 500; }
-.shi-tom { background: rgba(255,255,255,0.08); border-radius: 5px; padding: 2px 7px; font-size: 11px; color: rgba(255,255,255,0.5); }
-.sheet-actions { display: flex; flex-direction: column; gap: 8px; padding: 14px 20px 28px; flex-shrink: 0; }
-.sheet-btn { display: flex; align-items: center; justify-content: center; gap: 6px; padding: 12px 8px; border-radius: 12px; border: 0.5px solid rgba(255,255,255,0.15); background: rgba(255,255,255,0.07); font-size: 13px; font-weight: 500; color: #fff; cursor: pointer; transition: background 0.15s; text-decoration: none; font-family: 'DM Sans', sans-serif; }
-.sheet-btn:hover { background: rgba(255,255,255,0.13); }
-.sheet-btn.disabled { opacity: 0.3; pointer-events: none; }
-.sheet-btn.spotify { background: #1DB954; border-color: #1DB954; }
-.sheet-btn.spotify:hover { background: #1aa34a; }
-.sheet-btn.youtube { background: #FF0000; border-color: #FF0000; }
-.sheet-btn.youtube:hover { background: #cc0000; }
-.sheet-actions-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+/* lista de músicas */
+.ml-row { border-bottom: 0.5px solid rgba(255,255,255,0.07); -webkit-tap-highlight-color: transparent; }
+.ml-summary { display: flex; align-items: center; gap: 10px; padding: 10px 16px; cursor: pointer; min-height: 60px; }
+.ml-row.open .ml-summary { background: rgba(255,255,255,0.03); }
+.ml-cover { width: 42px; height: 42px; border-radius: 7px; flex-shrink: 0; background-size: cover; background-position: center; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.3); }
+.ml-info { flex: 1; min-width: 0; }
+.ml-title { font-size: 13px; font-weight: 500; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ml-artist { font-size: 11px; color: rgba(255,255,255,0.38); margin-top: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ml-meta { display: flex; flex-direction: column; align-items: flex-end; gap: 3px; flex-shrink: 0; }
+.ml-plays { font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.75); }
+.ml-ago { font-size: 10px; color: rgba(255,255,255,0.25); white-space: nowrap; }
+.ml-expand { display: none; padding: 0 16px 14px; background: rgba(255,255,255,0.02); border-top: 0.5px solid rgba(255,255,255,0.06); }
+.ml-expand.open { display: block; }
+.ml-btns { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 12px; padding-top: 12px; }
+.ml-btn { height: 44px; border-radius: 10px; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; -webkit-tap-highlight-color: transparent; transition: opacity 0.15s; }
+.ml-btn:active { opacity: 0.75; }
+.ml-btn.ml-spotify { background: #1DB954; }
+.ml-btn.ml-youtube { background: #FF0000; }
+.ml-btn.ml-cifra { background: rgba(255,255,255,0.08); border: 0.5px solid rgba(255,255,255,0.15); font-size: 12px; font-weight: 500; color: rgba(255,255,255,0.65); font-family: 'DM Sans', sans-serif; }
+.ml-btn.ml-cifra.disabled { opacity: 0.25; cursor: default; pointer-events: none; }
+.ml-btn.disabled-logo { opacity: 0.25; cursor: default; pointer-events: none; }
+.ml-btn svg { display: block; }
+.ml-stats { display: flex; gap: 8px; margin-bottom: 12px; }
+.ml-stat { flex: 1; background: rgba(255,255,255,0.05); border-radius: 8px; padding: 8px 6px; text-align: center; }
+.ml-stat-val { font-size: 16px; font-weight: 500; color: #fff; line-height: 1; }
+.ml-stat-lbl { font-size: 10px; color: rgba(255,255,255,0.3); margin-top: 2px; }
+.ml-hist-lbl { font-size: 10px; font-weight: 500; color: rgba(255,255,255,0.25); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 6px; }
+.ml-hist-item { display: flex; justify-content: space-between; align-items: center; padding: 7px 0; border-bottom: 0.5px solid rgba(255,255,255,0.06); font-size: 12px; }
+.ml-hist-item:last-child { border-bottom: none; }
+.ml-hist-date { color: rgba(255,255,255,0.35); }
+.ml-hist-lead { color: #fff; font-weight: 500; }
+.ml-hist-tom { background: rgba(255,255,255,0.07); border-radius: 4px; padding: 1px 6px; font-size: 10px; color: rgba(255,255,255,0.4); }
 
 /* ═══ ABA CULTOS — LISTA ═══ */
 #panel-cultos { position: fixed; inset: 0; z-index: 1; background: #0d0d0d; overflow-y: auto; -webkit-overflow-scrolling: touch; padding-top: 56px; }
@@ -423,10 +354,6 @@ body::after {
 
 <!-- PAINEL MÚSICAS -->
 <div id="panel-repertorio" class="panel active">
-  <div id="cf-fullbg"></div>
-  <div id="cf-fullbg-color"></div>
-  <div id="cf-fullbg-overlay"></div>
-
   <div id="cf-nav-overlay">
     <div class="cf-nav-top">
       <span class="cf-nav-title">Rive-Sud</span>
@@ -442,49 +369,8 @@ body::after {
       <button class="cf-filter-btn" id="filter-recentes" onclick="toggleOrdenacao()">+ Recentes</button>
     </div>
   </div>
-
   <div id="cf-count-badge"></div>
-  <div id="cf-cards"></div>
-
-  <div id="cf-player-strip" class="hidden">
-    <button class="cfps-mute" id="cfps-mute-btn" onclick="gMuteToggle()">
-      <svg id="cfps-mute-icon" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
-    </button>
-    <div class="cfps-play-btn" onclick="gPlayPause()">
-      <svg id="cfps-play-icon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-    </div>
-  </div>
-
-  <div id="cf-song-info">
-    <div id="cf-song-name"></div>
-    <div id="cf-song-artist"></div>
-  </div>
-  <div id="cf-dots"></div>
-
-  <div id="cf-audio-bar">
-    <span id="cf-audio-icon">&#127925;</span>
-    <span id="cf-audio-title">Preview</span>
-    <span id="cf-audio-status"></span>
-  </div>
-  <audio id="cf-audio" preload="none"></audio>
-
-  <div id="cf-sheet">
-    <div id="cf-sheet-backdrop"></div>
-    <div id="cf-sheet-body">
-      <div class="sheet-drag-handle" id="cf-sheet-drag"></div>
-      <div class="sheet-header">
-        <div class="sheet-cover-thumb" id="cf-sheet-thumb"></div>
-        <div class="sheet-header-info">
-          <div class="sheet-song-name" id="cf-sheet-name"></div>
-          <div class="sheet-song-artist" id="cf-sheet-artist"></div>
-        </div>
-      </div>
-      <div class="sheet-stats" id="cf-sheet-stats"></div>
-      <div class="sheet-hist-label">Histórico</div>
-      <div class="sheet-hist-scroll" id="cf-sheet-hist"></div>
-      <div class="sheet-actions" id="cf-sheet-actions"></div>
-    </div>
-  </div>
+  <div id="musicas-list"></div>
 </div>
 
 <!-- PAINEL CULTOS -->
@@ -645,15 +531,11 @@ const gPlayer = {
   _updateIcons(playing) {
     const pauseSVG = '<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>';
     const playSVG  = '<path d="M8 5v14l11-7z"/>';
-    const cfIcon = document.getElementById('cfps-play-icon');
-    if (cfIcon) cfIcon.innerHTML = playing ? pauseSVG : playSVG;
   },
 
   _updateMuteIcons() {
     const onSVG  = '<path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/>';
     const offSVG = '<path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>';
-    const cfMute = document.getElementById('cfps-mute-icon');
-    if (cfMute) cfMute.innerHTML = this.muted ? offSVG : onSVG;
   }
 };
 
@@ -791,10 +673,10 @@ function toggleFiltro() { filtroNuncaUsadas=!filtroNuncaUsadas; document.getElem
 function toggleOrdenacao() { ordenarPorRecente=!ordenarPorRecente; document.getElementById('filter-recentes').classList.toggle('on',ordenarPorRecente); renderMusicas(); }
 
 // ═══════════════════════════════════════
-// COVERFLOW — MÚSICAS
+// MÚSICAS — LISTA
 // ═══════════════════════════════════════
-let cfLista=[], cfIdx=0, cfCovers={};
-let cfTouchStartX=0, cfTouchStartY=0, cfTouchStartTime=0;
+let cfCovers = {};
+let mlOpenRow = null;
 
 const CF_GRADIENTS = [
   ['#0a3d62','#1D9E75'],['#1a1a2e','#534AB7'],['#2d1b00','#EF9F27'],
@@ -818,11 +700,11 @@ async function cfBuscarCapa(musica) {
     const d = await r.json();
     if (d.results?.length > 0) {
       const item = d.results[0];
-      cfCovers[key] = { img:(item.artworkUrl100||'').replace('100x100bb','400x400bb'), preview:item.previewUrl||null, color:d.dominantColor||null };
+      cfCovers[key] = { img:(item.artworkUrl100||'').replace('100x100bb','400x400bb') };
       return cfCovers[key];
     }
   } catch(e) {}
-  cfCovers[key] = { img:null, preview:null, color:null };
+  cfCovers[key] = { img:null };
   return cfCovers[key];
 }
 
@@ -839,172 +721,118 @@ function renderMusicas() {
   } else {
     lista.sort((a,b)=>b.usos-a.usos||a.nome.localeCompare(b.nome));
   }
-  cfLista=lista; cfIdx=0;
-  document.getElementById('cf-count-badge').textContent = lista.length+' músicas';
-  if (!lista.length) {
-    document.getElementById('cf-cards').innerHTML='';
-    document.getElementById('cf-song-name').textContent='Nenhuma música encontrada';
-    document.getElementById('cf-song-artist').textContent='';
+  const countEl = document.getElementById('cf-count-badge');
+  if (countEl) countEl.textContent = lista.length + ' músicas';
+  const container = document.getElementById('musicas-list');
+  if (!container) return;
+  container.innerHTML = '';
+  mlOpenRow = null;
+  lista.forEach(m => container.appendChild(buildMusicaRow(m)));
+}
+
+function buildMusicaRow(m) {
+  const grad = cfGradient(m.nome);
+  const cover = cfCovers[m.nome+'|'+m.artista];
+  const idxU = cultos.findIndex(c=>c.musicas.some(cm=>cm.nome.toLowerCase()===m.nome.toLowerCase()));
+  const agoStr = idxU === 0 ? 'último culto' : idxU > 0 ? `${idxU} culto${idxU!==1?'s':''} atrás` : m.usos > 0 ? '—' : 'nunca tocada';
+
+  const row = document.createElement('div');
+  row.className = 'ml-row';
+
+  const coverStyle = cover?.img
+    ? `background-image:url('${cover.img}');`
+    : `background:linear-gradient(135deg,${grad[0]},${grad[1]}88);`;
+
+  row.innerHTML = `
+    <div class="ml-summary">
+      <div class="ml-cover" style="${coverStyle}">${cover?.img ? '' : cfInitials(m.nome)}</div>
+      <div class="ml-info">
+        <div class="ml-title">${esc(m.nome)}</div>
+        <div class="ml-artist">${esc(m.artista||'—')}</div>
+      </div>
+      <div class="ml-meta">
+        <div class="ml-plays">${m.usos}×</div>
+        <div class="ml-ago" style="${m.usos===0?'color:rgba(255,255,255,0.15);':''}">${agoStr}</div>
+      </div>
+    </div>
+    <div class="ml-expand"></div>`;
+
+  row.querySelector('.ml-summary').addEventListener('click', () => mlToggle(row, m));
+
+  // lazy load cover if not yet fetched
+  if (cfCovers[m.nome+'|'+m.artista] === undefined) {
+    cfBuscarCapa(m).then(c => {
+      if (!c?.img) return;
+      const coverEl = row.querySelector('.ml-cover');
+      if (coverEl) { coverEl.style.backgroundImage = `url('${c.img}')`; coverEl.textContent = ''; }
+    });
+  }
+
+  return row;
+}
+
+function mlToggle(row, m) {
+  const expand = row.querySelector('.ml-expand');
+  const isOpen = row.classList.contains('open');
+
+  if (mlOpenRow && mlOpenRow !== row) {
+    mlOpenRow.classList.remove('open');
+    mlOpenRow.querySelector('.ml-expand').classList.remove('open');
+    mlOpenRow.querySelector('.ml-expand').innerHTML = '';
+  }
+
+  if (isOpen) {
+    row.classList.remove('open');
+    expand.classList.remove('open');
+    expand.innerHTML = '';
+    mlOpenRow = null;
     return;
   }
-  cfRenderCarrossel();
-  cfPreloadCovers();
-}
 
-function cfRenderCarrossel(dir) {
-  if (!cfLista.length) return;
-  const total = cfLista.length;
-  const container = document.getElementById('cf-cards');
-  container.innerHTML = '';
-  [-2,-1,0,1,2].forEach(offset => {
-    const idx=(cfIdx+offset+total)%total, m=cfLista[idx];
-    const grad=cfGradient(m.nome), cover=cfCovers[m.nome+'|'+m.artista];
-    const posCls=offset===0?'pos-center':offset===-1?'pos-left':offset===1?'pos-right':offset<-1?'pos-hidden-left':'pos-hidden-right';
-    const sizeCls=offset===0?'cf-card-size':'cf-card-size-side';
-    let animCls='';
-    if (dir!==undefined && offset===0) animCls=dir>0?'anim-enter-right':'anim-enter-left';
-    const div=document.createElement('div');
-    div.className=`cf-card ${sizeCls} ${posCls} ${animCls}`;
-    div.innerHTML=`<div class="cf-cover-fallback" style="background:linear-gradient(135deg,${grad[0]},${grad[1]}88);">${cfInitials(m.nome)}</div>${cover&&cover.img?`<div class="cf-cover-img" style="background-image:url('${cover.img}');"></div>`:''}${offset===0?`<div class="cf-overlay"></div><div class="cf-plays-badge">${m.usos} culto${m.usos!==1?'s':''}</div>`:''}`;
-    if (offset===0) div.addEventListener('click',()=>cfAbrirSheet(m));
-    else div.addEventListener('click',()=>cfNavegar(offset));
-    container.appendChild(div);
-  });
-  cfAtualizarBg();
-  cfAtualizarInfo();
-  cfRenderDots();
-  cfTocarPreview();
-}
+  row.classList.add('open');
+  expand.classList.add('open');
+  mlOpenRow = row;
 
-function cfNavegar(dir) {
-  if (!cfLista.length) return;
-  cfIdx=(cfIdx+dir+cfLista.length)%cfLista.length;
-  cfRenderCarrossel(dir);
-  setTimeout(()=>cfPreloadCovers(),50);
-}
-
-function cfAtualizarBg() {
-  if (!cfLista.length) return;
-  const m=cfLista[cfIdx], cover=cfCovers[m.nome+'|'+m.artista];
-  const bg=document.getElementById('cf-fullbg'), color=document.getElementById('cf-fullbg-color');
-  if (cover?.img) { bg.style.backgroundImage=`url('${cover.img}')`; bg.style.opacity='1'; color.style.background='rgba(0,0,0,0.45)'; }
-  else { const g=cfGradient(m.nome); bg.style.backgroundImage=''; bg.style.opacity='0'; color.style.background=`linear-gradient(160deg,${g[0]} 0%,${g[1]}55 100%)`; }
-}
-function cfAtualizarInfo() {
-  if (!cfLista.length) return;
-  const m=cfLista[cfIdx];
-  document.getElementById('cf-song-name').textContent=m.nome;
-  document.getElementById('cf-song-artist').textContent=m.artista||'—';
-}
-function cfRenderDots() {
-  const dots=document.getElementById('cf-dots'), total=cfLista.length;
-  dots.innerHTML='';
-  if (total<=1) return;
-  const maxDots=12, showTotal=Math.min(total,maxDots);
-  let start=Math.max(0,cfIdx-Math.floor(showTotal/2)), end=start+showTotal;
-  if (end>total){end=total;start=Math.max(0,end-showTotal);}
-  for(let i=start;i<end;i++){const d=document.createElement('div');d.className='cf-dot'+(i===cfIdx?' active':'');d.addEventListener('click',()=>{cfIdx=i;cfRenderCarrossel();});dots.appendChild(d);}
-}
-
-async function cfPreloadCovers() {
-  if (!cfLista.length) return;
-  const total = cfLista.length;
-  const prioridade = [0,1,-1].map(o=>(cfIdx+o+total)%total);
-  await Promise.all(prioridade.map(async i=>{
-    const m=cfLista[i];
-    if(cfCovers[m.nome+'|'+m.artista]===undefined) await cfBuscarCapa(m);
-  }));
-  cfAtualizarBg(); cfRenderCarrossel();
-}
-
-async function cfTocarPreview() {
-  const audio = document.getElementById('cf-audio');
-  const bar = document.getElementById('cf-audio-bar');
-  const statusEl = document.getElementById('cf-audio-status');
-  const titleEl = document.getElementById('cf-audio-title');
-  audio.pause(); audio.src = '';
-  document.getElementById('cf-player-strip').classList.add('hidden');
-  document.getElementById('cfps-play-icon').innerHTML = '<path d="M8 5v14l11-7z"/>';
-  if (!cfLista.length) return;
-  const m = cfLista[cfIdx];
-  titleEl.textContent = m.nome;
-  const cover = cfCovers[m.nome+'|'+m.artista] || await cfBuscarCapa(m);
-  if (cover?.preview && cfLista[cfIdx] === m) {
-    bar.style.display = 'flex'; statusEl.textContent = 'carregando…';
-    audio.src = cover.preview; audio.volume = 0.55;
-    try {
-      await audio.play();
-      statusEl.textContent = '▶ preview 30s';
-      document.getElementById('cf-player-strip').classList.remove('hidden');
-      document.getElementById('cfps-play-icon').innerHTML = '<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>';
-    } catch(e) { statusEl.textContent = 'toque ▶'; }
-    audio.onended = () => {
-      statusEl.textContent = '—';
-      document.getElementById('cfps-play-icon').innerHTML = '<path d="M8 5v14l11-7z"/>';
-    };
-  } else { bar.style.display = 'none'; }
-}
-
-async function cfAbrirSheet(m) {
-  const sheet=document.getElementById('cf-sheet'), grad=cfGradient(m.nome), thumb=document.getElementById('cf-sheet-thumb');
-  let cover=cfCovers[m.nome+'|'+m.artista];
-  if (!cover) cover=await cfBuscarCapa(m);
-  if (cover?.img){thumb.style.backgroundImage=`url('${cover.img}')`;thumb.style.background='';}
-  else{thumb.style.backgroundImage='';thumb.style.background=`linear-gradient(135deg,${grad[0]},${grad[1]})`;}
-  document.getElementById('cf-sheet-name').textContent=m.nome;
-  document.getElementById('cf-sheet-artist').textContent=m.artista||'—';
-  const hist=cultos.filter(c=>c.musicas.some(cm=>cm.nome.toLowerCase()===m.nome.toLowerCase()));
-  const toms={};
+  const hist = cultos.filter(c=>c.musicas.some(cm=>cm.nome.toLowerCase()===m.nome.toLowerCase()));
+  const toms = {};
   hist.forEach(c=>{const mu=c.musicas.find(cm=>cm.nome.toLowerCase()===m.nome.toLowerCase());const t=mu.tom||'';if(t)toms[t]=(toms[t]||0)+1;});
-  const tomFreq=Object.entries(toms).sort((a,b)=>b[1]-a[1])[0]?.[0]||'—';
-  const idxU=cultos.findIndex(c=>c.musicas.some(cm=>cm.nome.toLowerCase()===m.nome.toLowerCase()));
-  const ultStr=idxU===0?'último':idxU>0?`${idxU} culto${idxU!==1?'s':''} atrás`:'—';
-  document.getElementById('cf-sheet-stats').innerHTML=`<div class="sheet-stat"><div class="sheet-stat-val">${m.usos}</div><div class="sheet-stat-lbl">cultos</div></div><div class="sheet-stat"><div class="sheet-stat-val">${tomFreq}</div><div class="sheet-stat-lbl">tom freq.</div></div><div class="sheet-stat"><div class="sheet-stat-val" style="font-size:13px;line-height:1.3;">${ultStr}</div><div class="sheet-stat-lbl">última vez</div></div>`;
-  document.getElementById('cf-sheet-hist').innerHTML=hist.length?hist.map(c=>{const mu=c.musicas.find(cm=>cm.nome.toLowerCase()===m.nome.toLowerCase());return`<div class="sheet-hist-item"><span class="shi-date">${esc(c.data)}</span><span class="shi-leader">${esc(c.ministra||'—')}</span><span class="shi-tom">${esc(mu.tom||'—')}</span></div>`;}).join(''):'<div style="padding:16px 0;color:rgba(255,255,255,0.35);font-size:13px;">Nunca tocada</div>';
+  const tomFreq = Object.entries(toms).sort((a,b)=>b[1]-a[1])[0]?.[0]||'—';
+  const idxU = cultos.findIndex(c=>c.musicas.some(cm=>cm.nome.toLowerCase()===m.nome.toLowerCase()));
+  const ultStr = idxU===0?'último':idxU>0?`${idxU} culto${idxU!==1?'s':''} atrás`:'—';
 
-  const cifras = m.cifra ? (m.cifra.match(/https?:\/\/[^\s]+/g) || []) : [];
-  const midias  = m.midia ? (m.midia.match(/https?:\/\/[^\s]+/g) || []) : [];
-  const spotifyUrl = midias.find(u=>u.includes('spotify.com')) || null;
-  const youtubeUrl = midias.find(u=>u.includes('youtu'))       || null;
+  const cifras = m.cifra ? (m.cifra.match(/https?:\/\/[^\s]+/g)||[]) : [];
+  const midias  = m.midia ? (m.midia.match(/https?:\/\/[^\s]+/g)||[]) : [];
+  const spotifyUrl = midias.find(u=>u.includes('spotify.com'))||null;
+  const youtubeUrl = midias.find(u=>u.includes('youtu'))||null;
 
-  const actionsEl=document.getElementById('cf-sheet-actions');
-  actionsEl.innerHTML='';
+  // SVG logos
+  const spotifySVG = `<svg width="22" height="22" viewBox="0 0 24 24" fill="#fff"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.586 14.424a.623.623 0 01-.857.207c-2.348-1.435-5.304-1.76-8.785-.964a.623.623 0 01-.277-1.215c3.809-.87 7.077-.496 9.712 1.115a.623.623 0 01.207.857zm1.223-2.722a.78.78 0 01-1.072.257C14.01 12.327 10.61 11.95 7.7 12.78a.78.78 0 01-.45-1.493c3.306-.998 7.113-.515 9.782 1.143a.78.78 0 01.257 1.072zm.105-2.835C15.001 9.15 10.757 9.007 8.078 9.803a.937.937 0 11-.543-1.794c3.064-.929 7.856-.75 10.952 1.197a.938.938 0 01-.573 1.661z"/></svg>`;
+  const youtubeSVG = `<svg width="22" height="22" viewBox="0 0 24 24" fill="#fff"><path d="M23.495 6.205a3.007 3.007 0 00-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 00.527 6.205a31.247 31.247 0 00-.522 5.805 31.247 31.247 0 00.522 5.783 3.007 3.007 0 002.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 002.088-2.088 31.247 31.247 0 00.5-5.783 31.247 31.247 0 00-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/></svg>`;
 
-  const cifraBtn=document.createElement('button');
-  cifraBtn.className='sheet-btn'+(cifras.length?'':' disabled');
-  cifraBtn.innerHTML='&#127926; Cifra';
-  if (cifras.length) cifraBtn.addEventListener('click',()=>cifras.forEach(u=>window.open(u,'_blank')));
-  actionsEl.appendChild(cifraBtn);
+  expand.innerHTML = `
+    <div class="ml-btns">
+      ${spotifyUrl
+        ? `<a href="${spotifyUrl}" target="_blank" rel="noopener" class="ml-btn ml-spotify">${spotifySVG}</a>`
+        : `<button class="ml-btn ml-spotify disabled-logo">${spotifySVG}</button>`}
+      <button class="ml-btn ml-cifra${cifras.length?'':' disabled'}"${cifras.length?'':' disabled'}>♩ Cifra</button>
+      ${youtubeUrl
+        ? `<a href="${youtubeUrl}" target="_blank" rel="noopener" class="ml-btn ml-youtube">${youtubeSVG}</a>`
+        : `<button class="ml-btn ml-youtube disabled-logo">${youtubeSVG}</button>`}
+    </div>
+    <div class="ml-stats">
+      <div class="ml-stat"><div class="ml-stat-val">${m.usos}</div><div class="ml-stat-lbl">cultos</div></div>
+      <div class="ml-stat"><div class="ml-stat-val">${esc(tomFreq)}</div><div class="ml-stat-lbl">tom freq.</div></div>
+      <div class="ml-stat"><div class="ml-stat-val" style="font-size:12px;line-height:1.3;">${ultStr}</div><div class="ml-stat-lbl">última vez</div></div>
+    </div>
+    <div class="ml-hist-lbl">Histórico</div>
+    <div>${hist.length ? hist.map(c=>{const mu=c.musicas.find(cm=>cm.nome.toLowerCase()===m.nome.toLowerCase());return`<div class="ml-hist-item"><span class="ml-hist-date">${esc(c.data)}</span><span class="ml-hist-lead">${esc(c.ministra||'—')}</span><span class="ml-hist-tom">${esc(mu.tom||'—')}</span></div>`;}).join('') : '<div style="padding:12px 0;color:rgba(255,255,255,0.3);font-size:12px;">Nunca tocada</div>'}</div>`;
 
-  const row=document.createElement('div');
-  row.className='sheet-actions-row';
-
-  if (spotifyUrl) {
-    const a=document.createElement('a');
-    a.href=spotifyUrl; a.target='_blank'; a.rel='noopener';
-    a.className='sheet-btn spotify'; a.innerHTML='&#9654; Spotify';
-    row.appendChild(a);
-  } else {
-    const b=document.createElement('button');
-    b.className='sheet-btn disabled'; b.innerHTML='&#9654; Spotify';
-    row.appendChild(b);
+  if (cifras.length) {
+    expand.querySelector('.ml-cifra').addEventListener('click', () => cifras.forEach(u=>window.open(u,'_blank')));
   }
 
-  if (youtubeUrl) {
-    const a=document.createElement('a');
-    a.href=youtubeUrl; a.target='_blank'; a.rel='noopener';
-    a.className='sheet-btn youtube'; a.innerHTML='&#9654; YouTube';
-    row.appendChild(a);
-  } else {
-    const b=document.createElement('button');
-    b.className='sheet-btn disabled'; b.innerHTML='&#9654; YouTube';
-    row.appendChild(b);
-  }
-
-  actionsEl.appendChild(row);
-  sheet.classList.add('open'); document.body.style.overflow='hidden';
+  setTimeout(() => row.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 50);
 }
-function cfFecharSheet() { document.getElementById('cf-sheet').classList.remove('open'); document.body.style.overflow=''; }
 
 // ═══════════════════════════════════════
 // CULTOS — LISTA
@@ -1278,15 +1106,6 @@ function showTab(id, btn) {
   document.getElementById('panel-' + id).classList.add('active');
   if (btn) btn.classList.add('active');
 
-  // para cf-audio ao trocar de aba
-  const cfAudio = document.getElementById('cf-audio');
-  if (cfAudio && !cfAudio.paused) {
-    cfAudio.pause(); cfAudio.src = '';
-    document.getElementById('cf-audio-bar').style.display = 'none';
-    document.getElementById('cf-player-strip').classList.add('hidden');
-    document.getElementById('cfps-play-icon').innerHTML = '<path d="M8 5v14l11-7z"/>';
-  }
-
   // para MP3 de culto ao sair da aba cultos
   if (id !== 'cultos' && cultoAudioBtn) {
     gPlayer.pause();
@@ -1370,11 +1189,6 @@ document.addEventListener('keydown',e=>{
     if(e.key==='ArrowRight'||e.key==='ArrowDown')navegarEnsaio(1);
     if(e.key==='ArrowLeft'||e.key==='ArrowUp')navegarEnsaio(-1);
     if(e.key==='Escape')fecharEnsaio();
-    return;
-  }
-  if(document.getElementById('panel-repertorio').classList.contains('active')&&cfLista.length){
-    if(e.key==='ArrowRight')cfNavegar(1);
-    if(e.key==='ArrowLeft')cfNavegar(-1);
   }
 });
 function abrirMenuEnsaio(){
