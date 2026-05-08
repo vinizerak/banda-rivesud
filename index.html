@@ -326,10 +326,69 @@ body::after {
 .toast.show { display: block; }
 .toast.erro { background: rgba(139,32,32,0.8); }
 
-@media (max-width: 420px) {
-  .cf-search-row { flex-wrap: wrap; }
-  .cf-search-input { min-width: 100%; }
-}
+/* ═══ ABA DADOS ═══ */
+#panel-dados { position: fixed; inset: 0; z-index: 1; background: #0d0d0d; overflow-y: auto; -webkit-overflow-scrolling: touch; padding-top: 56px; }
+#panel-dados.active { display: block; }
+
+.dados-heading { padding: 16px 16px 0; display: flex; align-items: baseline; justify-content: space-between; }
+.dados-heading-title { font-family: 'Instrument Serif', serif; font-size: 22px; color: #fff; }
+
+.dados-subtabs { display: flex; border-bottom: 0.5px solid rgba(255,255,255,0.07); margin-bottom: 0; }
+.dados-subtab { flex: 1; text-align: center; padding: 12px 4px; font-size: 12px; font-weight: 500; color: rgba(255,255,255,0.35); cursor: pointer; border-bottom: 2px solid transparent; -webkit-tap-highlight-color: transparent; transition: color 0.15s; }
+.dados-subtab.active { color: #7BBF45; border-bottom-color: #7BBF45; }
+
+.dados-section { padding: 16px; }
+.dados-section-lbl { font-size: 10px; font-weight: 500; color: rgba(255,255,255,0.25); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 12px; }
+.pc-group { margin-bottom: 18px; }
+.pc-group-hdr { font-size: 9px; font-weight: 600; color: rgba(255,255,255,0.28); text-transform: uppercase; letter-spacing: .1em; padding: 4px 0 6px; display: flex; align-items: center; gap: 6px; }
+.pc-group-cnt { color: rgba(255,255,255,0.18); font-weight: 400; }
+.pc-group-hdr::after { content:''; flex:1; height:0.5px; background:rgba(255,255,255,0.1); }
+
+/* ministrantes */
+.min-row { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+.min-name { font-size: 13px; color: #fff; min-width: 62px; }
+.min-track { flex: 1; height: 8px; background: rgba(255,255,255,0.07); border-radius: 99px; overflow: hidden; }
+.min-fill { height: 100%; border-radius: 99px; }
+.min-count { font-size: 12px; color: rgba(255,255,255,0.38); min-width: 30px; text-align: right; }
+
+/* participações */
+.pc-card { background: rgba(255,255,255,0.05); border: 0.5px solid rgba(255,255,255,0.09); border-radius: 10px; margin-bottom: 8px; overflow: hidden; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.pc-card.open { border-color: rgba(255,255,255,0.18); }
+.pc-summary { display: flex; align-items: center; gap: 10px; padding: 10px 12px; }
+.pc-rank { font-size: 11px; color: rgba(255,255,255,0.2); min-width: 18px; text-align: right; flex-shrink: 0; }
+.pc-avatar { width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 500; flex-shrink: 0; }
+.pc-info { flex: 1; min-width: 0; }
+.pc-main { flex: 1; min-width: 0; }
+.pc-name { font-size: 14px; font-weight: 500; color: #fff; letter-spacing: -0.01em; }
+.pc-sub { font-size: 11px; color: rgba(255,255,255,0.38); margin-top: 2px; }
+.pc-ago { font-size: 10px; color: rgba(255,255,255,0.28); margin-top: 1px; }
+.pc-right { flex-shrink: 0; margin-right: 4px; }
+.pc-count { font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.6); }
+.pc-total { font-size: 11px; color: rgba(255,255,255,0.28); flex-shrink: 0; }
+.pc-chevron { font-size: 12px; color: rgba(255,255,255,0.25); transition: transform 0.2s; flex-shrink: 0; }
+.pc-card.open .pc-chevron { transform: rotate(90deg); }
+.pc-tags { display: flex; gap: 5px; flex-wrap: wrap; padding: 0 12px 10px; }
+.pc-tag { font-size: 10px; font-weight: 500; padding: 3px 8px; border-radius: 99px; }
+.pc-expand { display: none; border-top: 0.5px solid rgba(255,255,255,0.07); padding: 10px 12px 12px; background: rgba(0,0,0,0.2); }
+.pc-card.open .pc-expand { display: block; }
+.pc-expand-lbl { font-size: 10px; color: rgba(255,255,255,0.25); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 7px; }
+.pc-hist-row { display: flex; align-items: center; padding: 5px 0; border-bottom: 0.5px solid rgba(255,255,255,0.06); font-size: 12px; }
+.pc-hist-row:last-child { border-bottom: none; }
+.pc-hist-date { color: rgba(255,255,255,0.4); min-width: 64px; }
+.pc-hist-role { color: rgba(255,255,255,0.7); flex: 1; }
+.pc-hist-ago { color: rgba(255,255,255,0.25); font-size: 10px; text-align: right; flex-shrink: 0; }
+
+/* gráficos */
+.instr-block { padding: 10px 16px; }
+.instr-block + .instr-block { border-top: 0.5px solid rgba(255,255,255,0.07); }
+.instr-title { font-size: 9px; font-weight: 500; color: rgba(255,255,255,0.25); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 6px; }
+.bars-wrap { display: flex; flex-direction: column; gap: 6px; }
+.bar-row { display: flex; align-items: center; gap: 7px; }
+.bar-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; background: #7BBF45; }
+.bar-name { font-size: 12px; color: rgba(255,255,255,0.7); min-width: 56px; flex-shrink: 0; }
+.bar-track { flex: 1; height: 6px; background: rgba(255,255,255,0.07); border-radius: 99px; overflow: hidden; }
+.bar-fill { height: 100%; border-radius: 99px; background: #7BBF45; }
+.bar-count { font-size: 11px; font-weight: 500; color: rgba(255,255,255,0.4); min-width: 18px; text-align: right; flex-shrink: 0; }
 
 @keyframes ensaio-pulse { 0%,100%{transform:scale(1);opacity:1;}50%{transform:scale(1.1);opacity:0.75;} }
 @keyframes ensaio-dot { 0%,80%,100%{transform:scale(0.6);opacity:0.4;}40%{transform:scale(1);opacity:1;} }
@@ -346,6 +405,7 @@ body::after {
   <div class="other-nav-pills">
     <button class="other-nav-pill" onclick="showTab('repertorio',this)">Músicas</button>
     <button class="other-nav-pill" onclick="showTab('cultos',this)">Cultos</button>
+    <button class="other-nav-pill" onclick="showTab('dados',this)">Dados</button>
     <button class="other-nav-pill" onclick="showTab('ensaio',this)">🎸 Ensaio</button>
   </div>
 </nav>
@@ -360,6 +420,7 @@ body::after {
       <div class="cf-nav-pills">
         <button class="cf-nav-pill active" onclick="showTab('repertorio',this)">Músicas</button>
         <button class="cf-nav-pill" onclick="showTab('cultos',this)">Cultos</button>
+        <button class="cf-nav-pill" onclick="showTab('dados',this)">Dados</button>
         <button class="cf-nav-pill" onclick="showTab('ensaio',this)">🎸 Ensaio</button>
       </div>
     </div>
@@ -417,6 +478,9 @@ body::after {
     <div id="ensaio-song-list"></div>
   </div>
 </div>
+
+<!-- PAINEL DADOS -->
+<div id="panel-dados" class="panel"></div>
 
 </div><!-- /content -->
 
@@ -539,36 +603,7 @@ const gPlayer = {
   }
 };
 
-function gPlayPause() {
-  if (document.getElementById('panel-repertorio').classList.contains('active')) {
-    const audio = document.getElementById('cf-audio');
-    if (!audio.src) return;
-    if (audio.paused) {
-      audio.play().catch(()=>{});
-      document.getElementById('cfps-play-icon').innerHTML = '<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>';
-    } else {
-      audio.pause();
-      document.getElementById('cfps-play-icon').innerHTML = '<path d="M8 5v14l11-7z"/>';
-    }
-    return;
-  }
-  gPlayer.togglePlayPause();
-}
-
-function gMuteToggle() {
-  if (document.getElementById('panel-repertorio').classList.contains('active')) {
-    const audio = document.getElementById('cf-audio');
-    audio.muted = !audio.muted;
-    const offSVG = '<path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>';
-    const onSVG  = '<path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/>';
-    document.getElementById('cfps-mute-icon').innerHTML = audio.muted ? offSVG : onSVG;
-    return;
-  }
-  gPlayer.muteToggle();
-}
-
 document.addEventListener('DOMContentLoaded', () => {
-  document.getElementById('cf-sheet-backdrop').addEventListener('click', cfFecharSheet);
   const cpTrack = document.getElementById('cultos-player-track');
   if (cpTrack) {
     cpTrack.addEventListener('click', e => {
@@ -577,30 +612,6 @@ document.addEventListener('DOMContentLoaded', () => {
       gPlayer.audio.currentTime = gPlayer.audio.duration * Math.max(0, Math.min(1, (e.clientX - r.left) / r.width));
     });
   }
-  let sheetDragY = null;
-  document.getElementById('cf-sheet-drag').addEventListener('touchstart', e => { sheetDragY = e.touches[0].clientY; }, {passive:true});
-  document.getElementById('cf-sheet-drag').addEventListener('touchend', e => {
-    if (sheetDragY === null) return;
-    if (e.changedTouches[0].clientY - sheetDragY > 60) cfFecharSheet();
-    sheetDragY = null;
-  }, {passive:true});
-  const panel = document.getElementById('panel-repertorio');
-  let tx=0, ty=0, tt=0;
-  panel.addEventListener('touchstart', e => { tx=e.touches[0].clientX; ty=e.touches[0].clientY; tt=Date.now(); }, {passive:true});
-  panel.addEventListener('touchend', e => {
-    if (document.getElementById('cf-sheet').classList.contains('open')) return;
-    const dx = e.changedTouches[0].clientX - tx, dy = e.changedTouches[0].clientY - ty;
-    if (Date.now()-tt > 400) return;
-    if (Math.abs(dx)>Math.abs(dy) && Math.abs(dx)>44) cfNavegar(dx<0?1:-1);
-  }, {passive:true});
-  let msx = null;
-  panel.addEventListener('mousedown', e => { msx = e.clientX; });
-  panel.addEventListener('mouseup', e => {
-    if (msx===null || document.getElementById('cf-sheet').classList.contains('open')) return;
-    const dx = e.clientX - msx;
-    if (Math.abs(dx)>44) cfNavegar(dx<0?1:-1);
-    msx = null;
-  });
 });
 
 // ═══════════════════════════════════════
@@ -684,6 +695,30 @@ const CF_GRADIENTS = [
   ['#2a0a2a','#D4537E'],['#0a2a2a','#1D9E75'],['#1a0a1a','#B7509E'],
   ['#0a1a2a','#4A7C28'],['#2a1a0a','#BA7517'],['#1a2a1a','#3B6D11'],
 ];
+// fila de covers: processa 2 por vez pra não sobrecarregar o Netlify
+const cfQueue = [];
+let cfQueueRunning = 0;
+const CF_CONCURRENCY = 2;
+
+function cfBuscarCapaQueued(musica) {
+  const key = musica.nome+'|'+musica.artista;
+  if (cfCovers[key] !== undefined) return Promise.resolve(cfCovers[key]);
+  return new Promise(resolve => {
+    cfQueue.push({ musica, resolve });
+    cfDrainQueue();
+  });
+}
+
+async function cfDrainQueue() {
+  if (cfQueueRunning >= CF_CONCURRENCY || cfQueue.length === 0) return;
+  const { musica, resolve } = cfQueue.shift();
+  cfQueueRunning++;
+  const result = await cfBuscarCapa(musica);
+  cfQueueRunning--;
+  resolve(result);
+  cfDrainQueue();
+}
+
 function cfGradient(nome) { let h=0; for(let i=0;i<nome.length;i++) h=(h*31+nome.charCodeAt(i))&0xffffffff; return CF_GRADIENTS[Math.abs(h)%CF_GRADIENTS.length]; }
 function cfInitials(nome) { return nome.split(' ').slice(0,2).map(w=>w[0]||'').join('').toUpperCase()||'♪'; }
 
@@ -734,7 +769,7 @@ function buildMusicaRow(m) {
   const grad = cfGradient(m.nome);
   const cover = cfCovers[m.nome+'|'+m.artista];
   const idxU = cultos.findIndex(c=>c.musicas.some(cm=>cm.nome.toLowerCase()===m.nome.toLowerCase()));
-  const agoStr = idxU === 0 ? 'último culto' : idxU > 0 ? `${idxU} culto${idxU!==1?'s':''} atrás` : m.usos > 0 ? '—' : 'nunca tocada';
+  const agoStr = idxU === 0 ? 'Último culto' : idxU > 0 ? `${idxU} culto${idxU!==1?'s':''} atrás` : m.usos > 0 ? '—' : 'nunca tocada';
 
   const row = document.createElement('div');
   row.className = 'ml-row';
@@ -759,9 +794,9 @@ function buildMusicaRow(m) {
 
   row.querySelector('.ml-summary').addEventListener('click', () => mlToggle(row, m));
 
-  // lazy load cover if not yet fetched
+  // lazy load via fila (evita 50+ requests simultâneos)
   if (cfCovers[m.nome+'|'+m.artista] === undefined) {
-    cfBuscarCapa(m).then(c => {
+    cfBuscarCapaQueued(m).then(c => {
       if (!c?.img) return;
       const coverEl = row.querySelector('.ml-cover');
       if (coverEl) { coverEl.style.backgroundImage = `url('${c.img}')`; coverEl.textContent = ''; }
@@ -1106,7 +1141,6 @@ function showTab(id, btn) {
   document.getElementById('panel-' + id).classList.add('active');
   if (btn) btn.classList.add('active');
 
-  // para MP3 de culto ao sair da aba cultos
   if (id !== 'cultos' && cultoAudioBtn) {
     gPlayer.pause();
     cultoAudioBtn.textContent = '▶ MP3';
@@ -1120,17 +1154,247 @@ function showTab(id, btn) {
   } else {
     document.getElementById('other-nav').classList.add('visible');
     document.querySelectorAll('.other-nav-pill').forEach(p => {
-      if (p.textContent.toLowerCase().includes(id === 'cultos' ? 'culto' : 'ensaio')) p.classList.add('active');
+      const t = p.textContent.toLowerCase();
+      if (id === 'cultos' && t.includes('culto')) p.classList.add('active');
+      if (id === 'ensaio' && t.includes('ensaio')) p.classList.add('active');
+      if (id === 'dados' && t.includes('dados')) p.classList.add('active');
     });
     if (id === 'ensaio') renderEnsaioTab();
     if (id === 'cultos') renderCultos();
+    if (id === 'dados') renderDados();
   }
 }
 
 // ═══════════════════════════════════════
+// DADOS
+// ═══════════════════════════════════════
+let dadosActiveTab = 'pessoas';
+let graficosFilter = 'ultimos10';
+
+const PERSON_COLORS = {
+  'gabi':   { bg:'rgba(99,153,34,0.2)',   color:'#7BBF45' },
+  'pamela': { bg:'rgba(155,140,192,0.2)', color:'#9B8CC0' },
+  'pâmela': { bg:'rgba(155,140,192,0.2)', color:'#9B8CC0' },
+  'erica':  { bg:'rgba(224,112,64,0.2)',  color:'#E07040' },
+  'érica':  { bg:'rgba(224,112,64,0.2)',  color:'#E07040' },
+};
+const PERSON_COLOR_POOL = [
+  { bg:'rgba(239,159,39,0.2)',  color:'#F4A835' },
+  { bg:'rgba(29,158,117,0.2)', color:'#3DB88A' },
+  { bg:'rgba(55,138,221,0.2)', color:'#5B9BD5' },
+  { bg:'rgba(212,105,138,0.2)',color:'#D4698A' },
+  { bg:'rgba(196,133,42,0.2)', color:'#C4852A' },
+  { bg:'rgba(79,195,168,0.2)', color:'#4FC3A8' },
+];
+const personColorCache = {};
+let personColorIdx = 0;
+
+function getPersonColor(nome) {
+  const key = nome.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+  if (personColorCache[key]) return personColorCache[key];
+  // check named colors
+  const named = PERSON_COLORS[nome.toLowerCase()];
+  if (named) { personColorCache[key] = named; return named; }
+  const c = PERSON_COLOR_POOL[personColorIdx % PERSON_COLOR_POOL.length];
+  personColorIdx++;
+  personColorCache[key] = c;
+  return c;
+}
+
+function normalizarNome(n) {
+  return (n||'').trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+}
+
+function buildPessoasMap(cultosArr) {
+  const map = {}; // chave: nome normalizado → { nomeDisplay, aparicoesPorCulto: {data: [role]} }
+  const addRole = (nome, role, data) => {
+    nome = nome.trim();
+    if (!nome) return;
+    const key = normalizarNome(nome);
+    if (!map[key]) map[key] = { nomeDisplay: nome, aparicoesPorCulto: {} };
+    // manter o nome mais frequente (com maiúscula/acento correto)
+    if (!map[key].aparicoesPorCulto[data]) map[key].aparicoesPorCulto[data] = [];
+    if (!map[key].aparicoesPorCulto[data].includes(role))
+      map[key].aparicoesPorCulto[data].push(role);
+  };
+
+  cultosArr.forEach(c => {
+    if (c.ministra) addRole(c.ministra, 'Ministrou', c.data);
+    if (c.vozes) c.vozes.split(/,| e /i).map(v => v.trim()).filter(Boolean).forEach(v => addRole(v, 'Voz', c.data));
+    if (c.musicos) c.musicos.split(',').forEach(entry => {
+      const parts = entry.split(':');
+      if (parts.length >= 2) {
+        const instr = parts[0].trim();
+        // suporte a "Instrumento: João e Gil"
+        parts.slice(1).join(':').split(/ e /i).map(n => n.trim()).filter(Boolean).forEach(n => addRole(n, instr, c.data));
+      }
+    });
+  });
+
+  return Object.values(map).map(p => {
+    const datas = Object.keys(p.aparicoesPorCulto).sort((a,b) => parseDataBR(b)-parseDataBR(a));
+    const totalCultos = datas.length;
+    const lastData = datas[0] || '';
+    const lastIdx = cultos.findIndex(c => c.data === lastData);
+    const agoStr = lastIdx === 0 ? 'Último culto' : lastIdx > 0 ? `${lastIdx} culto${lastIdx!==1?'s':''} atrás` : '—';
+    // roles únicos agregados
+    const allRoles = {};
+    datas.forEach(d => p.aparicoesPorCulto[d].forEach(r => allRoles[r] = (allRoles[r]||0)+1));
+    return { ...p, datas, totalCultos, lastData, lastIdx, agoStr, allRoles };
+  }).sort((a,b) => {
+    if (a.lastIdx !== b.lastIdx) return a.lastIdx - b.lastIdx; // mais recente primeiro (menor idx)
+    return b.totalCultos - a.totalCultos;
+  });
+}
+
+function renderDados() {
+  const panel = document.getElementById('panel-dados');
+  panel.innerHTML = `
+    <div class="dados-heading"><span class="dados-heading-title">Dados</span></div>
+    <div id="dados-body"></div>`;
+  renderPessoas(document.getElementById('dados-body'));
+}
+
+function renderPessoas(body) {
+  const pessoas = buildPessoasMap(cultos);
+  body.innerHTML = '';
+
+  const getInitials = nome => {
+    const w = nome.split(' ').filter(x => x.length > 0);
+    return w.length >= 2 ? (w[0][0] + w[1][0]).toUpperCase() : nome.slice(0,2).toUpperCase();
+  };
+
+  const makeCard = (p, cnt, groupDatas) => {
+    const col = getPersonColor(p.nomeDisplay);
+    const lastIdx = groupDatas.length > 0 ? cultos.findIndex(c => c.data === groupDatas[0]) : -1;
+    const agoStr = lastIdx === 0 ? 'último culto' : lastIdx > 0 ? `${lastIdx} culto${lastIdx!==1?'s':''} atrás` : '—';
+    const card = document.createElement('div');
+    card.className = 'pc-card';
+    card.innerHTML = `
+      <div class="pc-summary">
+        <div class="pc-avatar" style="background:${col.bg};color:${col.color};">${getInitials(p.nomeDisplay)}</div>
+        <div class="pc-main">
+          <div class="pc-name">${esc(p.nomeDisplay)}</div>
+          <div class="pc-sub">${esc(agoStr)}</div>
+        </div>
+        <div class="pc-right"><div class="pc-count">${cnt}×</div></div>
+        <span class="pc-chevron">›</span>
+      </div>
+      <div class="pc-expand">
+        <div class="pc-expand-lbl">Últimas participações</div>
+        ${p.datas.slice(0,3).map(data => {
+          const roles = p.aparicoesPorCulto[data].join(' · ');
+          const idx = cultos.findIndex(c => c.data === data);
+          const ago = idx === 0 ? 'último' : idx > 0 ? `${idx} culto${idx!==1?'s':''} atrás` : '—';
+          return `<div class="pc-hist-row"><span class="pc-hist-date">${esc(data)}</span><span class="pc-hist-role">${esc(roles)}</span><span class="pc-hist-ago">${ago}</span></div>`;
+        }).join('')}
+      </div>`;
+    card.querySelector('.pc-summary').addEventListener('click', () => {
+      const isOpen = card.classList.contains('open');
+      body.querySelectorAll('.pc-card.open').forEach(c => c.classList.remove('open'));
+      if (!isOpen) card.classList.add('open');
+    });
+    return card;
+  };
+
+  const sortGroup = items => items.sort((a,b) => {
+    const ai = a.datas.length > 0 ? cultos.findIndex(c => c.data === a.datas[0]) : 999;
+    const bi = b.datas.length > 0 ? cultos.findIndex(c => c.data === b.datas[0]) : 999;
+    return ai !== bi ? ai - bi : b.cnt - a.cnt;
+  });
+
+  const makeGroup = (title, items) => {
+    if (!items.length) return null;
+    const wrap = document.createElement('div');
+    wrap.className = 'pc-group';
+    wrap.innerHTML = `<div class="pc-group-hdr">${esc(title)}<span class="pc-group-cnt">${items.length}</span></div>`;
+    items.forEach(({ p, cnt, datas }) => wrap.appendChild(makeCard(p, cnt, datas)));
+    return wrap;
+  };
+
+  const ministrantes = sortGroup(pessoas.map(p => {
+    const datas = p.datas.filter(d => p.aparicoesPorCulto[d].includes('Ministrou'));
+    return { p, cnt: datas.length, datas };
+  }).filter(x => x.cnt > 0));
+
+  const vozes = sortGroup(pessoas.map(p => {
+    const datas = p.datas.filter(d =>
+      p.aparicoesPorCulto[d].includes('Voz') && !p.aparicoesPorCulto[d].includes('Ministrou')
+    );
+    return { p, cnt: datas.length, datas };
+  }).filter(x => x.cnt > 0));
+
+  const instrumentistas = sortGroup(pessoas.map(p => {
+    const datas = p.datas.filter(d =>
+      p.aparicoesPorCulto[d].some(r => r !== 'Ministrou' && r !== 'Voz')
+    );
+    return { p, cnt: datas.length, datas };
+  }).filter(x => x.cnt > 0));
+
+  const section = document.createElement('div');
+  section.className = 'dados-section';
+  [makeGroup('Ministrantes', ministrantes), makeGroup('Vozes', vozes), makeGroup('Instrumentistas', instrumentistas)]
+    .filter(Boolean).forEach(g => section.appendChild(g));
+  body.appendChild(section);
+}
+
+function renderGraficos(body) {
+  const cultosArr = graficosFilter === 'ultimos10' ? cultos.slice(0,10) : cultos;
+
+  // agrupar por instrumento/função
+  const instrs = {};
+  cultosArr.forEach(c => {
+    const add = (nome, role) => {
+      nome = nome.trim(); if (!nome) return;
+      const key = normalizarNome(nome);
+      if (!instrs[role]) instrs[role] = {};
+      if (!instrs[role][key]) instrs[role][key] = { nome, cnt: 0 };
+      instrs[role][key].cnt++;
+    };
+    if (c.ministra) add(c.ministra, 'Ministrou');
+    if (c.vozes) c.vozes.split(/,| e /i).map(v => v.trim()).filter(Boolean).forEach(v => add(v, 'Voz'));
+    if (c.musicos) c.musicos.split(',').forEach(entry => {
+      const parts = entry.split(':');
+      if (parts.length >= 2) {
+        const instr = parts[0].trim();
+        parts.slice(1).join(':').split(/ e /i).map(n => n.trim()).filter(Boolean).forEach(n => add(n, instr));
+      }
+    });
+  });
+
+  // ordenar instrumentos por total de participações
+  const instrOrder = Object.entries(instrs)
+    .map(([role, pessoas]) => ({ role, total: Object.values(pessoas).reduce((s,p)=>s+p.cnt,0) }))
+    .sort((a,b) => b.total - a.total)
+    .map(x => x.role);
+
+  body.innerHTML = '';
+
+  instrOrder.forEach((role) => {
+    const pessoas = Object.values(instrs[role]).sort((a,b) => b.cnt - a.cnt);
+    const max = pessoas[0]?.cnt || 1;
+
+    const block = document.createElement('div');
+    block.className = 'instr-block';
+
+    block.innerHTML = `<div class="instr-title">${esc(role)}</div><div class="bars-wrap"></div>`;
+    const wrap = block.querySelector('.bars-wrap');
+
+    pessoas.forEach((p, idx) => {
+      const pct = Math.round((p.cnt / max) * 100);
+      const opacity = Math.max(0.35, 1 - idx * 0.18).toFixed(2);
+      const row = document.createElement('div');
+      row.className = 'bar-row';
+      row.innerHTML = `<div class="bar-dot" style="opacity:${opacity};"></div><span class="bar-name" style="opacity:${opacity};">${esc(p.nome)}</span><div class="bar-track"><div class="bar-fill" style="width:${pct}%;opacity:${opacity};"></div></div><span class="bar-count">${p.cnt}</span>`;
+      wrap.appendChild(row);
+    });
+    body.appendChild(block);
+  });
+}
+// ═══════════════════════════════════════
 // ENSAIO
 // ═══════════════════════════════════════
-const HOLYRICS_URL='http://10.10.10.44:8060/view/standard';
+const HOLYRICS_URL = 'http://10.10.10.44:8060/view/standard';
 const LOADING_MSGS=['Afinando as cordas…','Buscando cifras no Drive…','Preparando o setlist…','Quase lá…','Carregando partituras…','Chegando já…'];
 let ensaioMusicas=[],ensaioIdx=0,ensaioWakeLock=null,loadingMsgInterval=null;
 let touchStartX=0,touchStartY=0,ensaioPerfil=null;
