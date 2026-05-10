@@ -330,65 +330,31 @@ body::after {
 #panel-dados { position: fixed; inset: 0; z-index: 1; background: #0d0d0d; overflow-y: auto; -webkit-overflow-scrolling: touch; padding-top: 56px; }
 #panel-dados.active { display: block; }
 
-.dados-heading { padding: 16px 16px 0; display: flex; align-items: baseline; justify-content: space-between; }
-.dados-heading-title { font-family: 'Instrument Serif', serif; font-size: 22px; color: #fff; }
+.dados-hero { padding: 20px 16px 16px; border-bottom: 0.5px solid rgba(255,255,255,0.07); }
+.dados-hero-eyebrow { font-size: 11px; font-weight: 500; color: #7BBF45; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 4px; }
+.dados-hero-title { font-family: 'Instrument Serif', serif; font-size: 26px; color: #fff; font-style: italic; margin-bottom: 4px; }
+.dados-hero-sub { font-size: 12px; color: rgba(255,255,255,0.32); }
 
-.dados-subtabs { display: flex; border-bottom: 0.5px solid rgba(255,255,255,0.07); margin-bottom: 0; }
-.dados-subtab { flex: 1; text-align: center; padding: 12px 4px; font-size: 12px; font-weight: 500; color: rgba(255,255,255,0.35); cursor: pointer; border-bottom: 2px solid transparent; -webkit-tap-highlight-color: transparent; transition: color 0.15s; }
-.dados-subtab.active { color: #7BBF45; border-bottom-color: #7BBF45; }
+.dados-dot-legend { display: flex; align-items: center; gap: 8px; padding: 10px 16px 8px; border-bottom: 0.5px solid rgba(255,255,255,0.06); }
+.dados-dot-legend-lbl { font-size: 10px; color: rgba(255,255,255,0.25); }
+.dados-dot-legend-dots { display: flex; gap: 3px; margin: 0 auto; }
 
-.dados-section { padding: 16px; }
-.dados-section-lbl { font-size: 10px; font-weight: 500; color: rgba(255,255,255,0.25); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 12px; }
-.pc-group { margin-bottom: 18px; }
-.pc-group-hdr { font-size: 9px; font-weight: 600; color: rgba(255,255,255,0.28); text-transform: uppercase; letter-spacing: .1em; padding: 4px 0 6px; display: flex; align-items: center; gap: 6px; }
-.pc-group-cnt { color: rgba(255,255,255,0.18); font-weight: 400; }
-.pc-group-hdr::after { content:''; flex:1; height:0.5px; background:rgba(255,255,255,0.1); }
+.dados-role-group { border-bottom: 0.5px solid rgba(255,255,255,0.07); padding-bottom: 8px; }
+.dados-role-hdr { padding: 14px 16px 6px; display: flex; align-items: center; gap: 6px; }
+.dados-role-name { font-size: 10px; font-weight: 500; color: rgba(255,255,255,0.3); text-transform: uppercase; letter-spacing: 0.09em; }
+.dados-role-count { font-size: 10px; color: rgba(255,255,255,0.16); }
 
-/* ministrantes */
-.min-row { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
-.min-name { font-size: 13px; color: #fff; min-width: 62px; }
-.min-track { flex: 1; height: 8px; background: rgba(255,255,255,0.07); border-radius: 99px; overflow: hidden; }
-.min-fill { height: 100%; border-radius: 99px; }
-.min-count { font-size: 12px; color: rgba(255,255,255,0.38); min-width: 30px; text-align: right; }
-
-/* participações */
-.pc-card { background: rgba(255,255,255,0.05); border: 0.5px solid rgba(255,255,255,0.09); border-radius: 10px; margin-bottom: 8px; overflow: hidden; cursor: pointer; -webkit-tap-highlight-color: transparent; }
-.pc-card.open { border-color: rgba(255,255,255,0.18); }
-.pc-summary { display: flex; align-items: center; gap: 10px; padding: 10px 12px; }
-.pc-rank { font-size: 11px; color: rgba(255,255,255,0.2); min-width: 18px; text-align: right; flex-shrink: 0; }
-.pc-avatar { width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 500; flex-shrink: 0; }
-.pc-info { flex: 1; min-width: 0; }
-.pc-main { flex: 1; min-width: 0; }
-.pc-name { font-size: 14px; font-weight: 500; color: #fff; letter-spacing: -0.01em; }
-.pc-sub { font-size: 11px; color: rgba(255,255,255,0.38); margin-top: 2px; }
-.pc-ago { font-size: 10px; color: rgba(255,255,255,0.28); margin-top: 1px; }
-.pc-right { flex-shrink: 0; margin-right: 4px; }
-.pc-count { font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.6); }
-.pc-total { font-size: 11px; color: rgba(255,255,255,0.28); flex-shrink: 0; }
-.pc-chevron { font-size: 12px; color: rgba(255,255,255,0.25); transition: transform 0.2s; flex-shrink: 0; }
-.pc-card.open .pc-chevron { transform: rotate(90deg); }
-.pc-tags { display: flex; gap: 5px; flex-wrap: wrap; padding: 0 12px 10px; }
-.pc-tag { font-size: 10px; font-weight: 500; padding: 3px 8px; border-radius: 99px; }
-.pc-expand { display: none; border-top: 0.5px solid rgba(255,255,255,0.07); padding: 10px 12px 12px; background: rgba(0,0,0,0.2); }
-.pc-card.open .pc-expand { display: block; }
-.pc-expand-lbl { font-size: 10px; color: rgba(255,255,255,0.25); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 7px; }
-.pc-hist-row { display: flex; align-items: center; padding: 5px 0; border-bottom: 0.5px solid rgba(255,255,255,0.06); font-size: 12px; }
-.pc-hist-row:last-child { border-bottom: none; }
-.pc-hist-date { color: rgba(255,255,255,0.4); min-width: 64px; }
-.pc-hist-role { color: rgba(255,255,255,0.7); flex: 1; }
-.pc-hist-ago { color: rgba(255,255,255,0.25); font-size: 10px; text-align: right; flex-shrink: 0; }
-
-/* gráficos */
-.instr-block { padding: 10px 16px; }
-.instr-block + .instr-block { border-top: 0.5px solid rgba(255,255,255,0.07); }
-.instr-title { font-size: 9px; font-weight: 500; color: rgba(255,255,255,0.25); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 6px; }
-.bars-wrap { display: flex; flex-direction: column; gap: 6px; }
-.bar-row { display: flex; align-items: center; gap: 7px; }
-.bar-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; background: #7BBF45; }
-.bar-name { font-size: 12px; color: rgba(255,255,255,0.7); min-width: 56px; flex-shrink: 0; }
-.bar-track { flex: 1; height: 6px; background: rgba(255,255,255,0.07); border-radius: 99px; overflow: hidden; }
-.bar-fill { height: 100%; border-radius: 99px; background: #7BBF45; }
-.bar-count { font-size: 11px; font-weight: 500; color: rgba(255,255,255,0.4); min-width: 18px; text-align: right; flex-shrink: 0; }
+.dados-person-row { display: flex; align-items: center; gap: 10px; padding: 7px 16px; border-top: 0.5px solid rgba(255,255,255,0.04); }
+.dados-person-avatar { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 500; flex-shrink: 0; }
+.dados-person-name { font-size: 13px; color: #fff; flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.dados-person-dots { display: flex; gap: 3px; flex-shrink: 0; }
+.pdot { width: 7px; height: 7px; border-radius: 50%; }
+.pdot.on { background: #7BBF45; }
+.pdot.off { background: rgba(255,255,255,0.1); }
+.dados-ago-badge { font-size: 10px; font-weight: 500; padding: 2px 7px; border-radius: 99px; flex-shrink: 0; white-space: nowrap; }
+.dados-ago-badge.green { background: rgba(123,191,69,0.15); color: #7BBF45; }
+.dados-ago-badge.yellow { background: rgba(244,168,53,0.15); color: #F4A835; }
+.dados-ago-badge.red { background: rgba(224,96,80,0.15); color: #E06050; }
 
 @keyframes ensaio-pulse { 0%,100%{transform:scale(1);opacity:1;}50%{transform:scale(1.1);opacity:0.75;} }
 @keyframes ensaio-dot { 0%,80%,100%{transform:scale(0.6);opacity:0.4;}40%{transform:scale(1);opacity:1;} }
@@ -536,46 +502,28 @@ let musicas = [], cultos = [];
 let filtroNuncaUsadas = false, ordenarPorRecente = false;
 
 // ═══════════════════════════════════════
-// PLAYER GLOBAL
+// PLAYER — usado pelo Cultos
 // ═══════════════════════════════════════
 const gPlayer = {
   audio: null,
   url: null,
-  muted: false,
   nome: '',
   artista: '',
 
   play(url, nome, artista) {
     if (this.audio) { this.audio.pause(); this.audio.src = ''; }
-    const cfAudio = document.getElementById('cf-audio');
-    if (cfAudio && !cfAudio.paused) {
-      cfAudio.pause(); cfAudio.src = '';
-      document.getElementById('cf-audio-bar').style.display = 'none';
-      document.getElementById('cf-player-strip').classList.add('hidden');
-      document.getElementById('cfps-play-icon').innerHTML = '<path d="M8 5v14l11-7z"/>';
-    }
     this.url = url; this.nome = nome; this.artista = artista;
     this.audio = new Audio(url);
-    this.audio.muted = this.muted;
     this.audio.play().catch(() => {});
     this.audio.addEventListener('timeupdate', () => this._tick());
     this.audio.addEventListener('loadedmetadata', () => this._tick());
-    this.audio.addEventListener('ended', () => {
-      this._updateIcons(false);
-    });
-    this._updateMuteIcons();
+    this.audio.addEventListener('ended', () => { this._updateIcons(false); });
   },
 
-  pause() { if (this.audio) this.audio.pause(); this._updateIcons(false); },
+  pause()  { if (this.audio) this.audio.pause(); this._updateIcons(false); },
   resume() { if (this.audio) { this.audio.play(); this._updateIcons(true); } },
   isPlaying() { return this.audio && !this.audio.paused; },
   togglePlayPause() { if (!this.audio) return; if (this.audio.paused) this.resume(); else this.pause(); },
-
-  muteToggle() {
-    this.muted = !this.muted;
-    if (this.audio) this.audio.muted = this.muted;
-    this._updateMuteIcons();
-  },
 
   _tick() {
     if (!this.audio) return;
@@ -593,14 +541,12 @@ const gPlayer = {
   },
 
   _updateIcons(playing) {
-    const pauseSVG = '<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>';
-    const playSVG  = '<path d="M8 5v14l11-7z"/>';
+    const icon = document.getElementById('cultos-player-icon');
+    if (!icon) return;
+    icon.innerHTML = playing
+      ? '<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>'
+      : '<path d="M8 5v14l11-7z"/>';
   },
-
-  _updateMuteIcons() {
-    const onSVG  = '<path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/>';
-    const offSVG = '<path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>';
-  }
 };
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -695,10 +641,10 @@ const CF_GRADIENTS = [
   ['#2a0a2a','#D4537E'],['#0a2a2a','#1D9E75'],['#1a0a1a','#B7509E'],
   ['#0a1a2a','#4A7C28'],['#2a1a0a','#BA7517'],['#1a2a1a','#3B6D11'],
 ];
-// fila de covers: processa 2 por vez pra não sobrecarregar o Netlify
+
+const CF_CONCURRENCY = 10;
 const cfQueue = [];
 let cfQueueRunning = 0;
-const CF_CONCURRENCY = 2;
 
 function cfBuscarCapaQueued(musica) {
   const key = musica.nome+'|'+musica.artista;
@@ -726,11 +672,12 @@ async function cfBuscarCapa(musica) {
   const key = musica.nome+'|'+musica.artista;
   if (cfCovers[key] !== undefined) return cfCovers[key];
   cfCovers[key] = null;
-  const q = (musica.nome+' '+musica.artista).trim();
   try {
+    const params = new URLSearchParams({ nome: musica.nome });
+    if (musica.artista) params.append('artista', musica.artista);
     const r = await Promise.race([
-      fetch(`/.netlify/functions/itunes?q=${encodeURIComponent(q)}`),
-      new Promise((_,rej) => setTimeout(()=>rej(),5000))
+      fetch(`/.netlify/functions/itunes?${params}`),
+      new Promise((_,rej) => setTimeout(()=>rej(),6000))
     ]);
     const d = await r.json();
     if (d.results?.length > 0) {
@@ -794,8 +741,7 @@ function buildMusicaRow(m) {
 
   row.querySelector('.ml-summary').addEventListener('click', () => mlToggle(row, m));
 
-  // lazy load via fila (evita 50+ requests simultâneos)
-  if (cfCovers[m.nome+'|'+m.artista] === undefined) {
+  if (cover === undefined) {
     cfBuscarCapaQueued(m).then(c => {
       if (!c?.img) return;
       const coverEl = row.querySelector('.ml-cover');
@@ -840,7 +786,6 @@ function mlToggle(row, m) {
   const spotifyUrl = midias.find(u=>u.includes('spotify.com'))||null;
   const youtubeUrl = midias.find(u=>u.includes('youtu'))||null;
 
-  // SVG logos
   const spotifySVG = `<svg width="22" height="22" viewBox="0 0 24 24" fill="#fff"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.586 14.424a.623.623 0 01-.857.207c-2.348-1.435-5.304-1.76-8.785-.964a.623.623 0 01-.277-1.215c3.809-.87 7.077-.496 9.712 1.115a.623.623 0 01.207.857zm1.223-2.722a.78.78 0 01-1.072.257C14.01 12.327 10.61 11.95 7.7 12.78a.78.78 0 01-.45-1.493c3.306-.998 7.113-.515 9.782 1.143a.78.78 0 01.257 1.072zm.105-2.835C15.001 9.15 10.757 9.007 8.078 9.803a.937.937 0 11-.543-1.794c3.064-.929 7.856-.75 10.952 1.197a.938.938 0 01-.573 1.661z"/></svg>`;
   const youtubeSVG = `<svg width="22" height="22" viewBox="0 0 24 24" fill="#fff"><path d="M23.495 6.205a3.007 3.007 0 00-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 00.527 6.205a31.247 31.247 0 00-.522 5.805 31.247 31.247 0 00.522 5.783 3.007 3.007 0 002.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 002.088-2.088 31.247 31.247 0 00.5-5.783 31.247 31.247 0 00-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/></svg>`;
 
@@ -968,7 +913,6 @@ function toggleCultoRow(rowEl, culto) {
   const expand = rowEl.querySelector('.cultos-expand');
   const isOpen = rowEl.classList.contains('open');
 
-  // fecha todos
   document.querySelectorAll('#cultos-list .cultos-row.open').forEach(r => {
     r.classList.remove('open');
     const ex = r.querySelector('.cultos-expand');
@@ -981,7 +925,6 @@ function toggleCultoRow(rowEl, culto) {
   rowEl.classList.add('open');
   expand.classList.add('open');
 
-  // seção Vozes
   if (culto.vozes) {
     const lbl = document.createElement('div');
     lbl.className = 'cultos-section-lbl';
@@ -993,7 +936,6 @@ function toggleCultoRow(rowEl, culto) {
     expand.appendChild(row);
   }
 
-  // seção Músicos
   if (culto.musicos) {
     const lbl = document.createElement('div');
     lbl.className = 'cultos-section-lbl';
@@ -1022,7 +964,6 @@ function toggleCultoRow(rowEl, culto) {
     expand.appendChild(grid);
   }
 
-  // seção Músicas
   const lbl = document.createElement('div');
   lbl.className = 'cultos-section-lbl';
   lbl.textContent = 'Músicas';
@@ -1077,7 +1018,6 @@ function handleCultoMp3(btn, url, nome) {
   cultoAudioBtn = btn;
   btn.textContent = '⏸ MP3';
   btn.classList.add('playing');
-  // mostra player bar
   const playerEl = document.getElementById('cultos-player');
   const playerName = document.getElementById('cultos-player-name');
   if (playerEl) { playerEl.classList.add('vis'); document.getElementById('panel-cultos').style.paddingBottom = '84px'; }
@@ -1166,11 +1106,8 @@ function showTab(id, btn) {
 }
 
 // ═══════════════════════════════════════
-// DADOS
+// DADOS — ABA PLANEJAMENTO
 // ═══════════════════════════════════════
-let dadosActiveTab = 'pessoas';
-let graficosFilter = 'ultimos10';
-
 const PERSON_COLORS = {
   'gabi':   { bg:'rgba(99,153,34,0.2)',   color:'#7BBF45' },
   'pamela': { bg:'rgba(155,140,192,0.2)', color:'#9B8CC0' },
@@ -1190,9 +1127,8 @@ const personColorCache = {};
 let personColorIdx = 0;
 
 function getPersonColor(nome) {
-  const key = nome.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+  const key = (nome||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
   if (personColorCache[key]) return personColorCache[key];
-  // check named colors
   const named = PERSON_COLORS[nome.toLowerCase()];
   if (named) { personColorCache[key] = named; return named; }
   const c = PERSON_COLOR_POOL[personColorIdx % PERSON_COLOR_POOL.length];
@@ -1205,192 +1141,113 @@ function normalizarNome(n) {
   return (n||'').trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
 }
 
-function buildPessoasMap(cultosArr) {
-  const map = {}; // chave: nome normalizado → { nomeDisplay, aparicoesPorCulto: {data: [role]} }
-  const addRole = (nome, role, data) => {
-    nome = nome.trim();
-    if (!nome) return;
-    const key = normalizarNome(nome);
-    if (!map[key]) map[key] = { nomeDisplay: nome, aparicoesPorCulto: {} };
-    // manter o nome mais frequente (com maiúscula/acento correto)
-    if (!map[key].aparicoesPorCulto[data]) map[key].aparicoesPorCulto[data] = [];
-    if (!map[key].aparicoesPorCulto[data].includes(role))
-      map[key].aparicoesPorCulto[data].push(role);
-  };
-
-  cultosArr.forEach(c => {
-    if (c.ministra) addRole(c.ministra, 'Ministrou', c.data);
-    if (c.vozes) c.vozes.split(/,| e /i).map(v => v.trim()).filter(Boolean).forEach(v => addRole(v, 'Voz', c.data));
-    if (c.musicos) c.musicos.split(',').forEach(entry => {
-      const parts = entry.split(':');
-      if (parts.length >= 2) {
-        const instr = parts[0].trim();
-        // suporte a "Instrumento: João e Gil"
-        parts.slice(1).join(':').split(/ e /i).map(n => n.trim()).filter(Boolean).forEach(n => addRole(n, instr, c.data));
-      }
-    });
-  });
-
-  return Object.values(map).map(p => {
-    const datas = Object.keys(p.aparicoesPorCulto).sort((a,b) => parseDataBR(b)-parseDataBR(a));
-    const totalCultos = datas.length;
-    const lastData = datas[0] || '';
-    const lastIdx = cultos.findIndex(c => c.data === lastData);
-    const agoStr = lastIdx === 0 ? 'Último culto' : lastIdx > 0 ? `${lastIdx} culto${lastIdx!==1?'s':''} atrás` : '—';
-    // roles únicos agregados
-    const allRoles = {};
-    datas.forEach(d => p.aparicoesPorCulto[d].forEach(r => allRoles[r] = (allRoles[r]||0)+1));
-    return { ...p, datas, totalCultos, lastData, lastIdx, agoStr, allRoles };
-  }).sort((a,b) => {
-    if (a.lastIdx !== b.lastIdx) return a.lastIdx - b.lastIdx; // mais recente primeiro (menor idx)
-    return b.totalCultos - a.totalCultos;
-  });
-}
-
 function renderDados() {
   const panel = document.getElementById('panel-dados');
   panel.innerHTML = `
-    <div class="dados-heading"><span class="dados-heading-title">Dados</span></div>
+    <div class="dados-hero">
+      <div class="dados-hero-eyebrow">Ministério de Louvor</div>
+      <div class="dados-hero-title">Quem convocar?</div>
+      <div class="dados-hero-sub">Ordenado por quem toca há mais tempo · ${cultos.length} cultos registrados</div>
+    </div>
+    <div class="dados-dot-legend">
+      <span class="dados-dot-legend-lbl">+ antigo</span>
+      <div class="dados-dot-legend-dots" id="dados-legend-dots"></div>
+      <span class="dados-dot-legend-lbl">+ recente</span>
+    </div>
     <div id="dados-body"></div>`;
-  renderPessoas(document.getElementById('dados-body'));
+
+  const legendDots = document.getElementById('dados-legend-dots');
+  for (let i = 0; i < 6; i++) {
+    const d = document.createElement('div');
+    d.className = 'pdot ' + (i >= 4 ? 'on' : 'off');
+    legendDots.appendChild(d);
+  }
+
+  renderRosterByRole(document.getElementById('dados-body'));
 }
 
-function renderPessoas(body) {
-  const pessoas = buildPessoasMap(cultos);
-  body.innerHTML = '';
+function renderRosterByRole(body) {
+  const N = 6;
 
-  const getInitials = nome => {
-    const w = nome.split(' ').filter(x => x.length > 0);
-    return w.length >= 2 ? (w[0][0] + w[1][0]).toUpperCase() : nome.slice(0,2).toUpperCase();
+  const roleMap = {};
+  const addPerson = (nome, role, idx) => {
+    nome = nome.trim();
+    if (!nome) return;
+    if (!roleMap[role]) roleMap[role] = {};
+    const key = normalizarNome(nome);
+    if (!roleMap[role][key]) roleMap[role][key] = { nome, appearances: new Set() };
+    roleMap[role][key].appearances.add(idx);
   };
 
-  const makeCard = (p, cnt, groupDatas) => {
-    const col = getPersonColor(p.nomeDisplay);
-    const lastIdx = groupDatas.length > 0 ? cultos.findIndex(c => c.data === groupDatas[0]) : -1;
-    const agoStr = lastIdx === 0 ? 'último culto' : lastIdx > 0 ? `${lastIdx} culto${lastIdx!==1?'s':''} atrás` : '—';
-    const card = document.createElement('div');
-    card.className = 'pc-card';
-    card.innerHTML = `
-      <div class="pc-summary">
-        <div class="pc-avatar" style="background:${col.bg};color:${col.color};">${getInitials(p.nomeDisplay)}</div>
-        <div class="pc-main">
-          <div class="pc-name">${esc(p.nomeDisplay)}</div>
-          <div class="pc-sub">${esc(agoStr)}</div>
-        </div>
-        <div class="pc-right"><div class="pc-count">${cnt}×</div></div>
-        <span class="pc-chevron">›</span>
-      </div>
-      <div class="pc-expand">
-        <div class="pc-expand-lbl">Últimas participações</div>
-        ${p.datas.slice(0,3).map(data => {
-          const roles = p.aparicoesPorCulto[data].join(' · ');
-          const idx = cultos.findIndex(c => c.data === data);
-          const ago = idx === 0 ? 'último' : idx > 0 ? `${idx} culto${idx!==1?'s':''} atrás` : '—';
-          return `<div class="pc-hist-row"><span class="pc-hist-date">${esc(data)}</span><span class="pc-hist-role">${esc(roles)}</span><span class="pc-hist-ago">${ago}</span></div>`;
-        }).join('')}
-      </div>`;
-    card.querySelector('.pc-summary').addEventListener('click', () => {
-      const isOpen = card.classList.contains('open');
-      body.querySelectorAll('.pc-card.open').forEach(c => c.classList.remove('open'));
-      if (!isOpen) card.classList.add('open');
-    });
-    return card;
-  };
-
-  const sortGroup = items => items.sort((a,b) => {
-    const ai = a.datas.length > 0 ? cultos.findIndex(c => c.data === a.datas[0]) : 999;
-    const bi = b.datas.length > 0 ? cultos.findIndex(c => c.data === b.datas[0]) : 999;
-    return ai !== bi ? ai - bi : b.cnt - a.cnt;
-  });
-
-  const makeGroup = (title, items) => {
-    if (!items.length) return null;
-    const wrap = document.createElement('div');
-    wrap.className = 'pc-group';
-    wrap.innerHTML = `<div class="pc-group-hdr">${esc(title)}<span class="pc-group-cnt">${items.length}</span></div>`;
-    items.forEach(({ p, cnt, datas }) => wrap.appendChild(makeCard(p, cnt, datas)));
-    return wrap;
-  };
-
-  const ministrantes = sortGroup(pessoas.map(p => {
-    const datas = p.datas.filter(d => p.aparicoesPorCulto[d].includes('Ministrou'));
-    return { p, cnt: datas.length, datas };
-  }).filter(x => x.cnt > 0));
-
-  const vozes = sortGroup(pessoas.map(p => {
-    const datas = p.datas.filter(d =>
-      p.aparicoesPorCulto[d].includes('Voz') && !p.aparicoesPorCulto[d].includes('Ministrou')
-    );
-    return { p, cnt: datas.length, datas };
-  }).filter(x => x.cnt > 0));
-
-  const instrumentistas = sortGroup(pessoas.map(p => {
-    const datas = p.datas.filter(d =>
-      p.aparicoesPorCulto[d].some(r => r !== 'Ministrou' && r !== 'Voz')
-    );
-    return { p, cnt: datas.length, datas };
-  }).filter(x => x.cnt > 0));
-
-  const section = document.createElement('div');
-  section.className = 'dados-section';
-  [makeGroup('Ministrantes', ministrantes), makeGroup('Vozes', vozes), makeGroup('Instrumentistas', instrumentistas)]
-    .filter(Boolean).forEach(g => section.appendChild(g));
-  body.appendChild(section);
-}
-
-function renderGraficos(body) {
-  const cultosArr = graficosFilter === 'ultimos10' ? cultos.slice(0,10) : cultos;
-
-  // agrupar por instrumento/função
-  const instrs = {};
-  cultosArr.forEach(c => {
-    const add = (nome, role) => {
-      nome = nome.trim(); if (!nome) return;
-      const key = normalizarNome(nome);
-      if (!instrs[role]) instrs[role] = {};
-      if (!instrs[role][key]) instrs[role][key] = { nome, cnt: 0 };
-      instrs[role][key].cnt++;
-    };
-    if (c.ministra) add(c.ministra, 'Ministrou');
-    if (c.vozes) c.vozes.split(/,| e /i).map(v => v.trim()).filter(Boolean).forEach(v => add(v, 'Voz'));
+  cultos.forEach((c, idx) => {
+    if (c.ministra) addPerson(c.ministra, 'Ministrou', idx);
+    if (c.vozes) c.vozes.split(/,| e /i).map(v => v.trim()).filter(Boolean).forEach(v => addPerson(v, 'Voz', idx));
     if (c.musicos) c.musicos.split(',').forEach(entry => {
       const parts = entry.split(':');
       if (parts.length >= 2) {
         const instr = parts[0].trim();
-        parts.slice(1).join(':').split(/ e /i).map(n => n.trim()).filter(Boolean).forEach(n => add(n, instr));
+        parts.slice(1).join(':').split(/ e /i).map(n => n.trim()).filter(Boolean).forEach(n => addPerson(n, instr, idx));
       }
     });
   });
 
-  // ordenar instrumentos por total de participações
-  const instrOrder = Object.entries(instrs)
-    .map(([role, pessoas]) => ({ role, total: Object.values(pessoas).reduce((s,p)=>s+p.cnt,0) }))
-    .sort((a,b) => b.total - a.total)
-    .map(x => x.role);
+  const fixedOrder = ['Ministrou', 'Voz'];
+  const otherRoles = Object.keys(roleMap).filter(r => !fixedOrder.includes(r)).sort();
+  const roleOrder = [...fixedOrder.filter(r => roleMap[r]), ...otherRoles];
+
+  const getInitials = nome => {
+    const w = nome.split(' ').filter(Boolean);
+    return w.length >= 2 ? (w[0][0] + w[1][0]).toUpperCase() : nome.slice(0, 2).toUpperCase();
+  };
 
   body.innerHTML = '';
 
-  instrOrder.forEach((role) => {
-    const pessoas = Object.values(instrs[role]).sort((a,b) => b.cnt - a.cnt);
-    const max = pessoas[0]?.cnt || 1;
+  roleOrder.forEach(role => {
+    if (!roleMap[role]) return;
 
-    const block = document.createElement('div');
-    block.className = 'instr-block';
+    const people = Object.values(roleMap[role])
+      .map(p => ({ ...p, lastIdx: Math.min(...p.appearances) }))
+      .sort((a, b) => b.lastIdx - a.lastIdx);
 
-    block.innerHTML = `<div class="instr-title">${esc(role)}</div><div class="bars-wrap"></div>`;
-    const wrap = block.querySelector('.bars-wrap');
+    const group = document.createElement('div');
+    group.className = 'dados-role-group';
 
-    pessoas.forEach((p, idx) => {
-      const pct = Math.round((p.cnt / max) * 100);
-      const opacity = Math.max(0.35, 1 - idx * 0.18).toFixed(2);
+    const hdr = document.createElement('div');
+    hdr.className = 'dados-role-hdr';
+    hdr.innerHTML = `<span class="dados-role-name">${esc(role)}</span><span class="dados-role-count">${people.length}</span>`;
+    group.appendChild(hdr);
+
+    people.forEach(p => {
+      const col = getPersonColor(p.nome);
       const row = document.createElement('div');
-      row.className = 'bar-row';
-      row.innerHTML = `<div class="bar-dot" style="opacity:${opacity};"></div><span class="bar-name" style="opacity:${opacity};">${esc(p.nome)}</span><div class="bar-track"><div class="bar-fill" style="width:${pct}%;opacity:${opacity};"></div></div><span class="bar-count">${p.cnt}</span>`;
-      wrap.appendChild(row);
+      row.className = 'dados-person-row';
+
+      // Dots: left = oldest, right = most recent
+      // cultos[0] = most recent (idx 0), cultos[N-1] = oldest shown (idx N-1)
+      // Dot position 0 (leftmost) = cultoIdx N-1, dot position N-1 (rightmost) = cultoIdx 0
+      const dotsHtml = Array.from({length: N}, (_, i) => {
+        const cultoIdx = N - 1 - i;
+        const present = p.appearances.has(cultoIdx);
+        return `<div class="pdot ${present ? 'on' : 'off'}"></div>`;
+      }).join('');
+
+      const lastIdx = p.lastIdx;
+      const badgeClass = lastIdx === 0 ? 'green' : lastIdx <= 2 ? 'yellow' : 'red';
+      const badgeText = lastIdx === 0 ? 'último' : `${lastIdx} atrás`;
+
+      row.innerHTML = `
+        <div class="dados-person-avatar" style="background:${col.bg};color:${col.color};">${getInitials(p.nome)}</div>
+        <span class="dados-person-name">${esc(p.nome)}</span>
+        <div class="dados-person-dots">${dotsHtml}</div>
+        <div class="dados-ago-badge ${badgeClass}">${badgeText}</div>`;
+
+      group.appendChild(row);
     });
-    body.appendChild(block);
+
+    body.appendChild(group);
   });
 }
+
 // ═══════════════════════════════════════
 // ENSAIO
 // ═══════════════════════════════════════
