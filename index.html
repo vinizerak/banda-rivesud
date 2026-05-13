@@ -759,7 +759,7 @@ function buildMusicaRow(m) {
     cfBuscarCapaQueued(m).then(c => {
       if (!c?.img) return;
       const coverEl = row.querySelector('.ml-cover');
-      if (coverEl) { coverEl.style.backgroundImage = `url('${c.img}')`; coverEl.textContent = ''; }
+      if (coverEl) {   coverEl.style.backgroundImage = '';   coverEl.style.background = 'none';   coverEl.style.position = 'relative';   coverEl.style.overflow = 'hidden';   coverEl.innerHTML = `<img src="${c.img}" style="width:42px;height:42px;border-radius:7px;object-fit:cover;display:block;position:absolute;top:0;left:0;">`; }
     });
   }
 
