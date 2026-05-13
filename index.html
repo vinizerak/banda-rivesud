@@ -696,7 +696,7 @@ async function cfBuscarCapa(musica) {
     const d = await r.json();
     if (d.results?.length > 0) {
       const item = d.results[0];
-      cfCovers[key] = { img:(item.artworkUrl100||'').replace('100x100bb','400x400bb') };
+      cfCovers[key] = { img: item.artworkUrl100 || '' };
       return cfCovers[key];
     }
   } catch(e) {}
