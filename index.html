@@ -138,7 +138,7 @@ body::after {
   height: 42px;
   border-radius: 7px; 
   flex-shrink: 0; 
-  background-size: contain; 
+  background-size: cover; 
   background-position: center; 
   background-repeat: no-repeat; 
   background-color: #1a1a1a; 
@@ -696,7 +696,7 @@ async function cfBuscarCapa(musica) {
     const d = await r.json();
     if (d.results?.length > 0) {
       const item = d.results[0];
-      cfCovers[key] = { img: item.artworkUrl100 || '' };
+      cfCovers[key] = { img: (item.artworkUrl100 || '').replace('100x100bb', '200x200bb') };
       return cfCovers[key];
     }
   } catch(e) {}
