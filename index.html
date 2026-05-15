@@ -111,19 +111,21 @@ body::after {
 }
 .cf-nav-pill.active { background: rgba(255,255,255,0.18); color: #fff; border-color: rgba(255,255,255,0.35); }
 .cf-nav-pill:hover:not(.active) { background: rgba(255,255,255,0.12); color: rgba(255,255,255,0.85); }
-.cf-search-row { display: flex; gap: 8px; }
+.cf-search-row { display: flex; flex-direction: column; gap: 8px; }
 .cf-search-input {
-  flex: 1; height: 38px; padding: 0 14px;
+  width: 100%; height: 38px; padding: 0 14px;
   background: rgba(255,255,255,0.1); border: 0.5px solid rgba(255,255,255,0.2);
   border-radius: 10px; font-size: 14px; font-family: 'DM Sans', sans-serif; color: #fff; outline: none;
 }
 .cf-search-input::placeholder { color: rgba(255,255,255,0.35); }
 .cf-search-input:focus { border-color: rgba(255,255,255,0.45); background: rgba(255,255,255,0.14); }
+.cf-filter-row { display: flex; gap: 8px; justify-content: center; }
 .cf-filter-btn {
-  height: 38px; padding: 0 12px;
+  height: 34px; padding: 0 14px;
   background: rgba(255,255,255,0.08); border: 0.5px solid rgba(255,255,255,0.18);
-  border-radius: 10px; font-size: 12px; font-family: 'DM Sans', sans-serif;
+  border-radius: 99px; font-size: 12px; font-family: 'DM Sans', sans-serif;
   color: rgba(255,255,255,0.55); cursor: pointer; white-space: nowrap; transition: all 0.15s;
+  flex-shrink: 0;
 }
 .cf-filter-btn.on { background: rgba(255,255,255,0.2); border-color: rgba(255,255,255,0.4); color: #fff; font-weight: 500; }
 
@@ -161,7 +163,7 @@ body::after {
 .ml-btn:active { opacity: 0.75; }
 .ml-btn.ml-spotify { background: #1DB954; }
 .ml-btn.ml-youtube { background: #FF0000; }
-.ml-btn.ml-cifra { background: rgba(255,255,255,0.08); border: 0.5px solid rgba(255,255,255,0.15); font-size: 12px; font-weight: 500; color: rgba(255,255,255,0.65); font-family: 'DM Sans', sans-serif; }
+.ml-btn.ml-cifra { background: rgba(255,255,255,0.08); border: 0.5px solid rgba(255,255,255,0.15); color: rgba(255,255,255,0.65); font-family: 'DM Sans', sans-serif; }
 .ml-btn.ml-cifra.disabled { opacity: 0.25; cursor: default; pointer-events: none; }
 .ml-btn.disabled-logo { opacity: 0.25; cursor: default; pointer-events: none; }
 .ml-btn svg { display: block; }
@@ -175,6 +177,21 @@ body::after {
 .ml-hist-date { color: rgba(255,255,255,0.35); }
 .ml-hist-lead { color: #fff; font-weight: 500; }
 .ml-hist-tom { background: rgba(255,255,255,0.07); border-radius: 4px; padding: 1px 6px; font-size: 10px; color: rgba(255,255,255,0.4); }
+.ml-hist-mp3 {
+  display: flex; align-items: center; gap: 5px;
+  padding: 4px 10px;
+  background: rgba(255,255,255,0.07);
+  border: 0.5px solid rgba(255,255,255,0.12);
+  border-radius: 99px;
+  font-size: 11px; font-weight: 500;
+  color: rgba(255,255,255,0.55);
+  font-family: 'DM Sans', sans-serif;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  -webkit-tap-highlight-color: transparent;
+  flex-shrink: 0;
+}
+.ml-hist-mp3:active { background: rgba(255,255,255,0.14); color: #fff; }
 
 /* ═══ ABA CULTOS — LISTA ═══ */
 #panel-cultos { position: fixed; inset: 0; z-index: 1; background: #0d0d0d; overflow-y: auto; -webkit-overflow-scrolling: touch; padding-top: 56px; }
@@ -296,61 +313,67 @@ body::after {
 
 #cultos-player-body {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
-  gap: 16px;
-  padding: 8px 16px 16px;
+  gap: 0;
+  padding: 16px 24px 20px;
   position: relative; z-index: 1;
-  flex-shrink: 0;
+  flex: 1;
+  min-height: 0;
+  justify-content: center;
 }
 #cultos-player-cover {
-  width: 72px; height: 72px;
+  width: min(220px, 55vw); height: min(220px, 55vw);
   background: linear-gradient(135deg, #534AB7, #7F77DD);
   background-size: cover;
   background-position: center;
-  border-radius: 10px;
+  border-radius: 16px;
   flex-shrink: 0;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.5);
+  box-shadow: 0 16px 48px rgba(0,0,0,0.6);
+  margin-bottom: 24px;
 }
 #cultos-player-info {
-  flex: 1; min-width: 0;
+  width: 100%; text-align: center;
   position: relative; z-index: 1;
+  margin-bottom: 20px;
 }
 #cultos-player-title {
-  font-size: 17px; font-weight: 500; color: #fff;
-  margin: 0 0 3px;
+  font-size: 20px; font-weight: 600; color: #fff;
+  margin: 0 0 4px;
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  font-family: 'DM Sans', sans-serif;
 }
 #cultos-player-artist {
-  font-size: 13px; color: rgba(255,255,255,0.55);
+  font-size: 14px; color: rgba(255,255,255,0.5);
   margin: 0;
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
 
 #cultos-player-buttons {
-  display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px;
-  padding: 0 16px 14px;
+  display: flex; gap: 28px; justify-content: center; align-items: center;
+  padding: 0 0 4px;
   position: relative; z-index: 1;
   flex-shrink: 0;
 }
 .cp-btn {
-  padding: 10px 8px;
-  background: rgba(255,255,255,0.09);
-  border: 0.5px solid rgba(255,255,255,0.15);
-  border-radius: 10px;
-  color: rgba(255,255,255,0.8);
-  font-size: 12px;
-  font-weight: 500;
+  width: 44px; height: 44px;
+  background: rgba(255,255,255,0.08);
+  border: 0.5px solid rgba(255,255,255,0.12);
+  border-radius: 50%;
+  color: rgba(255,255,255,0.65);
   cursor: pointer;
   transition: all 0.15s;
   -webkit-tap-highlight-color: transparent;
-  display: flex; align-items: center; justify-content: center; gap: 5px;
+  display: flex; align-items: center; justify-content: center;
   font-family: 'DM Sans', sans-serif;
+  flex-shrink: 0;
 }
 .cp-btn:active {
   background: rgba(255,255,255,0.18);
-  transform: scale(0.97);
+  transform: scale(0.95);
+  color: #fff;
 }
+.cp-btn.disabled { opacity: 0.25; pointer-events: none; }
 
 #cultos-player-scrubber {
   padding: 4px 16px 8px;
@@ -525,7 +548,7 @@ body::after {
   transition: color 0.15s;
 }
 
-/* ── ENSAIO ── */
+
 #panel-ensaio { display: none; padding-top: 76px; }
 #panel-ensaio.active { display: block; }
 .ensaio-choice-row { display: flex; gap: 12px; margin-bottom: 20px; padding: 0 16px; }
@@ -637,8 +660,10 @@ body::after {
     </div>
     <div class="cf-search-row">
       <input type="text" class="cf-search-input" id="search-musicas" placeholder="Buscar música ou artista…" oninput="renderMusicas()">
-      <button class="cf-filter-btn" id="filter-nuncausadas" onclick="toggleFiltro()">Nunca usadas</button>
-      <button class="cf-filter-btn" id="filter-recentes" onclick="toggleOrdenacao()">+ Recentes</button>
+      <div class="cf-filter-row">
+        <button class="cf-filter-btn" id="filter-nuncausadas" onclick="toggleFiltro()">Nunca usadas</button>
+        <button class="cf-filter-btn" id="filter-recentes" onclick="toggleOrdenacao()">+ Recentes</button>
+      </div>
     </div>
   </div>
   <div id="cf-count-badge"></div>
@@ -665,6 +690,10 @@ body::after {
     <button id="cultos-mini-play-btn" onclick="event.stopPropagation(); handleCultosPlayerToggle()">
       <svg id="cp-mini-play-icon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
     </button>
+    <div style="width:1px;height:24px;background:rgba(255,255,255,0.08);flex-shrink:0;"></div>
+    <div style="width:36px;height:36px;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:rgba(255,255,255,0.3);">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/></svg>
+    </div>
   </div>
   <div id="cultos-mini-scrubber">
     <div id="cultos-mini-fill"></div>
@@ -691,19 +720,19 @@ body::after {
   </div>
 
   <div id="cultos-player-buttons">
-    <button class="cp-btn" id="cp-btn-spotify" onclick="cultosBtnSpotify()">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.586 14.424a.623.623 0 01-.857.207c-2.348-1.435-5.304-1.76-8.785-.964a.623.623 0 01-.277-1.215c3.809-.87 7.077-.496 9.712 1.115a.623.623 0 01.207.857zm1.223-2.722a.78.78 0 01-1.072.257C14.01 12.327 10.61 11.95 7.7 12.78a.78.78 0 01-.45-1.493c3.306-.998 7.113-.515 9.782 1.143a.78.78 0 01.257 1.072zm.105-2.835C15.001 9.15 10.757 9.007 8.078 9.803a.937.937 0 11-.543-1.794c3.064-.929 7.856-.75 10.952 1.197a.938.938 0 01-.573 1.661z"/></svg>
-      Spotify
+    <button class="cp-btn" id="cp-btn-spotify" onclick="cultosBtnSpotify()" title="Spotify">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.586 14.424a.623.623 0 01-.857.207c-2.348-1.435-5.304-1.76-8.785-.964a.623.623 0 01-.277-1.215c3.809-.87 7.077-.496 9.712 1.115a.623.623 0 01.207.857zm1.223-2.722a.78.78 0 01-1.072.257C14.01 12.327 10.61 11.95 7.7 12.78a.78.78 0 01-.45-1.493c3.306-.998 7.113-.515 9.782 1.143a.78.78 0 01.257 1.072zm.105-2.835C15.001 9.15 10.757 9.007 8.078 9.803a.937.937 0 11-.543-1.794c3.064-.929 7.856-.75 10.952 1.197a.938.938 0 01-.573 1.661z"/></svg>
     </button>
-    <button class="cp-btn" id="cp-btn-cifra" onclick="cultosBtnCifra()">♩ Cifra</button>
-    <button class="cp-btn" id="cp-btn-youtube" onclick="cultosBtnYoutube()">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M23.495 6.205a3.007 3.007 0 00-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 00.527 6.205a31.247 31.247 0 00-.522 5.805 31.247 31.247 0 00.522 5.783 3.007 3.007 0 002.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 002.088-2.088 31.247 31.247 0 00.5-5.783 31.247 31.247 0 00-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/></svg>
-      YouTube
+    <button class="cp-btn" id="cp-btn-cifra" onclick="cultosBtnCifra()" title="Cifra">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M21 3L9 6v11.08A3.5 3.5 0 1012.5 20V10.17l6-1.74V14.1A3.5 3.5 0 1021 17.5V3z"/></svg>
+    </button>
+    <button class="cp-btn" id="cp-btn-youtube" onclick="cultosBtnYoutube()" title="YouTube">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M23.495 6.205a3.007 3.007 0 00-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 00.527 6.205a31.247 31.247 0 00-.522 5.805 31.247 31.247 0 00.522 5.783 3.007 3.007 0 002.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 002.088-2.088 31.247 31.247 0 00.5-5.783 31.247 31.247 0 00-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/></svg>
     </button>
   </div>
 
   <div id="cultos-player-scrubber">
-    <div id="cultos-player-track" ontouchmove="cultosPlayerTrackMove(event)" onmousemove="cultosPlayerTrackMove(event)">
+    <div id="cultos-player-track">
       <div id="cultos-player-bar">
         <div id="cultos-player-fill">
           <div id="cultos-player-thumb"></div>
@@ -832,7 +861,7 @@ const gPlayer = {
     const cur = this.audio.currentTime || 0;
     const dur = this.audio.duration   || 0;
     const pct = dur > 0 ? (cur / dur) * 100 : 0;
-    const fmt = s => { const m = Math.floor(s/60), ss = Math.floor(s%60); return `${m}:${ss<10?'0':''}${ss}`; };
+    const fmt = s => { const m = Math.floor(s/60), ss = Math.floor(s%60); return (m + ':' + (ss < 10 ? '0' : '') + ss); };
     const curEl = document.getElementById('cultos-player-cur');
     if (curEl) curEl.textContent = fmt(cur);
     const durEl = document.getElementById('cultos-player-dur');
@@ -859,8 +888,9 @@ const gPlayer = {
   },
 };
 
+
+
 function cultosPlayerTrackMove(e) {
-  if (e.type === 'touchmove') e.preventDefault();
   if (!gPlayer.isDragging) return;
   const track = document.getElementById('cultos-player-track');
   if (!track || !gPlayer.audio || !gPlayer.audio.duration) return;
@@ -873,7 +903,7 @@ function cultosPlayerTrackMove(e) {
   if (fill) fill.style.width = (pos * 100) + '%';
   // Update time display while dragging
   const dragTime = gPlayer.audio.duration * pos;
-  const fmt = s => { const m = Math.floor(s/60), ss = Math.floor(s%60); return `${m}:${ss<10?'0':''}${ss}`; };
+  const fmt = s => { const m = Math.floor(s/60), ss = Math.floor(s%60); return (m + ':' + (ss < 10 ? '0' : '') + ss); };
   const curEl = document.getElementById('cultos-player-cur');
   if (curEl) curEl.textContent = fmt(dragTime);
   gPlayer.seek(dragTime);
@@ -889,7 +919,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const pos = Math.max(0, Math.min(1, (e.clientX - r.left) / r.width));
         const fill = document.getElementById('cultos-player-fill');
         if (fill) fill.style.width = (pos * 100) + '%';
-        const fmt = s => { const m = Math.floor(s/60), ss = Math.floor(s%60); return `${m}:${ss<10?'0':''}${ss}`; };
+        const fmt = s => { const m = Math.floor(s/60), ss = Math.floor(s%60); return (m + ':' + (ss < 10 ? '0' : '') + ss); };
         const curEl = document.getElementById('cultos-player-cur');
         if (curEl) curEl.textContent = fmt(gPlayer.audio.duration * pos);
         gPlayer.seek(gPlayer.audio.duration * pos);
@@ -902,14 +932,16 @@ document.addEventListener('DOMContentLoaded', () => {
         const pos = Math.max(0, Math.min(1, (e.touches[0].clientX - r.left) / r.width));
         const fill = document.getElementById('cultos-player-fill');
         if (fill) fill.style.width = (pos * 100) + '%';
-        const fmt = s => { const m = Math.floor(s/60), ss = Math.floor(s%60); return `${m}:${ss<10?'0':''}${ss}`; };
+        const fmt = s => { const m = Math.floor(s/60), ss = Math.floor(s%60); return (m + ':' + (ss < 10 ? '0' : '') + ss); };
         const curEl = document.getElementById('cultos-player-cur');
         if (curEl) curEl.textContent = fmt(gPlayer.audio.duration * pos);
         gPlayer.seek(gPlayer.audio.duration * pos);
       }
-    }, { passive: true });
+    }, { passive: false });
     document.addEventListener('mouseup', () => { gPlayer.isDragging = false; });
     document.addEventListener('touchend', () => { gPlayer.isDragging = false; });
+    document.addEventListener('mousemove', e => { if (gPlayer.isDragging) cultosPlayerTrackMove(e); });
+    document.addEventListener('touchmove', e => { if (gPlayer.isDragging) cultosPlayerTrackMove(e); }, { passive: false });
   }
 });
 
@@ -1083,21 +1115,21 @@ function buildMusicaRow(m) {
 
   const coverContent = cover?.img
     ? `<img src="${cover.img}" width="42" height="42" style="border-radius:7px;object-fit:cover;display:block;">`
-    : `<div style="width:42px;height:42px;border-radius:7px;background:linear-gradient(135deg,${grad[0]},${grad[1]}88);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:500;color:rgba(255,255,255,0.3);">${cfInitials(m.nome)}</div>`;
+    : `<div style="width:42px;height:42px;border-radius:7px;background:linear-gradient(135deg,${grad[0]},${grad[1]}88);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:500;color:rgba(255,255,255,0.3);">${cfInitials(m.nome)}<\/div>`;
 
   row.innerHTML = `
     <div class="ml-summary">
-      <div class="ml-cover" style="background:none;">${coverContent}</div>
+      <div class="ml-cover" style="background:none;">${coverContent}<\/div>
       <div class="ml-info">
-        <div class="ml-title">${esc(m.nome)}</div>
-        <div class="ml-artist">${esc(m.artista||'—')}</div>
-      </div>
+        <div class="ml-title">${esc(m.nome)}<\/div>
+        <div class="ml-artist">${esc(m.artista||'—')}<\/div>
+      <\/div>
       <div class="ml-meta">
-        <div class="ml-plays">${m.usos}×</div>
-        <div class="ml-ago" style="${m.usos===0?'color:rgba(255,255,255,0.15);':''}">${agoStr}</div>
-      </div>
-    </div>
-    <div class="ml-expand"></div>`;
+        <div class="ml-plays">${m.usos}×<\/div>
+        <div class="ml-ago" style="${m.usos===0?'color:rgba(255,255,255,0.15);':''}">${agoStr}<\/div>
+      <\/div>
+    <\/div>
+    <div class="ml-expand"><\/div>`;
 
   row.querySelector('.ml-summary').addEventListener('click', () => mlToggle(row, m));
 
@@ -1146,30 +1178,40 @@ function mlToggle(row, m) {
   const spotifyUrl = midias.find(u=>u.includes('spotify.com'))||null;
   const youtubeUrl = midias.find(u=>u.includes('youtu'))||null;
 
-  const spotifySVG = `<svg width="22" height="22" viewBox="0 0 24 24" fill="#fff"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.586 14.424a.623.623 0 01-.857.207c-2.348-1.435-5.304-1.76-8.785-.964a.623.623 0 01-.277-1.215c3.809-.87 7.077-.496 9.712 1.115a.623.623 0 01.207.857zm1.223-2.722a.78.78 0 01-1.072.257C14.01 12.327 10.61 11.95 7.7 12.78a.78.78 0 01-.45-1.493c3.306-.998 7.113-.515 9.782 1.143a.78.78 0 01.257 1.072zm.105-2.835C15.001 9.15 10.757 9.007 8.078 9.803a.937.937 0 11-.543-1.794c3.064-.929 7.856-.75 10.952 1.197a.938.938 0 01-.573 1.661z"/></svg>`;
-  const youtubeSVG = `<svg width="22" height="22" viewBox="0 0 24 24" fill="#fff"><path d="M23.495 6.205a3.007 3.007 0 00-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 00.527 6.205a31.247 31.247 0 00-.522 5.805 31.247 31.247 0 00.522 5.783 3.007 3.007 0 002.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 002.088-2.088 31.247 31.247 0 00.5-5.783 31.247 31.247 0 00-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/></svg>`;
+  const spotifySVG = `<svg width="22" height="22" viewBox="0 0 24 24" fill="#fff"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.586 14.424a.623.623 0 01-.857.207c-2.348-1.435-5.304-1.76-8.785-.964a.623.623 0 01-.277-1.215c3.809-.87 7.077-.496 9.712 1.115a.623.623 0 01.207.857zm1.223-2.722a.78.78 0 01-1.072.257C14.01 12.327 10.61 11.95 7.7 12.78a.78.78 0 01-.45-1.493c3.306-.998 7.113-.515 9.782 1.143a.78.78 0 01.257 1.072zm.105-2.835C15.001 9.15 10.757 9.007 8.078 9.803a.937.937 0 11-.543-1.794c3.064-.929 7.856-.75 10.952 1.197a.938.938 0 01-.573 1.661z"/><\/svg>`;
+  const youtubeSVG = `<svg width="22" height="22" viewBox="0 0 24 24" fill="#fff"><path d="M23.495 6.205a3.007 3.007 0 00-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 00.527 6.205a31.247 31.247 0 00-.522 5.805 31.247 31.247 0 00.522 5.783 3.007 3.007 0 002.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 002.088-2.088 31.247 31.247 0 00.5-5.783 31.247 31.247 0 00-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/><\/svg>`;
 
   expand.innerHTML = `
     <div class="ml-btns">
       ${spotifyUrl
         ? `<a href="${spotifyUrl}" target="_blank" rel="noopener" class="ml-btn ml-spotify">${spotifySVG}</a>`
         : `<button class="ml-btn ml-spotify disabled-logo">${spotifySVG}</button>`}
-      <button class="ml-btn ml-cifra${cifras.length?'':' disabled'}"${cifras.length?'':' disabled'}>♩ Cifra</button>
+      <button class="ml-btn ml-cifra${cifras.length?'':' disabled'}"${cifras.length?'':' disabled'}><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M21 3L9 6v11.08A3.5 3.5 0 1012.5 20V10.17l6-1.74V14.1A3.5 3.5 0 1021 17.5V3z"/><\/svg><\/button>
       ${youtubeUrl
         ? `<a href="${youtubeUrl}" target="_blank" rel="noopener" class="ml-btn ml-youtube">${youtubeSVG}</a>`
         : `<button class="ml-btn ml-youtube disabled-logo">${youtubeSVG}</button>`}
-    </div>
+    <\/div>
     <div class="ml-stats">
-      <div class="ml-stat"><div class="ml-stat-val">${m.usos}</div><div class="ml-stat-lbl">cultos</div></div>
-      <div class="ml-stat"><div class="ml-stat-val">${esc(tomFreq)}</div><div class="ml-stat-lbl">tom freq.</div></div>
-      <div class="ml-stat"><div class="ml-stat-val" style="font-size:12px;line-height:1.3;">${ultStr}</div><div class="ml-stat-lbl">última vez</div></div>
-    </div>
-    <div class="ml-hist-lbl">Histórico</div>
-    <div>${hist.length ? hist.map(c=>{const mu=c.musicas.find(cm=>cm.nome.toLowerCase()===m.nome.toLowerCase());return`<div class="ml-hist-item"><span class="ml-hist-date">${esc(c.data)}</span><span class="ml-hist-lead">${esc(c.ministra||'—')}</span><span class="ml-hist-tom">${esc(mu.tom||'—')}</span></div>`;}).join('') : '<div style="padding:12px 0;color:rgba(255,255,255,0.3);font-size:12px;">Nunca tocada</div>'}</div>`;
+      <div class="ml-stat"><div class="ml-stat-val">${m.usos}<\/div><div class="ml-stat-lbl">cultos<\/div><\/div>
+      <div class="ml-stat"><div class="ml-stat-val">${esc(tomFreq)}<\/div><div class="ml-stat-lbl">tom freq.<\/div><\/div>
+      <div class="ml-stat"><div class="ml-stat-val" style="font-size:12px;line-height:1.3;">${ultStr}<\/div><div class="ml-stat-lbl">última vez<\/div><\/div>
+    <\/div>
+    <div class="ml-hist-lbl">Histórico<\/div>
+    <div id="ml-hist-${esc(m.nome.replace(/\s/g,'_'))}">${hist.length ? hist.map(c=>{const mu=c.musicas.find(cm=>cm.nome.toLowerCase()===m.nome.toLowerCase());const hasAudio=!!resolveAudioUrl(mu.mp3||'');return`<div class="ml-hist-item"><span class="ml-hist-date">${esc(c.data)}</span><span class="ml-hist-lead">${esc(c.ministra||'—')}</span>${hasAudio?`<button class="ml-hist-mp3" data-data="${esc(c.data)}" data-nome="${esc(m.nome)}"><svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/><\/svg>MP3<\/button>`:'<span class="ml-hist-tom">—<\/span>'}<\/div>`;}).join('') : '<div style="padding:12px 0;color:rgba(255,255,255,0.3);font-size:12px;">Nunca tocada<\/div>'}<\/div>`;
 
   if (cifras.length) {
     expand.querySelector('.ml-cifra').addEventListener('click', () => cifras.forEach(u=>window.open(u,'_blank')));
   }
+
+  // Botões MP3 do histórico → navega pra cultos e toca
+  expand.querySelectorAll('.ml-hist-mp3').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.stopPropagation();
+      const dataStr = btn.dataset.data;
+      const nomeMusica = btn.dataset.nome;
+      irParaCultoETocar(dataStr, nomeMusica);
+    });
+  });
 
   setTimeout(() => row.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 50);
 }
@@ -1257,7 +1299,7 @@ function buildCultoRow(i) {
     div.className = 'cultos-row';
     div.style.opacity = '0.38';
     div.style.pointerEvents = 'none';
-    div.innerHTML = `<div class="cultos-row-summary"><div class="cultos-date"><div class="cultos-date-day">${d.getDate()}</div><div class="cultos-date-month ${CULTOS_MES_CLS[m]}">${CULTOS_MES_S[m]}</div></div><span class="cultos-sem-reg">sem registro</span></div>`;
+    div.innerHTML = `<div class="cultos-row-summary"><div class="cultos-date"><div class="cultos-date-day">${d.getDate()}<\/div><div class="cultos-date-month ${CULTOS_MES_CLS[m]}">${CULTOS_MES_S[m]}<\/div><\/div><span class="cultos-sem-reg">sem registro<\/span><\/div>`;
     return div;
   }
 
@@ -1266,7 +1308,7 @@ function buildCultoRow(i) {
   const m = d.getMonth();
 
   div.className = 'cultos-row';
-  div.innerHTML = `<div class="cultos-row-summary"><div class="cultos-date"><div class="cultos-date-day">${d.getDate()}</div><div class="cultos-date-month ${CULTOS_MES_CLS[m]}">${CULTOS_MES_S[m]}</div></div><div class="cultos-row-info"><div class="cultos-row-leader">${esc(c.ministra || '—')}</div></div><span class="cultos-chevron">›</span></div><div class="cultos-expand"></div>`;
+  div.innerHTML = `<div class="cultos-row-summary"><div class="cultos-date"><div class="cultos-date-day">${d.getDate()}<\/div><div class="cultos-date-month ${CULTOS_MES_CLS[m]}">${CULTOS_MES_S[m]}<\/div><\/div><div class="cultos-row-info"><div class="cultos-row-leader">${esc(c.ministra || '—')}<\/div><\/div><span class="cultos-chevron">›<\/span><\/div><div class="cultos-expand"><\/div>`;
 
   div.querySelector('.cultos-row-summary').addEventListener('click', () => toggleCultoRow(div, c));
   return div;
@@ -1456,8 +1498,12 @@ function handleCultoMp3(btn, url, nome, culto, playlist, idx) {
     });
   }
 
-  // Mostrar mini-bar; se player já estiver aberto, manter aberto
+  // Mostrar mini-bar; abrir player cheio se não havia música tocando antes
+  const eraPrimeiraTocada = !gPlayer.audio;
   cultosMiniBarShow();
+  if (eraPrimeiraTocada) {
+    document.getElementById('cultos-player').classList.add('vis');
+  }
   cultosPlayerUpdateIcon(true);
   cultosMiniUpdateIcon(true);
 
@@ -1583,6 +1629,56 @@ function cultosBtnYoutube() {
   if (youtubeLink) window.open(youtubeLink, '_blank');
 }
 
+function irParaCultoETocar(dataStr, nomeMusica) {
+  // 1. Navegar para aba cultos
+  const cultosBtn = document.querySelector('.cf-nav-pill:not(.active)') || 
+    [...document.querySelectorAll('.cf-nav-pill')].find(b => b.textContent.includes('Cultos'));
+  showTab('cultos', [...document.querySelectorAll('.cf-nav-pill,.other-nav-pill')].find(b => b.textContent.includes('Cultos')));
+
+  // 2. Aguardar render e encontrar o culto
+  setTimeout(() => {
+    const culto = cultos.find(c => c.data === dataStr);
+    if (!culto) return;
+
+    // Encontrar o row do culto na lista
+    const rows = document.querySelectorAll('#cultos-list .cultos-row');
+    let targetRow = null;
+    rows.forEach(row => {
+      const dayEl = row.querySelector('.cultos-date-day');
+      const monthEl = row.querySelector('.cultos-date-month');
+      if (!dayEl || !monthEl) return;
+      const d = parseDataBR(dataStr);
+      const CULTOS_MES_S = ['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
+      if (dayEl.textContent.trim() == d.getDate() && monthEl.textContent.trim() === CULTOS_MES_S[d.getMonth()]) {
+        targetRow = row;
+      }
+    });
+
+    if (!targetRow) return;
+
+    // Abrir o culto se não estiver aberto
+    if (!targetRow.classList.contains('open')) {
+      targetRow.querySelector('.cultos-row-summary').click();
+    }
+
+    // Scroll até o culto
+    setTimeout(() => {
+      targetRow.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+      // Encontrar e clicar no botão da música
+      setTimeout(() => {
+        const btns = targetRow.querySelectorAll('.cultos-musica-play-btn');
+        btns.forEach(btn => {
+          const nomeEl = btn.querySelector('.cultos-musica-nome-text');
+          if (nomeEl && nomeEl.textContent.toLowerCase() === nomeMusica.toLowerCase()) {
+            btn.click();
+          }
+        });
+      }, 200);
+    }, 100);
+  }, 150);
+}
+
 // ═══════════════════════════════════════
 // TABS
 // ═══════════════════════════════════════
@@ -1635,7 +1731,7 @@ function renderSongList(){
   const c=cultos[0];
   infoEl.innerHTML='<strong>'+esc(c.data)+'</strong> &middot; '+c.musicas.length+' m&uacute;sica'+(c.musicas.length!==1?'s':'')+' &middot; '+(esc(c.ministra)||'&mdash;');
   ensaioMusicas=c.musicas.map(m=>{const info=musicas.find(x=>x.nome.toLowerCase()===m.nome.toLowerCase());const cStr=info?.cifra||'';return{nome:m.nome,artista:info?.artista||'',tom:m.tom||'',driveId:extrairDriveId(cStr),linksExternos:extrairLinksExternos(cStr)};});
-  listEl.innerHTML=ensaioMusicas.map((m,i)=>`<button class="ensaio-song-btn" onclick="abrirCifra(${i})"><div class="ensaio-song-num">${i+1}.</div><div class="ensaio-song-info"><div class="ensaio-song-name">${esc(m.nome)}</div>${m.artista?`<div class="ensaio-song-artist">${esc(m.artista)}</div>`:''}</div>${m.tom?`<div class="ensaio-song-tom">${esc(m.tom)}</div>`:''}<div class="ensaio-song-arrow">&#x203a;</div></button>`).join('');
+  listEl.innerHTML=ensaioMusicas.map((m,i)=>`<button class="ensaio-song-btn" onclick="abrirCifra(${i})"><div class="ensaio-song-num">${i+1}.<\/div><div class="ensaio-song-info"><div class="ensaio-song-name">${esc(m.nome)}<\/div>${m.artista?`<div class="ensaio-song-artist">${esc(m.artista)}</div>`:''}<\/div>${m.tom?`<div class="ensaio-song-tom">${esc(m.tom)}</div>`:''}<div class="ensaio-song-arrow">&#x203a;<\/div><\/button>`).join('');
 }
 function abrirCifra(idx){ensaioIdx=idx;mostrarLoadingEnsaio();setTimeout(()=>{esconderLoadingEnsaio();abrirEnsaioFs();},1200);}
 function abrirHolyrics(){document.getElementById('holyrics-iframe').src=HOLYRICS_URL;document.getElementById('holyrics-fs').style.display='block';document.body.style.overflow='hidden';if('wakeLock'in navigator)navigator.wakeLock.request('screen').then(wl=>ensaioWakeLock=wl).catch(()=>{});}
@@ -1679,7 +1775,7 @@ document.addEventListener('keydown',e=>{
   }
 });
 function abrirMenuEnsaio(){
-  document.getElementById('ensaio-menu-list').innerHTML=ensaioMusicas.map((m,i)=>`<div class="ensaio-menu-item ${i===ensaioIdx?'active':''}" onclick="irParaMusica(${i})"><div class="ensaio-menu-num">${i+1}</div><div class="ensaio-menu-info"><div class="ensaio-menu-nome">${esc(m.nome)}</div><div class="ensaio-menu-meta">${m.artista||''}${m.tom?' &middot; Tom '+esc(m.tom):''}</div></div>${i===ensaioIdx?'<div class="ensaio-menu-playing">&#9654;</div>':''}</div>`).join('');
+  document.getElementById('ensaio-menu-list').innerHTML=ensaioMusicas.map((m,i)=>`<div class="ensaio-menu-item ${i===ensaioIdx?'active':''}" onclick="irParaMusica(${i})"><div class="ensaio-menu-num">${i+1}<\/div><div class="ensaio-menu-info"><div class="ensaio-menu-nome">${esc(m.nome)}<\/div><div class="ensaio-menu-meta">${m.artista||''}${m.tom?' &middot; Tom '+esc(m.tom):''}<\/div><\/div>${i===ensaioIdx?'<div class="ensaio-menu-playing">&#9654;<\/div>':''}<\/div>`).join('');
   document.getElementById('ensaio-menu').classList.add('open');
 }
 function fecharMenuEnsaio(){document.getElementById('ensaio-menu').classList.remove('open');}
