@@ -238,29 +238,191 @@ body::after {
 
 /* player cultos */
 #cultos-player {
-  position: fixed; bottom: 0; left: 0; right: 0; z-index: 50;
-  display: none; flex-direction: column; gap: 8px;
-  padding: 10px 16px 14px;
-  background: rgba(10,10,10,0.97); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-  border-top: 0.5px solid rgba(255,255,255,0.1);
+  position: fixed; inset: 0; z-index: 60;
+  display: none; flex-direction: column;
+  background: #0d0d0d;
+  overflow: hidden;
+  animation: slideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+@keyframes slideUp {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
 }
 #cultos-player.vis { display: flex; }
-#cultos-player-top { display: flex; align-items: center; gap: 10px; }
-#cultos-player-name { flex: 1; font-size: 13px; font-weight: 500; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
-#cultos-player-btn {
-  width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0;
-  background: rgba(255,255,255,0.12); border: 0.5px solid rgba(255,255,255,0.22);
-  display: flex; align-items: center; justify-content: center;
-  cursor: pointer; -webkit-tap-highlight-color: transparent; transition: background 0.15s;
+#cultos-player::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: var(--cp-bg-img, #0d0d0d);
+  background-size: cover;
+  background-position: center;
+  filter: blur(60px) brightness(0.4);
+  transform: scale(1.1);
+  z-index: -1;
 }
-#cultos-player-btn:active { background: rgba(255,255,255,0.22); }
-#cultos-player-btn svg { width: 13px; height: 13px; fill: #fff; display: block; }
-#cultos-player-scrubber { display: flex; flex-direction: column; gap: 3px; }
-#cultos-player-track { position: relative; height: 18px; display: flex; align-items: center; cursor: pointer; -webkit-tap-highlight-color: transparent; }
-#cultos-player-bar { width: 100%; height: 3px; background: rgba(255,255,255,0.14); border-radius: 99px; pointer-events: none; }
-#cultos-player-fill { height: 100%; width: 0%; background: #7BBF45; border-radius: 99px; position: relative; pointer-events: none; transition: width 0.4s linear; }
-#cultos-player-thumb { position: absolute; right: -5px; top: 50%; transform: translateY(-50%); width: 12px; height: 12px; border-radius: 50%; background: #fff; pointer-events: none; }
-#cultos-player-times { display: flex; justify-content: space-between; font-size: 10px; color: rgba(255,255,255,0.28); }
+
+#cultos-player-header {
+  padding: 16px 16px 8px;
+  display: flex; justify-content: space-between; align-items: center;
+  position: relative; z-index: 1;
+}
+#cultos-player-close {
+  width: 32px; height: 32px;
+  background: rgba(255,255,255,0.12);
+  border: 0.5px solid rgba(255,255,255,0.2);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; color: #fff; font-size: 18px;
+  transition: background 0.15s;
+  -webkit-tap-highlight-color: transparent;
+}
+#cultos-player-close:active { background: rgba(255,255,255,0.2); }
+
+#cultos-player-album {
+  flex: 1;
+  display: flex; justify-content: center; align-items: center;
+  padding: 24px 16px;
+  position: relative; z-index: 1;
+  min-height: 0;
+}
+#cultos-player-cover {
+  width: 280px; height: 280px;
+  background: linear-gradient(135deg, #534AB7, #7F77DD);
+  background-size: cover;
+  background-position: center;
+  border-radius: 12px;
+  flex-shrink: 0;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.6);
+}
+
+#cultos-player-info {
+  padding: 24px 16px 0;
+  position: relative; z-index: 1;
+}
+#cultos-player-title {
+  font-size: 22px; font-weight: 500; color: #fff;
+  margin: 0 0 4px;
+  font-family: 'Instrument Serif', serif;
+}
+#cultos-player-artist {
+  font-size: 15px; color: rgba(255,255,255,0.7);
+  margin: 0 0 16px;
+}
+
+#cultos-player-details {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+  margin-bottom: 12px;
+}
+.cp-detail-box {
+  background: rgba(255,255,255,0.08);
+  border: 0.5px solid rgba(255,255,255,0.12);
+  border-radius: 10px;
+  padding: 12px;
+}
+.cp-detail-label {
+  font-size: 10px; color: rgba(255,255,255,0.5);
+  text-transform: uppercase; font-weight: 500;
+  margin: 0 0 6px;
+}
+.cp-detail-value {
+  font-size: 14px; color: rgba(255,255,255,0.9);
+  margin: 0; font-weight: 500;
+}
+
+#cultos-player-buttons {
+  display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px;
+  margin-bottom: 20px;
+}
+.cp-btn {
+  padding: 12px 16px;
+  background: rgba(255,255,255,0.12);
+  border: 0.5px solid rgba(255,255,255,0.2);
+  border-radius: 10px;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s;
+  -webkit-tap-highlight-color: transparent;
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+}
+.cp-btn:active {
+  background: rgba(255,255,255,0.22);
+  transform: scale(0.97);
+}
+
+#cultos-player-scrubber {
+  padding: 20px 16px 16px;
+  border-top: 0.5px solid rgba(255,255,255,0.1);
+  position: relative; z-index: 1;
+}
+#cultos-player-track {
+  position: relative;
+  height: 28px;
+  display: flex; align-items: center;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  margin-bottom: 8px;
+}
+#cultos-player-bar {
+  width: 100%;
+  height: 4px;
+  background: rgba(255,255,255,0.14);
+  border-radius: 2px;
+  pointer-events: none;
+  position: relative;
+}
+#cultos-player-fill {
+  height: 100%;
+  width: 0%;
+  background: #7BBF45;
+  border-radius: 2px;
+  position: relative;
+  pointer-events: none;
+  transition: width 0.1s linear;
+}
+#cultos-player-thumb {
+  position: absolute;
+  right: -6px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #fff;
+  pointer-events: none;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+#cultos-player-times {
+  display: flex; justify-content: space-between;
+  font-size: 11px; color: rgba(255,255,255,0.4);
+  margin-bottom: 12px;
+}
+
+#cultos-player-controls {
+  display: flex; gap: 12px; align-items: center; justify-content: center;
+}
+.cp-control-btn {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.08);
+  border: 0.5px solid rgba(255,255,255,0.15);
+  color: #fff;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px;
+  transition: all 0.15s;
+  -webkit-tap-highlight-color: transparent;
+}
+.cp-control-btn:active { background: rgba(255,255,255,0.16); }
+.cp-control-btn.play {
+  width: 52px; height: 52px;
+  background: #7BBF45;
+  border: none;
+  color: #0d0d0d;
+  font-size: 20px;
+  font-weight: bold;
+}
+.cp-control-btn.play:active { background: #8BC94F; }
 
 /* ── ENSAIO ── */
 #panel-ensaio { display: none; padding-top: 76px; }
@@ -340,36 +502,6 @@ body::after {
 .toast.show { display: block; }
 .toast.erro { background: rgba(139,32,32,0.8); }
 
-/* ═══ ABA DADOS ═══ */
-#panel-dados { position: fixed; inset: 0; z-index: 1; background: #0d0d0d; overflow-y: auto; -webkit-overflow-scrolling: touch; padding-top: 56px; }
-#panel-dados.active { display: block; }
-
-.dados-hero { padding: 20px 16px 16px; border-bottom: 0.5px solid rgba(255,255,255,0.07); }
-.dados-hero-eyebrow { font-size: 11px; font-weight: 500; color: #7BBF45; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 4px; }
-.dados-hero-title { font-family: 'Instrument Serif', serif; font-size: 26px; color: #fff; font-style: italic; margin-bottom: 4px; }
-.dados-hero-sub { font-size: 12px; color: rgba(255,255,255,0.32); }
-
-.dados-dot-legend { display: flex; align-items: center; gap: 8px; padding: 10px 16px 8px; border-bottom: 0.5px solid rgba(255,255,255,0.06); }
-.dados-dot-legend-lbl { font-size: 10px; color: rgba(255,255,255,0.25); }
-.dados-dot-legend-dots { display: flex; gap: 3px; margin: 0 auto; }
-
-.dados-role-group { border-bottom: 0.5px solid rgba(255,255,255,0.07); padding-bottom: 8px; }
-.dados-role-hdr { padding: 14px 16px 6px; display: flex; align-items: center; gap: 6px; }
-.dados-role-name { font-size: 10px; font-weight: 500; color: rgba(255,255,255,0.3); text-transform: uppercase; letter-spacing: 0.09em; }
-.dados-role-count { font-size: 10px; color: rgba(255,255,255,0.16); }
-
-.dados-person-row { display: flex; align-items: center; gap: 10px; padding: 7px 16px; border-top: 0.5px solid rgba(255,255,255,0.04); }
-.dados-person-avatar { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 500; flex-shrink: 0; }
-.dados-person-name { font-size: 13px; color: #fff; flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.dados-person-dots { display: flex; gap: 3px; flex-shrink: 0; }
-.pdot { width: 7px; height: 7px; border-radius: 50%; }
-.pdot.on { background: #7BBF45; }
-.pdot.off { background: rgba(255,255,255,0.1); }
-.dados-ago-badge { font-size: 10px; font-weight: 500; padding: 2px 7px; border-radius: 99px; flex-shrink: 0; white-space: nowrap; }
-.dados-ago-badge.green { background: rgba(123,191,69,0.15); color: #7BBF45; }
-.dados-ago-badge.yellow { background: rgba(244,168,53,0.15); color: #F4A835; }
-.dados-ago-badge.red { background: rgba(224,96,80,0.15); color: #E06050; }
-
 @keyframes ensaio-pulse { 0%,100%{transform:scale(1);opacity:1;}50%{transform:scale(1.1);opacity:0.75;} }
 @keyframes ensaio-dot { 0%,80%,100%{transform:scale(0.6);opacity:0.4;}40%{transform:scale(1);opacity:1;} }
 @media (min-width: 600px) {
@@ -385,7 +517,6 @@ body::after {
   <div class="other-nav-pills">
     <button class="other-nav-pill" onclick="showTab('repertorio',this)">Músicas</button>
     <button class="other-nav-pill" onclick="showTab('cultos',this)">Cultos</button>
-    <button class="other-nav-pill" onclick="showTab('dados',this)">Dados</button>
     <button class="other-nav-pill" onclick="showTab('ensaio',this)">🎸 Ensaio</button>
   </div>
 </nav>
@@ -400,7 +531,6 @@ body::after {
       <div class="cf-nav-pills">
         <button class="cf-nav-pill active" onclick="showTab('repertorio',this)">Músicas</button>
         <button class="cf-nav-pill" onclick="showTab('cultos',this)">Cultos</button>
-        <button class="cf-nav-pill" onclick="showTab('dados',this)">Dados</button>
         <button class="cf-nav-pill" onclick="showTab('ensaio',this)">🎸 Ensaio</button>
       </div>
     </div>
@@ -425,17 +555,54 @@ body::after {
 
 <!-- PLAYER CULTOS -->
 <div id="cultos-player">
-  <div id="cultos-player-top">
-    <span id="cultos-player-name">—</span>
-    <div id="cultos-player-btn" onclick="handleCultosPlayerToggle()">
-      <svg id="cultos-player-icon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+  <div id="cultos-player-header">
+    <span style="font-size: 12px; color: rgba(255,255,255,0.4); text-transform: uppercase; font-weight: 500;">Agora tocando</span>
+    <div id="cultos-player-close" onclick="cultosPlayerHide()">×</div>
+  </div>
+  
+  <div id="cultos-player-album">
+    <div id="cultos-player-cover"></div>
+  </div>
+  
+  <div id="cultos-player-info">
+    <h3 id="cultos-player-title">—</h3>
+    <p id="cultos-player-artist">—</p>
+    
+    <div id="cultos-player-details">
+      <div class="cp-detail-box">
+        <p class="cp-detail-label">Ministrando</p>
+        <p class="cp-detail-value" id="cultos-player-leader">—</p>
+      </div>
+      <div class="cp-detail-box">
+        <p class="cp-detail-label">Vozes</p>
+        <p class="cp-detail-value" id="cultos-player-vozes">—</p>
+      </div>
+    </div>
+    
+    <div id="cultos-player-buttons">
+      <button class="cp-btn" id="cp-btn-spotify" onclick="cultosBtnSpotify()">🎵 Spotify</button>
+      <button class="cp-btn" id="cp-btn-cifra" onclick="cultosBtnCifra()">📝 Cifra</button>
+      <button class="cp-btn" id="cp-btn-youtube" onclick="cultosBtnYoutube()">📺 YouTube</button>
     </div>
   </div>
+  
   <div id="cultos-player-scrubber">
-    <div id="cultos-player-track">
-      <div id="cultos-player-bar"><div id="cultos-player-fill"><div id="cultos-player-thumb"></div></div></div>
+    <div id="cultos-player-track" ontouchmove="cultosPlayerTrackMove(event)" onmousemove="cultosPlayerTrackMove(event)">
+      <div id="cultos-player-bar">
+        <div id="cultos-player-fill">
+          <div id="cultos-player-thumb"></div>
+        </div>
+      </div>
     </div>
-    <div id="cultos-player-times"><span id="cultos-player-cur">0:00</span><span id="cultos-player-dur">0:00</span></div>
+    <div id="cultos-player-times">
+      <span id="cultos-player-cur">0:00</span>
+      <span id="cultos-player-dur">0:00</span>
+    </div>
+    <div id="cultos-player-controls">
+      <button class="cp-control-btn" onclick="cultosPlayerPrev()">⏮</button>
+      <button class="cp-control-btn play" id="cultos-player-play-btn" onclick="handleCultosPlayerToggle()">▶</button>
+      <button class="cp-control-btn" onclick="cultosPlayerNext()">⏭</button>
+    </div>
   </div>
 </div>
 
@@ -458,9 +625,6 @@ body::after {
     <div id="ensaio-song-list"></div>
   </div>
 </div>
-
-<!-- PAINEL DADOS -->
-<div id="panel-dados" class="panel"></div>
 
 </div><!-- /content -->
 
@@ -523,6 +687,7 @@ const gPlayer = {
   url: null,
   nome: '',
   artista: '',
+  isDragging: false,
 
   play(url, nome, artista) {
     if (this.audio) { this.audio.pause(); this.audio.src = ''; }
@@ -538,9 +703,10 @@ const gPlayer = {
   resume() { if (this.audio) { this.audio.play(); this._updateIcons(true); } },
   isPlaying() { return this.audio && !this.audio.paused; },
   togglePlayPause() { if (!this.audio) return; if (this.audio.paused) this.resume(); else this.pause(); },
+  seek(time) { if (this.audio) this.audio.currentTime = Math.max(0, Math.min(time, this.audio.duration || 0)); },
 
   _tick() {
-    if (!this.audio) return;
+    if (!this.audio || this.isDragging) return;
     const cur = this.audio.currentTime || 0;
     const dur = this.audio.duration   || 0;
     const pct = dur > 0 ? (cur / dur) * 100 : 0;
@@ -555,17 +721,30 @@ const gPlayer = {
   },
 
   _updateIcons(playing) {
-    const icon = document.getElementById('cultos-player-icon');
-    if (!icon) return;
-    icon.innerHTML = playing
-      ? '<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>'
-      : '<path d="M8 5v14l11-7z"/>';
+    const btn = document.getElementById('cultos-player-play-btn');
+    if (!btn) return;
+    btn.textContent = playing ? '⏸' : '▶';
   },
 };
+
+function cultosPlayerTrackMove(e) {
+  if (e.type === 'touchmove') e.preventDefault();
+  const track = document.getElementById('cultos-player-track');
+  if (!track || !gPlayer.audio || !gPlayer.audio.duration) return;
+  
+  const rect = track.getBoundingClientRect();
+  const clientX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
+  const pos = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
+  gPlayer.seek(gPlayer.audio.duration * pos);
+}
 
 document.addEventListener('DOMContentLoaded', () => {
   const cpTrack = document.getElementById('cultos-player-track');
   if (cpTrack) {
+    cpTrack.addEventListener('mousedown', () => { gPlayer.isDragging = true; });
+    cpTrack.addEventListener('touchstart', () => { gPlayer.isDragging = true; });
+    document.addEventListener('mouseup', () => { gPlayer.isDragging = false; });
+    document.addEventListener('touchend', () => { gPlayer.isDragging = false; });
     cpTrack.addEventListener('click', e => {
       if (!gPlayer.audio || !gPlayer.audio.duration) return;
       const r = cpTrack.getBoundingClientRect();
@@ -1051,11 +1230,9 @@ function handleCultoMp3(btn, url, nome) {
 }
 
 function cultosPlayerUpdateIcon(playing) {
-  const icon = document.getElementById('cultos-player-icon');
-  if (!icon) return;
-  icon.innerHTML = playing
-    ? '<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>'
-    : '<path d="M8 5v14l11-7z"/>';
+  const btn = document.getElementById('cultos-player-play-btn');
+  if (!btn) return;
+  btn.textContent = playing ? '⏸' : '▶';
 }
 
 function cultosPlayerHide() {
@@ -1069,21 +1246,70 @@ function cultosPlayerHide() {
   const durEl = document.getElementById('cultos-player-dur');
   if (durEl) durEl.textContent = '0:00';
   cultosPlayerUpdateIcon(false);
+  gPlayer.pause();
 }
 
 function handleCultosPlayerToggle() {
-  if (!cultoAudioBtn) return;
+  if (!gPlayer.audio) return;
   if (gPlayer.isPlaying()) {
     gPlayer.pause();
-    cultoAudioBtn.textContent = '▶ MP3';
-    cultoAudioBtn.classList.remove('playing');
-    cultosPlayerUpdateIcon(false);
   } else {
     gPlayer.resume();
-    cultoAudioBtn.textContent = '⏸ MP3';
-    cultoAudioBtn.classList.add('playing');
-    cultosPlayerUpdateIcon(true);
   }
+}
+
+function cultosPlayerPrev() {
+  // Placeholder - implementar quando tiver múltiplas músicas
+}
+
+function cultosPlayerNext() {
+  // Placeholder - implementar quando tiver múltiplas músicas
+}
+
+function cultosBtnSpotify() {
+  if (!cultoAudioBtn) return;
+  const spotifyLink = cultoAudioBtn.dataset.spotifyUrl;
+  if (spotifyLink) window.open(spotifyLink, '_blank');
+}
+
+function cultosBtnCifra() {
+  if (!cultoAudioBtn) return;
+  const cifraLink = cultoAudioBtn.dataset.cifraUrl;
+  if (cifraLink) window.open(cifraLink, '_blank');
+}
+
+function cultosBtnYoutube() {
+  if (!cultoAudioBtn) return;
+  const youtubeLink = cultoAudioBtn.dataset.youtubeUrl;
+  if (youtubeLink) window.open(youtubeLink, '_blank');
+}
+
+function cultosPlayerShow(musicaInfo, cultoInfo) {
+  const playerEl = document.getElementById('cultos-player');
+  if (!playerEl) return;
+  
+  // Atualizar foto do album
+  const cover = document.getElementById('cultos-player-cover');
+  if (cover && musicaInfo.cover) {
+    cover.style.backgroundImage = `url('${musicaInfo.cover}')`;
+  }
+  
+  // Atualizar background blur
+  if (musicaInfo.cover) {
+    playerEl.style.setProperty('--cp-bg-img', `url('${musicaInfo.cover}')`);
+  }
+  
+  // Info da música
+  document.getElementById('cultos-player-title').textContent = musicaInfo.nome || '—';
+  document.getElementById('cultos-player-artist').textContent = musicaInfo.artista || '—';
+  
+  // Info do culto
+  document.getElementById('cultos-player-leader').textContent = cultoInfo.leader || '—';
+  document.getElementById('cultos-player-vozes').textContent = cultoInfo.vozes || '—';
+  
+  // Mostrar player
+  playerEl.classList.add('vis');
+  document.getElementById('panel-cultos').style.paddingBottom = '0';
 }
 
 // ═══════════════════════════════════════
@@ -1111,155 +1337,10 @@ function showTab(id, btn) {
       const t = p.textContent.toLowerCase();
       if (id === 'cultos' && t.includes('culto')) p.classList.add('active');
       if (id === 'ensaio' && t.includes('ensaio')) p.classList.add('active');
-      if (id === 'dados' && t.includes('dados')) p.classList.add('active');
     });
     if (id === 'ensaio') renderEnsaioTab();
     if (id === 'cultos') renderCultos();
-    if (id === 'dados') renderDados();
   }
-}
-
-// ═══════════════════════════════════════
-// DADOS — ABA PLANEJAMENTO
-// ═══════════════════════════════════════
-const PERSON_COLORS = {
-  'gabi':   { bg:'rgba(99,153,34,0.2)',   color:'#7BBF45' },
-  'pamela': { bg:'rgba(155,140,192,0.2)', color:'#9B8CC0' },
-  'pâmela': { bg:'rgba(155,140,192,0.2)', color:'#9B8CC0' },
-  'erica':  { bg:'rgba(224,112,64,0.2)',  color:'#E07040' },
-  'érica':  { bg:'rgba(224,112,64,0.2)',  color:'#E07040' },
-};
-const PERSON_COLOR_POOL = [
-  { bg:'rgba(239,159,39,0.2)',  color:'#F4A835' },
-  { bg:'rgba(29,158,117,0.2)', color:'#3DB88A' },
-  { bg:'rgba(55,138,221,0.2)', color:'#5B9BD5' },
-  { bg:'rgba(212,105,138,0.2)',color:'#D4698A' },
-  { bg:'rgba(196,133,42,0.2)', color:'#C4852A' },
-  { bg:'rgba(79,195,168,0.2)', color:'#4FC3A8' },
-];
-const personColorCache = {};
-let personColorIdx = 0;
-
-function getPersonColor(nome) {
-  const key = (nome||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
-  if (personColorCache[key]) return personColorCache[key];
-  const named = PERSON_COLORS[nome.toLowerCase()];
-  if (named) { personColorCache[key] = named; return named; }
-  const c = PERSON_COLOR_POOL[personColorIdx % PERSON_COLOR_POOL.length];
-  personColorIdx++;
-  personColorCache[key] = c;
-  return c;
-}
-
-function normalizarNome(n) {
-  return (n||'').trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
-}
-
-function renderDados() {
-  const panel = document.getElementById('panel-dados');
-  panel.innerHTML = `
-    <div class="dados-hero">
-      <div class="dados-hero-eyebrow">Ministério de Louvor</div>
-      <div class="dados-hero-title">Quem convocar?</div>
-      <div class="dados-hero-sub">Ordenado por quem toca há mais tempo · ${cultos.length} cultos registrados</div>
-    </div>
-    <div class="dados-dot-legend">
-      <span class="dados-dot-legend-lbl">+ antigo</span>
-      <div class="dados-dot-legend-dots" id="dados-legend-dots"></div>
-      <span class="dados-dot-legend-lbl">+ recente</span>
-    </div>
-    <div id="dados-body"></div>`;
-
-  const legendDots = document.getElementById('dados-legend-dots');
-  for (let i = 0; i < 6; i++) {
-    const d = document.createElement('div');
-    d.className = 'pdot ' + (i >= 4 ? 'on' : 'off');
-    legendDots.appendChild(d);
-  }
-
-  renderRosterByRole(document.getElementById('dados-body'));
-}
-
-function renderRosterByRole(body) {
-  const N = 6;
-
-  const roleMap = {};
-  const addPerson = (nome, role, idx) => {
-    nome = nome.trim();
-    if (!nome) return;
-    if (!roleMap[role]) roleMap[role] = {};
-    const key = normalizarNome(nome);
-    if (!roleMap[role][key]) roleMap[role][key] = { nome, appearances: new Set() };
-    roleMap[role][key].appearances.add(idx);
-  };
-
-  cultos.forEach((c, idx) => {
-    if (c.ministra) addPerson(c.ministra, 'Ministrou', idx);
-    if (c.vozes) c.vozes.split(/,| e /i).map(v => v.trim()).filter(Boolean).forEach(v => addPerson(v, 'Voz', idx));
-    if (c.musicos) c.musicos.split(',').forEach(entry => {
-      const parts = entry.split(':');
-      if (parts.length >= 2) {
-        const instr = parts[0].trim();
-        parts.slice(1).join(':').split(/ e /i).map(n => n.trim()).filter(Boolean).forEach(n => addPerson(n, instr, idx));
-      }
-    });
-  });
-
-  const fixedOrder = ['Ministrou', 'Voz'];
-  const otherRoles = Object.keys(roleMap).filter(r => !fixedOrder.includes(r)).sort();
-  const roleOrder = [...fixedOrder.filter(r => roleMap[r]), ...otherRoles];
-
-  const getInitials = nome => {
-    const w = nome.split(' ').filter(Boolean);
-    return w.length >= 2 ? (w[0][0] + w[1][0]).toUpperCase() : nome.slice(0, 2).toUpperCase();
-  };
-
-  body.innerHTML = '';
-
-  roleOrder.forEach(role => {
-    if (!roleMap[role]) return;
-
-    const people = Object.values(roleMap[role])
-      .map(p => ({ ...p, lastIdx: Math.min(...p.appearances) }))
-      .sort((a, b) => b.lastIdx - a.lastIdx);
-
-    const group = document.createElement('div');
-    group.className = 'dados-role-group';
-
-    const hdr = document.createElement('div');
-    hdr.className = 'dados-role-hdr';
-    hdr.innerHTML = `<span class="dados-role-name">${esc(role)}</span><span class="dados-role-count">${people.length}</span>`;
-    group.appendChild(hdr);
-
-    people.forEach(p => {
-      const col = getPersonColor(p.nome);
-      const row = document.createElement('div');
-      row.className = 'dados-person-row';
-
-      // Dots: left = oldest, right = most recent
-      // cultos[0] = most recent (idx 0), cultos[N-1] = oldest shown (idx N-1)
-      // Dot position 0 (leftmost) = cultoIdx N-1, dot position N-1 (rightmost) = cultoIdx 0
-      const dotsHtml = Array.from({length: N}, (_, i) => {
-        const cultoIdx = N - 1 - i;
-        const present = p.appearances.has(cultoIdx);
-        return `<div class="pdot ${present ? 'on' : 'off'}"></div>`;
-      }).join('');
-
-      const lastIdx = p.lastIdx;
-      const badgeClass = lastIdx === 0 ? 'green' : lastIdx <= 2 ? 'yellow' : 'red';
-      const badgeText = lastIdx === 0 ? 'último' : `${lastIdx} atrás`;
-
-      row.innerHTML = `
-        <div class="dados-person-avatar" style="background:${col.bg};color:${col.color};">${getInitials(p.nome)}</div>
-        <span class="dados-person-name">${esc(p.nome)}</span>
-        <div class="dados-person-dots">${dotsHtml}</div>
-        <div class="dados-ago-badge ${badgeClass}">${badgeText}</div>`;
-
-      group.appendChild(row);
-    });
-
-    body.appendChild(group);
-  });
 }
 
 // ═══════════════════════════════════════
