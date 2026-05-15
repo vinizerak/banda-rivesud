@@ -238,135 +238,137 @@ body::after {
 
 /* player cultos */
 #cultos-player {
-  position: fixed; inset: 0; z-index: 60;
-  display: none; flex-direction: column;
-  background: #0d0d0d;
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  z-index: 60;
+  display: flex; flex-direction: column;
+  background: #161616;
+  border-radius: 20px 20px 0 0;
   overflow: hidden;
-  animation: slideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  height: 75vh;
+  transform: translateY(100%);
+  transition: transform 0.38s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+  box-shadow: 0 -8px 40px rgba(0,0,0,0.7);
 }
-@keyframes slideUp {
-  from { transform: translateY(100%); }
-  to { transform: translateY(0); }
+#cultos-player.vis {
+  transform: translateY(0);
+  pointer-events: all;
 }
-#cultos-player.vis { display: flex; }
 #cultos-player::before {
   content: '';
   position: absolute; inset: 0;
-  background: var(--cp-bg-img, #0d0d0d);
+  background: var(--cp-bg-img, #161616);
   background-size: cover;
   background-position: center;
-  filter: blur(60px) brightness(0.4);
+  filter: blur(60px) brightness(0.25);
   transform: scale(1.1);
   z-index: -1;
+  border-radius: inherit;
+}
+
+/* Handle decorativo */
+#cultos-player-handle {
+  width: 36px; height: 4px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 2px;
+  margin: 12px auto 4px;
+  flex-shrink: 0;
 }
 
 #cultos-player-header {
-  padding: 16px 16px 8px;
+  padding: 8px 16px 8px;
   display: flex; justify-content: space-between; align-items: center;
   position: relative; z-index: 1;
+  flex-shrink: 0;
 }
 #cultos-player-close {
   width: 32px; height: 32px;
-  background: rgba(255,255,255,0.12);
-  border: 0.5px solid rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.1);
+  border: 0.5px solid rgba(255,255,255,0.15);
   border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
-  cursor: pointer; color: #fff; font-size: 18px;
+  cursor: pointer; color: rgba(255,255,255,0.7); font-size: 14px;
   transition: background 0.15s;
   -webkit-tap-highlight-color: transparent;
 }
 #cultos-player-close:active { background: rgba(255,255,255,0.2); }
 
-#cultos-player-album {
-  flex: 1;
-  display: flex; justify-content: center; align-items: center;
-  padding: 24px 16px;
+#cultos-player-body {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 16px;
+  padding: 8px 16px 16px;
   position: relative; z-index: 1;
-  min-height: 0;
+  flex-shrink: 0;
 }
 #cultos-player-cover {
-  width: 280px; height: 280px;
+  width: 72px; height: 72px;
   background: linear-gradient(135deg, #534AB7, #7F77DD);
   background-size: cover;
   background-position: center;
-  border-radius: 12px;
+  border-radius: 10px;
   flex-shrink: 0;
-  box-shadow: 0 12px 40px rgba(0,0,0,0.6);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.5);
 }
-
 #cultos-player-info {
-  padding: 24px 16px 0;
+  flex: 1; min-width: 0;
   position: relative; z-index: 1;
 }
 #cultos-player-title {
-  font-size: 22px; font-weight: 500; color: #fff;
-  margin: 0 0 4px;
-  font-family: 'Instrument Serif', serif;
+  font-size: 17px; font-weight: 500; color: #fff;
+  margin: 0 0 3px;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
 #cultos-player-artist {
-  font-size: 15px; color: rgba(255,255,255,0.7);
-  margin: 0 0 16px;
-}
-
-#cultos-player-details {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
-  margin-bottom: 12px;
-}
-.cp-detail-box {
-  background: rgba(255,255,255,0.08);
-  border: 0.5px solid rgba(255,255,255,0.12);
-  border-radius: 10px;
-  padding: 12px;
-}
-.cp-detail-label {
-  font-size: 10px; color: rgba(255,255,255,0.5);
-  text-transform: uppercase; font-weight: 500;
-  margin: 0 0 6px;
-}
-.cp-detail-value {
-  font-size: 14px; color: rgba(255,255,255,0.9);
-  margin: 0; font-weight: 500;
+  font-size: 13px; color: rgba(255,255,255,0.55);
+  margin: 0;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
 
 #cultos-player-buttons {
-  display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px;
-  margin-bottom: 20px;
+  display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px;
+  padding: 0 16px 14px;
+  position: relative; z-index: 1;
+  flex-shrink: 0;
 }
 .cp-btn {
-  padding: 12px 16px;
-  background: rgba(255,255,255,0.12);
-  border: 0.5px solid rgba(255,255,255,0.2);
+  padding: 10px 8px;
+  background: rgba(255,255,255,0.09);
+  border: 0.5px solid rgba(255,255,255,0.15);
   border-radius: 10px;
-  color: #fff;
-  font-size: 13px;
+  color: rgba(255,255,255,0.8);
+  font-size: 12px;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.15s;
   -webkit-tap-highlight-color: transparent;
-  display: flex; align-items: center; justify-content: center; gap: 6px;
+  display: flex; align-items: center; justify-content: center; gap: 5px;
+  font-family: 'DM Sans', sans-serif;
 }
 .cp-btn:active {
-  background: rgba(255,255,255,0.22);
+  background: rgba(255,255,255,0.18);
   transform: scale(0.97);
 }
 
 #cultos-player-scrubber {
-  padding: 20px 16px 16px;
-  border-top: 0.5px solid rgba(255,255,255,0.1);
+  padding: 4px 16px 8px;
   position: relative; z-index: 1;
+  flex-shrink: 0;
 }
 #cultos-player-track {
   position: relative;
-  height: 28px;
+  height: 32px;
   display: flex; align-items: center;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
-  margin-bottom: 8px;
+  margin-bottom: 2px;
 }
 #cultos-player-bar {
   width: 100%;
-  height: 4px;
-  background: rgba(255,255,255,0.14);
+  height: 3px;
+  background: rgba(255,255,255,0.12);
   border-radius: 2px;
   pointer-events: none;
   position: relative;
@@ -378,11 +380,10 @@ body::after {
   border-radius: 2px;
   position: relative;
   pointer-events: none;
-  transition: width 0.1s linear;
 }
 #cultos-player-thumb {
   position: absolute;
-  right: -6px;
+  right: -7px;
   top: 50%;
   transform: translateY(-50%);
   width: 14px;
@@ -390,39 +391,139 @@ body::after {
   border-radius: 50%;
   background: #fff;
   pointer-events: none;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  box-shadow: 0 1px 6px rgba(0,0,0,0.4);
+  transition: transform 0.1s;
+}
+#cultos-player-track:active #cultos-player-thumb {
+  transform: translateY(-50%) scale(1.3);
 }
 #cultos-player-times {
   display: flex; justify-content: space-between;
-  font-size: 11px; color: rgba(255,255,255,0.4);
-  margin-bottom: 12px;
+  font-size: 10px; color: rgba(255,255,255,0.35);
+  margin-bottom: 8px;
 }
 
 #cultos-player-controls {
-  display: flex; gap: 12px; align-items: center; justify-content: center;
+  display: flex; gap: 0; align-items: center; justify-content: center;
+  padding-bottom: max(16px, env(safe-area-inset-bottom));
 }
 .cp-control-btn {
-  width: 40px; height: 40px;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.08);
-  border: 0.5px solid rgba(255,255,255,0.15);
-  color: #fff;
+  width: 52px; height: 48px;
+  border-radius: 12px;
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.75);
   cursor: pointer;
   display: flex; align-items: center; justify-content: center;
-  font-size: 14px;
   transition: all 0.15s;
   -webkit-tap-highlight-color: transparent;
 }
-.cp-control-btn:active { background: rgba(255,255,255,0.16); }
+.cp-control-btn:active { background: rgba(255,255,255,0.08); color: #fff; }
+.cp-control-btn:disabled { opacity: 0.2; cursor: default; }
 .cp-control-btn.play {
-  width: 52px; height: 52px;
-  background: #7BBF45;
-  border: none;
+  width: 60px; height: 60px;
+  background: #fff;
+  border-radius: 50%;
   color: #0d0d0d;
-  font-size: 20px;
-  font-weight: bold;
+  margin: 0 8px;
 }
-.cp-control-btn.play:active { background: #8BC94F; }
+.cp-control-btn.play:active { background: rgba(255,255,255,0.85); transform: scale(0.95); }
+
+/* ── MINI-BAR (Spotify style) ── */
+#cultos-mini-bar {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  z-index: 55;
+  background: #1e1e1e;
+  border-top: 0.5px solid rgba(255,255,255,0.1);
+  display: none;
+  flex-direction: column;
+  pointer-events: none;
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.5);
+  transition: transform 0.38s cubic-bezier(0.16, 1, 0.3, 1);
+}
+#cultos-mini-bar.vis {
+  display: flex;
+  pointer-events: all;
+}
+#cultos-mini-bar-inner {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 12px 8px;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+#cultos-mini-cover {
+  width: 38px; height: 38px;
+  border-radius: 6px;
+  background: linear-gradient(135deg, #534AB7, #7F77DD);
+  background-size: cover; background-position: center;
+  flex-shrink: 0;
+}
+#cultos-mini-info {
+  flex: 1; min-width: 0;
+}
+#cultos-mini-title {
+  font-size: 13px; font-weight: 500; color: #fff;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+#cultos-mini-artist {
+  font-size: 11px; color: rgba(255,255,255,0.45);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  margin-top: 1px;
+}
+#cultos-mini-play-btn {
+  width: 36px; height: 36px;
+  background: none; border: none;
+  color: #fff; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 50%;
+  transition: background 0.12s;
+  flex-shrink: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+#cultos-mini-play-btn:active { background: rgba(255,255,255,0.1); }
+#cultos-mini-scrubber {
+  height: 2px;
+  background: rgba(255,255,255,0.1);
+  position: relative;
+}
+#cultos-mini-fill {
+  height: 100%;
+  width: 0%;
+  background: #7BBF45;
+  pointer-events: none;
+}
+
+/* ── Linha de música como botão ── */
+.cultos-musica-row {
+  display: flex; align-items: center;
+  border-bottom: 0.5px solid rgba(255,255,255,0.06);
+}
+.cultos-musica-row:last-child { border-bottom: none; }
+.cultos-musica-play-btn {
+  display: flex; align-items: center; gap: 10px;
+  flex: 1; padding: 10px 0;
+  background: none; border: none; cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  text-align: left; min-width: 0;
+  -webkit-tap-highlight-color: transparent;
+  transition: opacity 0.12s;
+}
+.cultos-musica-play-btn:active { opacity: 0.65; }
+.cultos-musica-play-btn.inativo { cursor: default; opacity: 0.28; pointer-events: none; }
+.cultos-musica-play-btn.playing .cultos-musica-icon { color: #7BBF45; }
+.cultos-musica-play-btn.playing .cultos-musica-nome-text { color: #7BBF45; }
+.cultos-musica-icon {
+  width: 20px; flex-shrink: 0;
+  color: rgba(255,255,255,0.25);
+  display: flex; align-items: center; justify-content: center;
+  transition: color 0.15s;
+}
+.cultos-musica-nome-text {
+  flex: 1; font-size: 13px; color: rgba(255,255,255,0.82);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0;
+  transition: color 0.15s;
+}
 
 /* ── ENSAIO ── */
 #panel-ensaio { display: none; padding-top: 76px; }
@@ -553,39 +654,54 @@ body::after {
   <div id="cultos-list"></div>
 </div>
 
+<!-- MINI-BAR (minimizado, estilo Spotify) -->
+<div id="cultos-mini-bar" onclick="cultosPlayerExpand()">
+  <div id="cultos-mini-bar-inner">
+    <div id="cultos-mini-cover"></div>
+    <div id="cultos-mini-info">
+      <div id="cultos-mini-title">—</div>
+      <div id="cultos-mini-artist">—</div>
+    </div>
+    <button id="cultos-mini-play-btn" onclick="event.stopPropagation(); handleCultosPlayerToggle()">
+      <svg id="cp-mini-play-icon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+    </button>
+  </div>
+  <div id="cultos-mini-scrubber">
+    <div id="cultos-mini-fill"></div>
+  </div>
+</div>
+
 <!-- PLAYER CULTOS -->
 <div id="cultos-player">
+  <div id="cultos-player-handle"></div>
+
   <div id="cultos-player-header">
-    <span style="font-size: 12px; color: rgba(255,255,255,0.4); text-transform: uppercase; font-weight: 500;">Agora tocando</span>
-    <div id="cultos-player-close" onclick="cultosPlayerHide()">×</div>
+    <span style="font-size: 11px; color: rgba(255,255,255,0.35); text-transform: uppercase; font-weight: 600; letter-spacing: 0.06em;">Agora tocando</span>
+    <div id="cultos-player-close" onclick="cultosPlayerHide()">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><line x1="1" y1="1" x2="11" y2="11"/><line x1="11" y1="1" x2="1" y2="11"/></svg>
+    </div>
   </div>
-  
-  <div id="cultos-player-album">
+
+  <div id="cultos-player-body">
     <div id="cultos-player-cover"></div>
-  </div>
-  
-  <div id="cultos-player-info">
-    <h3 id="cultos-player-title">—</h3>
-    <p id="cultos-player-artist">—</p>
-    
-    <div id="cultos-player-details">
-      <div class="cp-detail-box">
-        <p class="cp-detail-label">Ministrando</p>
-        <p class="cp-detail-value" id="cultos-player-leader">—</p>
-      </div>
-      <div class="cp-detail-box">
-        <p class="cp-detail-label">Vozes</p>
-        <p class="cp-detail-value" id="cultos-player-vozes">—</p>
-      </div>
-    </div>
-    
-    <div id="cultos-player-buttons">
-      <button class="cp-btn" id="cp-btn-spotify" onclick="cultosBtnSpotify()">🎵 Spotify</button>
-      <button class="cp-btn" id="cp-btn-cifra" onclick="cultosBtnCifra()">📝 Cifra</button>
-      <button class="cp-btn" id="cp-btn-youtube" onclick="cultosBtnYoutube()">📺 YouTube</button>
+    <div id="cultos-player-info">
+      <h3 id="cultos-player-title">—</h3>
+      <p id="cultos-player-artist">—</p>
     </div>
   </div>
-  
+
+  <div id="cultos-player-buttons">
+    <button class="cp-btn" id="cp-btn-spotify" onclick="cultosBtnSpotify()">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.586 14.424a.623.623 0 01-.857.207c-2.348-1.435-5.304-1.76-8.785-.964a.623.623 0 01-.277-1.215c3.809-.87 7.077-.496 9.712 1.115a.623.623 0 01.207.857zm1.223-2.722a.78.78 0 01-1.072.257C14.01 12.327 10.61 11.95 7.7 12.78a.78.78 0 01-.45-1.493c3.306-.998 7.113-.515 9.782 1.143a.78.78 0 01.257 1.072zm.105-2.835C15.001 9.15 10.757 9.007 8.078 9.803a.937.937 0 11-.543-1.794c3.064-.929 7.856-.75 10.952 1.197a.938.938 0 01-.573 1.661z"/></svg>
+      Spotify
+    </button>
+    <button class="cp-btn" id="cp-btn-cifra" onclick="cultosBtnCifra()">♩ Cifra</button>
+    <button class="cp-btn" id="cp-btn-youtube" onclick="cultosBtnYoutube()">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M23.495 6.205a3.007 3.007 0 00-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 00.527 6.205a31.247 31.247 0 00-.522 5.805 31.247 31.247 0 00.522 5.783 3.007 3.007 0 002.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 002.088-2.088 31.247 31.247 0 00.5-5.783 31.247 31.247 0 00-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/></svg>
+      YouTube
+    </button>
+  </div>
+
   <div id="cultos-player-scrubber">
     <div id="cultos-player-track" ontouchmove="cultosPlayerTrackMove(event)" onmousemove="cultosPlayerTrackMove(event)">
       <div id="cultos-player-bar">
@@ -599,9 +715,15 @@ body::after {
       <span id="cultos-player-dur">0:00</span>
     </div>
     <div id="cultos-player-controls">
-      <button class="cp-control-btn" onclick="cultosPlayerPrev()">⏮</button>
-      <button class="cp-control-btn play" id="cultos-player-play-btn" onclick="handleCultosPlayerToggle()">▶</button>
-      <button class="cp-control-btn" onclick="cultosPlayerNext()">⏭</button>
+      <button class="cp-control-btn" id="cultos-player-prev-btn" onclick="cultosPlayerPrev()">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h2v12H6zm3.5 6 8.5 6V6z"/></svg>
+      </button>
+      <button class="cp-control-btn play" id="cultos-player-play-btn" onclick="handleCultosPlayerToggle()">
+        <svg id="cp-play-icon" width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+      </button>
+      <button class="cp-control-btn" id="cultos-player-next-btn" onclick="cultosPlayerNext()">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M6 18l8.5-6L6 6v12zm2-8.14L11.03 12 8 14.14V9.86zM16 6h2v12h-2z"/></svg>
+      </button>
     </div>
   </div>
 </div>
@@ -706,50 +828,95 @@ const gPlayer = {
   seek(time) { if (this.audio) this.audio.currentTime = Math.max(0, Math.min(time, this.audio.duration || 0)); },
 
   _tick() {
-    if (!this.audio || this.isDragging) return;
+    if (!this.audio) return;
     const cur = this.audio.currentTime || 0;
     const dur = this.audio.duration   || 0;
     const pct = dur > 0 ? (cur / dur) * 100 : 0;
     const fmt = s => { const m = Math.floor(s/60), ss = Math.floor(s%60); return `${m}:${ss<10?'0':''}${ss}`; };
-    const fill = document.getElementById('cultos-player-fill');
-    if (fill) fill.style.width = pct + '%';
     const curEl = document.getElementById('cultos-player-cur');
     if (curEl) curEl.textContent = fmt(cur);
     const durEl = document.getElementById('cultos-player-dur');
     if (durEl) durEl.textContent = fmt(dur);
+    if (!this.isDragging) {
+      const fill = document.getElementById('cultos-player-fill');
+      if (fill) fill.style.width = pct + '%';
+    }
+    const miniFill = document.getElementById('cultos-mini-fill');
+    if (miniFill) miniFill.style.width = pct + '%';
     this._updateIcons(!this.audio.paused);
   },
 
   _updateIcons(playing) {
-    const btn = document.getElementById('cultos-player-play-btn');
-    if (!btn) return;
-    btn.textContent = playing ? '⏸' : '▶';
+    const icon = document.getElementById('cp-play-icon');
+    if (icon) {
+      if (playing) {
+        icon.innerHTML = '<rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/>';
+      } else {
+        icon.innerHTML = '<path d="M8 5v14l11-7z"/>';
+      }
+    }
+    cultosMiniUpdateIcon(playing);
   },
 };
 
 function cultosPlayerTrackMove(e) {
   if (e.type === 'touchmove') e.preventDefault();
+  if (!gPlayer.isDragging) return;
   const track = document.getElementById('cultos-player-track');
   if (!track || !gPlayer.audio || !gPlayer.audio.duration) return;
   
   const rect = track.getBoundingClientRect();
   const clientX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
   const pos = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
-  gPlayer.seek(gPlayer.audio.duration * pos);
+  // Update fill visually while dragging
+  const fill = document.getElementById('cultos-player-fill');
+  if (fill) fill.style.width = (pos * 100) + '%';
+  // Update time display while dragging
+  const dragTime = gPlayer.audio.duration * pos;
+  const fmt = s => { const m = Math.floor(s/60), ss = Math.floor(s%60); return `${m}:${ss<10?'0':''}${ss}`; };
+  const curEl = document.getElementById('cultos-player-cur');
+  if (curEl) curEl.textContent = fmt(dragTime);
+  gPlayer.seek(dragTime);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
   const cpTrack = document.getElementById('cultos-player-track');
   if (cpTrack) {
-    cpTrack.addEventListener('mousedown', () => { gPlayer.isDragging = true; });
-    cpTrack.addEventListener('touchstart', () => { gPlayer.isDragging = true; });
+    cpTrack.addEventListener('mousedown', e => {
+      gPlayer.isDragging = true;
+      if (gPlayer.audio && gPlayer.audio.duration) {
+        const r = cpTrack.getBoundingClientRect();
+        const pos = Math.max(0, Math.min(1, (e.clientX - r.left) / r.width));
+        const fill = document.getElementById('cultos-player-fill');
+        if (fill) fill.style.width = (pos * 100) + '%';
+        const fmt = s => { const m = Math.floor(s/60), ss = Math.floor(s%60); return `${m}:${ss<10?'0':''}${ss}`; };
+        const curEl = document.getElementById('cultos-player-cur');
+        if (curEl) curEl.textContent = fmt(gPlayer.audio.duration * pos);
+        gPlayer.seek(gPlayer.audio.duration * pos);
+      }
+    });
+    cpTrack.addEventListener('touchstart', e => {
+      gPlayer.isDragging = true;
+      if (gPlayer.audio && gPlayer.audio.duration) {
+        const r = cpTrack.getBoundingClientRect();
+        const pos = Math.max(0, Math.min(1, (e.touches[0].clientX - r.left) / r.width));
+        const fill = document.getElementById('cultos-player-fill');
+        if (fill) fill.style.width = (pos * 100) + '%';
+        const fmt = s => { const m = Math.floor(s/60), ss = Math.floor(s%60); return `${m}:${ss<10?'0':''}${ss}`; };
+        const curEl = document.getElementById('cultos-player-cur');
+        if (curEl) curEl.textContent = fmt(gPlayer.audio.duration * pos);
+        gPlayer.seek(gPlayer.audio.duration * pos);
+      }
+    }, { passive: true });
     document.addEventListener('mouseup', () => { gPlayer.isDragging = false; });
     document.addEventListener('touchend', () => { gPlayer.isDragging = false; });
-    cpTrack.addEventListener('click', e => {
-      if (!gPlayer.audio || !gPlayer.audio.duration) return;
-      const r = cpTrack.getBoundingClientRect();
-      gPlayer.audio.currentTime = gPlayer.audio.duration * Math.max(0, Math.min(1, (e.clientX - r.left) / r.width));
-    });
+  }
+});
+
+document.addEventListener('keydown', e => {
+  if (e.code === 'Space' && document.getElementById('cultos-player').classList.contains('vis')) {
+    e.preventDefault();
+    handleCultosPlayerToggle();
   }
 });
 
@@ -1017,6 +1184,9 @@ const CULTOS_PAGE = 20;
 let cultosList = [];
 let cultosPage = 0;
 let cultoAudioBtn = null;
+// Playlist do culto aberto no player
+let cultoPlayerPlaylist = []; // [{btn, url, nome, culto}, ...]
+let cultoPlayerIdx = 0;
 
 function leaderDotColor(nome) {
   const n = (nome || '').toLowerCase();
@@ -1162,26 +1332,42 @@ function toggleCultoRow(rowEl, culto) {
   lbl.textContent = 'Músicas';
   expand.appendChild(lbl);
 
+  // Montar playlist do culto para prev/next
+  const playlist = [];
   culto.musicas.forEach(m => {
     const row = document.createElement('div');
     row.className = 'cultos-musica-row';
 
-    const nome = document.createElement('span');
-    nome.className = 'cultos-musica-nome';
-    nome.textContent = m.nome;
-    row.appendChild(nome);
-
     const audioUrl = resolveAudioUrl(m.mp3);
     const btn = document.createElement('button');
+    btn.className = 'cultos-musica-play-btn' + (audioUrl ? '' : ' inativo');
+
+    // Ícone play/pause
+    const iconEl = document.createElement('span');
+    iconEl.className = 'cultos-musica-icon';
+    iconEl.innerHTML = audioUrl
+      ? '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>'
+      : '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" opacity="0.3"><path d="M8 5v14l11-7z"/></svg>';
+
+    // Nome da música
+    const nomeEl = document.createElement('span');
+    nomeEl.className = 'cultos-musica-nome-text';
+    nomeEl.textContent = m.nome;
+
+    btn.appendChild(iconEl);
+    btn.appendChild(nomeEl);
+
     if (audioUrl) {
-      btn.className = 'cultos-mp3-btn';
-      btn.textContent = '▶ MP3';
-      btn.addEventListener('click', () => handleCultoMp3(btn, audioUrl, m.nome));
+      const entry = { btn, url: audioUrl, nome: m.nome, culto, iconEl, nomeEl };
+      playlist.push(entry);
+      btn.addEventListener('click', () => {
+        const idx = playlist.indexOf(entry);
+        handleCultoMp3(btn, audioUrl, m.nome, culto, playlist, idx);
+      });
     } else {
-      btn.className = 'cultos-mp3-btn inativo';
-      btn.textContent = 'MP3';
       btn.disabled = true;
     }
+
     row.appendChild(btn);
     expand.appendChild(row);
   });
@@ -1189,64 +1375,173 @@ function toggleCultoRow(rowEl, culto) {
   setTimeout(() => rowEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 50);
 }
 
-function handleCultoMp3(btn, url, nome) {
-  if (cultoAudioBtn === btn) {
+function handleCultoMp3(btn, url, nome, culto, playlist, idx) {
+  const isSameBtn = cultoAudioBtn === btn;
+
+  // Reset ícone do botão anterior
+  if (cultoAudioBtn && cultoAudioBtn !== btn) {
+    cultoAudioBtn.classList.remove('playing');
+    const prevIcon = cultoAudioBtn.querySelector('.cultos-musica-icon');
+    if (prevIcon) prevIcon.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>';
+  }
+
+  if (isSameBtn) {
     if (gPlayer.isPlaying()) {
       gPlayer.pause();
-      btn.textContent = '▶ MP3';
       btn.classList.remove('playing');
+      const ic = btn.querySelector('.cultos-musica-icon');
+      if (ic) ic.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>';
       cultosPlayerUpdateIcon(false);
+      cultosMiniUpdateIcon(false);
     } else {
       gPlayer.resume();
-      btn.textContent = '⏸ MP3';
       btn.classList.add('playing');
+      const ic = btn.querySelector('.cultos-musica-icon');
+      if (ic) ic.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>';
       cultosPlayerUpdateIcon(true);
+      cultosMiniUpdateIcon(true);
     }
     return;
   }
-  if (cultoAudioBtn) {
-    cultoAudioBtn.textContent = '▶ MP3';
-    cultoAudioBtn.classList.remove('playing');
-  }
+
   cultoAudioBtn = btn;
-  btn.textContent = '⏸ MP3';
   btn.classList.add('playing');
-  const playerEl = document.getElementById('cultos-player');
-  const playerName = document.getElementById('cultos-player-name');
-  if (playerEl) { playerEl.classList.add('vis'); document.getElementById('panel-cultos').style.paddingBottom = '84px'; }
-  if (playerName) playerName.textContent = nome;
+  const ic = btn.querySelector('.cultos-musica-icon');
+  if (ic) ic.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>';
+
+  // Salvar playlist
+  if (playlist) { cultoPlayerPlaylist = playlist; cultoPlayerIdx = idx ?? 0; }
+  cultosUpdateNavBtns();
+
+  // Info da música no catálogo
+  const musicaInfo = musicas.find(x => x.nome.toLowerCase() === nome.toLowerCase()) || {};
+  const midias = musicaInfo.midia ? (musicaInfo.midia.match(/https?:\/\/[^\s]+/g) || []) : [];
+  const cifras = musicaInfo.cifra ? (musicaInfo.cifra.match(/https?:\/\/[^\s]+/g) || []) : [];
+  const spotifyUrl = midias.find(u => u.includes('spotify.com')) || null;
+  const youtubeUrl = midias.find(u => u.includes('youtu')) || null;
+
+  btn.dataset.spotifyUrl = spotifyUrl || '';
+  btn.dataset.cifraUrl = cifras[0] || '';
+  btn.dataset.youtubeUrl = youtubeUrl || '';
+
+  // Atualizar player e mini-bar com info básica
+  const artista = musicaInfo.artista || '';
+  document.getElementById('cultos-player-title').textContent = nome;
+  document.getElementById('cultos-player-artist').textContent = artista;
+  document.getElementById('cultos-mini-title').textContent = nome;
+  document.getElementById('cultos-mini-artist').textContent = artista;
+
+  // Botões de link
+  const spBtn = document.getElementById('cp-btn-spotify');
+  const ytBtn = document.getElementById('cp-btn-youtube');
+  const cifraBtn = document.getElementById('cp-btn-cifra');
+  if (spBtn) spBtn.style.opacity = spotifyUrl ? '1' : '0.3';
+  if (ytBtn) ytBtn.style.opacity = youtubeUrl ? '1' : '0.3';
+  if (cifraBtn) cifraBtn.style.opacity = cifras.length ? '1' : '0.3';
+
+  // Resetar capa
+  const cover = document.getElementById('cultos-player-cover');
+  const miniCover = document.getElementById('cultos-mini-cover');
+  if (cover) cover.style.backgroundImage = '';
+  if (miniCover) miniCover.style.backgroundImage = '';
+  document.getElementById('cultos-player').style.removeProperty('--cp-bg-img');
+
+  // Buscar capa
+  if (musicaInfo.nome) {
+    cfBuscarCapaQueued(musicaInfo).then(c => {
+      if (!c?.img) return;
+      if (cover) cover.style.backgroundImage = `url('${c.img}')`;
+      if (miniCover) miniCover.style.backgroundImage = `url('${c.img}')`;
+      document.getElementById('cultos-player').style.setProperty('--cp-bg-img', `url('${c.img}')`);
+    });
+  }
+
+  // Mostrar mini-bar; se player já estiver aberto, manter aberto
+  cultosMiniBarShow();
   cultosPlayerUpdateIcon(true);
-  gPlayer.play(url, nome, '');
+  cultosMiniUpdateIcon(true);
+
+  gPlayer.play(url, nome, artista);
   if (gPlayer.audio) {
     gPlayer.audio.addEventListener('ended', () => {
       if (cultoAudioBtn === btn) {
-        btn.textContent = '▶ MP3';
         btn.classList.remove('playing');
+        const ic2 = btn.querySelector('.cultos-musica-icon');
+        if (ic2) ic2.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>';
         cultoAudioBtn = null;
-        cultosPlayerHide();
+        const next = cultoPlayerPlaylist[cultoPlayerIdx + 1];
+        if (next) {
+          handleCultoMp3(next.btn, next.url, next.nome, next.culto, cultoPlayerPlaylist, cultoPlayerIdx + 1);
+        } else {
+          cultosMiniBarHide();
+        }
       }
     }, { once: true });
   }
 }
 
 function cultosPlayerUpdateIcon(playing) {
-  const btn = document.getElementById('cultos-player-play-btn');
-  if (!btn) return;
-  btn.textContent = playing ? '⏸' : '▶';
+  const icon = document.getElementById('cp-play-icon');
+  if (!icon) return;
+  if (playing) {
+    icon.innerHTML = '<rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/>';
+  } else {
+    icon.innerHTML = '<path d="M8 5v14l11-7z"/>';
+  }
 }
 
-function cultosPlayerHide() {
+function cultosUpdateNavBtns() {
+  const prevBtn = document.getElementById('cultos-player-prev-btn');
+  const nextBtn = document.getElementById('cultos-player-next-btn');
+  if (prevBtn) prevBtn.disabled = cultoPlayerIdx <= 0;
+  if (nextBtn) nextBtn.disabled = cultoPlayerIdx >= cultoPlayerPlaylist.length - 1;
+}
+
+function cultosMiniUpdateIcon(playing) {
+  const icon = document.getElementById('cp-mini-play-icon');
+  if (!icon) return;
+  if (playing) {
+    icon.innerHTML = '<rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/>';
+  } else {
+    icon.innerHTML = '<path d="M8 5v14l11-7z"/>';
+  }
+}
+
+function cultosMiniBarShow() {
+  document.getElementById('cultos-mini-bar').classList.add('vis');
+}
+
+function cultosMiniBarHide() {
+  document.getElementById('cultos-mini-bar').classList.remove('vis');
+  // Fechar player também se estiver aberto
   const playerEl = document.getElementById('cultos-player');
-  if (playerEl) playerEl.classList.remove('vis');
-  document.getElementById('panel-cultos').style.paddingBottom = '';
+  if (playerEl) { playerEl.style.transform = ''; playerEl.classList.remove('vis'); }
+  // Limpar estado
+  if (cultoAudioBtn) { cultoAudioBtn.classList.remove('playing'); cultoAudioBtn = null; }
   const fill = document.getElementById('cultos-player-fill');
   if (fill) fill.style.width = '0%';
+  const miniFill = document.getElementById('cultos-mini-fill');
+  if (miniFill) miniFill.style.width = '0%';
   const curEl = document.getElementById('cultos-player-cur');
   if (curEl) curEl.textContent = '0:00';
   const durEl = document.getElementById('cultos-player-dur');
   if (durEl) durEl.textContent = '0:00';
   cultosPlayerUpdateIcon(false);
+  cultosMiniUpdateIcon(false);
   gPlayer.pause();
+  if (gPlayer.audio) { gPlayer.audio.src = ''; gPlayer.audio = null; }
+}
+
+// X fecha e para tudo
+function cultosPlayerHide() {
+  const playerEl = document.getElementById('cultos-player');
+  if (playerEl) { playerEl.style.transform = ''; playerEl.classList.remove('vis'); }
+  // Mantém mini-bar visível e música tocando
+}
+
+// Clicar na mini-bar abre o player cheio
+function cultosPlayerExpand() {
+  document.getElementById('cultos-player').classList.add('vis');
 }
 
 function handleCultosPlayerToggle() {
@@ -1259,11 +1554,15 @@ function handleCultosPlayerToggle() {
 }
 
 function cultosPlayerPrev() {
-  // Placeholder - implementar quando tiver múltiplas músicas
+  if (cultoPlayerIdx <= 0 || !cultoPlayerPlaylist.length) return;
+  const prev = cultoPlayerPlaylist[cultoPlayerIdx - 1];
+  handleCultoMp3(prev.btn, prev.url, prev.nome, prev.culto, cultoPlayerPlaylist, cultoPlayerIdx - 1);
 }
 
 function cultosPlayerNext() {
-  // Placeholder - implementar quando tiver múltiplas músicas
+  if (cultoPlayerIdx >= cultoPlayerPlaylist.length - 1 || !cultoPlayerPlaylist.length) return;
+  const next = cultoPlayerPlaylist[cultoPlayerIdx + 1];
+  handleCultoMp3(next.btn, next.url, next.nome, next.culto, cultoPlayerPlaylist, cultoPlayerIdx + 1);
 }
 
 function cultosBtnSpotify() {
@@ -1284,34 +1583,6 @@ function cultosBtnYoutube() {
   if (youtubeLink) window.open(youtubeLink, '_blank');
 }
 
-function cultosPlayerShow(musicaInfo, cultoInfo) {
-  const playerEl = document.getElementById('cultos-player');
-  if (!playerEl) return;
-  
-  // Atualizar foto do album
-  const cover = document.getElementById('cultos-player-cover');
-  if (cover && musicaInfo.cover) {
-    cover.style.backgroundImage = `url('${musicaInfo.cover}')`;
-  }
-  
-  // Atualizar background blur
-  if (musicaInfo.cover) {
-    playerEl.style.setProperty('--cp-bg-img', `url('${musicaInfo.cover}')`);
-  }
-  
-  // Info da música
-  document.getElementById('cultos-player-title').textContent = musicaInfo.nome || '—';
-  document.getElementById('cultos-player-artist').textContent = musicaInfo.artista || '—';
-  
-  // Info do culto
-  document.getElementById('cultos-player-leader').textContent = cultoInfo.leader || '—';
-  document.getElementById('cultos-player-vozes').textContent = cultoInfo.vozes || '—';
-  
-  // Mostrar player
-  playerEl.classList.add('vis');
-  document.getElementById('panel-cultos').style.paddingBottom = '0';
-}
-
 // ═══════════════════════════════════════
 // TABS
 // ═══════════════════════════════════════
@@ -1321,12 +1592,12 @@ function showTab(id, btn) {
   document.getElementById('panel-' + id).classList.add('active');
   if (btn) btn.classList.add('active');
 
-  if (id !== 'cultos' && cultoAudioBtn) {
-    gPlayer.pause();
-    cultoAudioBtn.textContent = '▶ MP3';
-    cultoAudioBtn.classList.remove('playing');
-    cultoAudioBtn = null;
-    cultosPlayerHide();
+  if (id !== 'cultos') {
+    // Fechar player cheio mas manter música tocando
+    const playerEl = document.getElementById('cultos-player');
+    if (playerEl) playerEl.classList.remove('vis');
+    // Esconder mini-bar também (fora da aba cultos não faz sentido)
+    cultosMiniBarHide();
   }
 
   if (id === 'repertorio') {
